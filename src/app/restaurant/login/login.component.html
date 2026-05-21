@@ -15,7 +15,7 @@
         </ul>
       </aside>
 
-      <div class="login-card__form">
+      <div class="login-card__form" [attr.aria-busy]="isLoading">
         <form [formGroup]="form" (keydown.enter)="onLogin()">
           <h3 class="heading-secondary">Login</h3>
           <p class="form-subtitle">Use your account credentials to continue.</p>
@@ -73,7 +73,7 @@
     </section>
   </div>
 
-  <div *ngIf="isLoading" class="loading-overlay" aria-live="polite" aria-busy="true">
+  <div *ngIf="isLoading" class="loading-overlay" aria-live="polite">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading, please wait</span>
     </div>

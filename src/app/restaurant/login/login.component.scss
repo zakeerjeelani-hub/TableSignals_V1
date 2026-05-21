@@ -7,6 +7,7 @@ $error: #d93f3f;
 
 .login-page {
   min-height: 100vh;
+  position: relative;
   padding: 24px 16px;
   background-image:
     linear-gradient(135deg, rgba(58, 157, 196, 0.08), rgba(254, 194, 0, 0.12)),
@@ -209,7 +210,7 @@ $error: #d93f3f;
 }
 
 .loading-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
