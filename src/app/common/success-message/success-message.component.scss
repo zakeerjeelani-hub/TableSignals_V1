@@ -1,0 +1,42 @@
+.success-message {
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+    color: #3c763d;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .success-message-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .success-icon {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  .success-text {
+    flex-grow: 1;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #3c763d;
+    line-height: 1;
+  }
+  
+
+
+
+  

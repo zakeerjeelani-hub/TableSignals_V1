@@ -1,0 +1,10 @@
+export interface MenuItem {
+  menuId: number;
+  roleID: number;
+  userId: number;
+  parentMenuId: number;
+  menuTitle: string;
+  description: string;
+  children?: MenuItem[];
+  isSubmenuVisible?: boolean;
+}

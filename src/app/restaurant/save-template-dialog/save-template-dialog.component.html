@@ -1,0 +1,47 @@
+<!-- ============================================
+SAVE TEMPLATE DIALOG TEMPLATE
+============================================ -->
+
+<!-- File: save-template-dialog.component.html -->
+
+<div class="save-template-dialog">
+  <h2 mat-dialog-title>
+    <mat-icon class="title-icon">save</mat-icon>
+    Save as Template
+  </h2>
+
+  <div mat-dialog-content class="dialog-content">
+    <p class="instruction-text">
+      Give your notification a memorable name so you can reuse it later.
+    </p>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <mat-icon>error</mat-icon>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Template Name Input -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Template Name *</mat-label>
+      <input matInput
+        [(ngModel)]="templateName"
+        (keypress)="onKeyPress($event)"
+        placeholder="e.g., Birthday Offer, Flash Sale, Welcome Message"
+        maxlength="50"
+        autofocus>
+      <mat-icon matSuffix>label</mat-icon>
+      <mat-hint align="end">{{ templateName.length }}/50</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary"
+      (click)="validateAndSave()"
+      [disabled]="!templateName || templateName.trim().length < 3">
+      <mat-icon>check</mat-icon>
+      Save Template
+    </button>
+  </div>
+</div>

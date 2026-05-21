@@ -1,0 +1,1739 @@
+// ============================================
+// QR CODE SELECTION PAGE - DESIGN SYSTEM
+// ============================================
+
+// ── Color Palette ──────────────────────────────────────────────
+$primary:           #fec200;
+$primary-dark:      #e5b000;
+$primary-light:     rgba(254, 194, 0, 0.1);
+$secondary:         #007bff;
+$success:           #28a745;
+$danger:            #f95055;
+$warning:           #ffc107;
+$info:              #3498db;
+$error:             #e74c3c;
+
+$text-primary:      #1a1a1a;
+$text-dark:         #1a1a1a;
+$text-secondary:    #666666;
+$text-muted:        #999999;
+$text-light:        #999999;
+
+$bg-white:          #ffffff;
+$bg-primary:        #f8f9fb;
+$bg-light:          #f8f9fb;
+$bg-darker:         #f0f1f5;
+$bg-lighter:        #fafbfc;
+
+$border-color:      #e0e0e0;
+$border-light:      #e8e8e8;
+$border-medium:     #d0d0d0;
+
+$shadow-color:      rgba(0, 0, 0, 0.08);
+$shadow-color-dark: rgba(0, 0, 0, 0.12);
+$shadow-xs:         0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-sm:         0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md:         0 4px 12px rgba(0, 0, 0, 0.12);
+$shadow-lg:         0 8px 24px rgba(0, 0, 0, 0.15);
+$shadow-xl:         0 12px 32px rgba(0, 0, 0, 0.18);
+
+// ── Spacing ────────────────────────────────────────────────────
+$space-xs:  4px;
+$space-sm:  8px;
+$space-md:  8px;
+$space-lg:  12px;
+$space-xl:  24px;
+$space-2xl: 32px;
+$space-3xl: 48px;
+
+// ── Typography ─────────────────────────────────────────────────
+$font-family-display: 'Segoe UI', 'Helvetica Neue', sans-serif;
+$font-family-body:    'Segoe UI', 'Helvetica Neue', sans-serif;
+
+$font-size-xs:   0.75rem;    // 12px
+$font-size-sm:   0.875rem;   // 14px
+$font-size-base: 1rem;       // 16px
+$font-size-lg:   1.125rem;   // 18px
+$font-size-xl:   1.25rem;    // 20px
+$font-size-2xl:  1.5rem;     // 24px
+$font-size-3xl:  1.75rem;    // 28px
+
+$font-weight-regular:  400;
+$font-weight-normal:   400;
+$font-weight-medium:   500;
+$font-weight-semibold: 600;
+$font-weight-bold:     700;
+$font-weight-heavy:    900;
+
+// ── Border Radius ──────────────────────────────────────────────
+$radius-sm:   4px;
+$radius-md:   8px;
+$radius-lg:   12px;
+$radius-xl:   16px;
+$radius-full: 9999px;
+
+// ── Breakpoints ────────────────────────────────────────────────
+$mobile:              599px;
+$tablet:              768px;
+$desktop:             1024px;
+$breakpoint-mobile:   599px;
+$breakpoint-tablet:   768px;
+$breakpoint-desktop:  1024px;
+
+// ── Transitions ────────────────────────────────────────────────
+$transition-fast: 0.15s ease-in-out;
+$transition-base: 0.3s ease-in-out;
+$transition-slow: 0.5s ease-in-out;
+
+
+// ============================================
+// MAIN CONTAINER
+// ============================================
+
+// Force this component to stretch full width inside #content-wrapper
+// which has align-items:center in global styles.css — without this,
+// auto-fit grid collapses to 1 column in production.
+:host {
+  display: block;
+  width: 100%;
+  align-self: stretch;
+}
+
+.page-main {
+  width: 100%;
+  background: $bg-light;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+}
+
+.qr-selection-container {
+  min-height: auto;
+  background: linear-gradient(135deg, $bg-primary 0%, #f0f2f5 100%);
+  padding: $space-xl;
+  font-family: $font-family-body;
+  padding-left: 11px;
+  padding-top: 10px;
+
+  @media (max-width: $tablet) {
+    padding: $space-lg $space-md;
+  }
+
+  @media (max-width: $mobile) {
+    padding: $space-md;
+  }
+}
+
+
+// ============================================
+// HEADER RIBBON
+// ============================================
+
+.header-ribbon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-md $space-lg;
+  background: linear-gradient(135deg, $primary-light 0%, $bg-lighter 100%);
+  border-bottom: 2px solid $primary;
+  border-radius: $radius-md;
+  margin-bottom: $space-md;
+  gap: $space-lg;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: $space-sm $space-md;
+    margin-bottom: $space-sm;
+  }
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  flex: 0 0 auto;
+
+  @media (max-width: $breakpoint-tablet) {
+    gap: $space-sm;
+  }
+}
+
+.page-title {
+  margin: 0;
+  padding: 0;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-heavy;
+  color: $primary;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-lg;
+  }
+}
+
+
+// ============================================
+// INFO BANNER
+// ============================================
+
+.info-banner {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  background: linear-gradient(135deg, rgba(254, 194, 0, 0.08) 0%, rgba(52, 152, 219, 0.08) 100%);
+  border: 1px solid rgba($primary, 0.3);
+  border-radius: $radius-lg;
+  padding: $space-lg;
+  margin-bottom: $space-2xl;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, $primary 0%, $info 100%);
+  }
+
+  @media (max-width: $mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: $space-md;
+    gap: $space-md;
+  }
+}
+
+.info-icon {
+  width: 32px;
+  height: 32px;
+  color: $primary;
+  flex-shrink: 0;
+
+  @media (max-width: $mobile) { width: 24px; height: 24px; }
+}
+
+.info-text { flex: 1; }
+
+.info-title {
+  margin: 0 0 $space-xs 0;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.info-description {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  line-height: 1.5;
+}
+
+
+// ============================================
+// CARDS GRID
+// ============================================
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $space-lg;
+  margin-bottom: $space-2xl;
+
+  @media (max-width: $tablet) {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+  }
+}
+
+
+// ============================================
+// QR CARD
+// ============================================
+
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  background: $bg-white;
+  border-radius: $radius-lg;
+  border: 2px solid $border-color;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 2px 8px $shadow-color;
+
+  &:hover:not(.coming-soon) {
+    transform: translateY(-4px);
+    border-color: $primary;
+    box-shadow: 0 12px 24px rgba($primary, 0.15);
+
+    .card-header { background: rgba($primary, 0.08); }
+    .btn-primary { transform: translateX(4px); }
+  }
+
+  &.active {
+    border-color: $primary;
+    background: rgba($primary, 0.02);
+    .card-header { background: rgba($primary, 0.08); }
+  }
+
+  &.coming-soon {
+    opacity: 0.65;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: $space-lg;
+  background: $bg-primary;
+  border-bottom: 1px solid $border-color;
+  transition: background 0.3s ease;
+}
+
+.card-icon {
+  width: 56px; height: 56px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: $radius-md;
+  flex-shrink: 0;
+
+  svg { width: 28px; height: 28px; stroke-width: 1.5; }
+
+  &.table-icon      { background: linear-gradient(135deg, rgba($info, 0.1) 0%, rgba($info, 0.05) 100%); color: $info; }
+  &.restaurant-icon { background: linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($primary, 0.05) 100%); color: $primary; }
+  &.vip-icon        { background: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(233, 30, 99, 0.05) 100%); color: #e91e63; }
+  &.custom-icon     { background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%); color: #2196f3; }
+  &.locked-icon     { background: linear-gradient(135deg, rgba($text-light, 0.1) 0%, rgba($text-light, 0.05) 100%); color: $text-light; }
+}
+
+.badge {
+  display: inline-block;
+  padding: $space-xs $space-sm;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+
+  &.new-badge {
+    background: linear-gradient(135deg, $primary 0%, lighten($primary, 10%) 100%);
+    color: $text-primary;
+    font-weight: bold;
+  }
+
+  &.feature-badge {
+    background: rgba($text-light, 0.2);
+    color: $text-secondary;
+  }
+}
+
+.card-body {
+  flex: 1;
+  padding: $space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.card-description {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  line-height: 1.6;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+
+  &.placeholder { opacity: 0.5; }
+}
+
+.feature-icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: $success;
+}
+
+.placeholder-box {
+  width: 100%;
+  height: 16px;
+  background: linear-gradient(90deg, $border-color 25%, #f5f5f5 50%, $border-color 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: $radius-sm;
+}
+
+@keyframes loading {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.use-case {
+  padding: $space-md;
+  background: rgba($primary, 0.06);
+  border-radius: $radius-md;
+  border-left: 3px solid $primary;
+}
+
+.use-case-label {
+  margin: 0 0 $space-xs 0;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.use-case-text {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-primary;
+  line-height: 1.5;
+}
+
+.card-footer {
+  padding: $space-lg;
+  border-top: 1px solid $border-color;
+  background: $bg-primary;
+}
+
+
+// ============================================
+// BUTTONS
+// ============================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  padding: $space-md $space-lg;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  text-decoration: none;
+
+  &:active { transform: scale(0.98); }
+
+  .btn-icon {
+    width: 18px; height: 18px;
+    transition: transform 0.3s ease;
+  }
+}
+
+.btn-primary {
+  background-color: white;
+  color: $secondary;
+  border: none;
+  box-shadow: 0 4px 12px rgba($primary, 0.25);
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 6px 16px rgba($primary, 0.35);
+    .btn-icon { transform: translateX(2px); }
+  }
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.btn-disabled {
+  background: $border-color;
+  color: $text-light;
+  cursor: not-allowed;
+  opacity: 0.7;
+
+  &:hover { background: $border-color; }
+}
+
+
+// ============================================
+// BOTTOM SECTION - INFO CARDS
+// ============================================
+
+.bottom-section { margin-top: $space-2xl; }
+
+.info-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $space-lg;
+
+  @media (max-width: $tablet) { grid-template-columns: repeat(2, 1fr); gap: $space-md; }
+  @media (max-width: $mobile) { grid-template-columns: 1fr; gap: $space-md; }
+}
+
+.info-card {
+  display: flex;
+  gap: $space-md;
+  padding: $space-lg;
+  background: $bg-white;
+  border-radius: $radius-lg;
+  border: 1px solid $border-color;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px $shadow-color;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba($primary, 0.1);
+    border-color: rgba($primary, 0.3);
+  }
+}
+
+.info-card-icon {
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, rgba($primary, 0.15) 0%, rgba($primary, 0.08) 100%);
+  border-radius: $radius-md;
+  flex-shrink: 0;
+
+  svg { width: 24px; height: 24px; color: $primary; }
+}
+
+.info-card-content { flex: 1; }
+
+.info-card-title {
+  margin: 0 0 $space-xs 0;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.info-card-text {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  line-height: 1.5;
+}
+
+
+// ============================================
+// MODAL STYLES
+// ============================================
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+// Shared overlay base
+%modal-overlay-base {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.qr-modal-overlay  { @extend %modal-overlay-base; }
+.qr-modal-overlay1 { @extend %modal-overlay-base; }
+
+// Modal content — custom QR
+.qr-modal-content {
+  background-color: white;
+  border-radius: $radius-lg;
+  border: 1px solid $border-color;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+
+  &.custom-qr-modal { max-width: 860px; max-height: 95vh; }
+}
+
+// Modal content — restaurant QR (wider, thicker border)
+.qr-modal-content1 {
+  background-color: white;
+  border-radius: $radius-lg;
+  border: 5px solid $border-color;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 860px;       // wider — fits two-column layout
+  width: 95%;
+  max-height: 95vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+// Body: two-column layout — QR left, print controls right
+.qr-modal-body {
+  padding: $space-md $space-lg;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  gap: $space-xl;
+  align-items: flex-start;
+  text-align: left;
+
+  // Left column: QR display
+  .qr-left-col {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-md;
+    min-width: 260px;
+  }
+
+  // Right column: print controls
+  .qr-right-col {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  // Collapse to single column on small screens
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    .qr-left-col { align-items: center; min-width: unset; }
+  }
+}
+
+.qr-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+  padding: $space-lg;
+  gap: $space-md;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+
+  h2 {
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    flex: 1;
+  }
+
+  .close-btn {
+    flex-shrink: 0;
+    padding: 0;
+    min-width: auto;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: $radius-md;
+    transition: background 0.2s ease;
+
+    &:hover { background: $bg-primary; }
+
+    mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  }
+}
+
+.qr-modal-body {
+  padding: $space-lg;
+  text-align: center;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+.custom-qr-body {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+  }
+}
+
+// ── Two-column body layout ───────────────────────────────────
+.cqr-body-cols {
+  display: flex;
+  gap: $space-xl;
+  align-items: flex-start;
+}
+
+.cqr-form-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.cqr-history-col {
+  width: 450px;
+  flex-shrink: 0;
+  border-left: 1px solid $border-light;
+  padding-left: $space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.cqr-history-header {
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding-bottom: $space-sm;
+  border-bottom: 1px solid $border-light;
+  position: sticky;
+  top: 0;
+  background: #fff;
+
+  mat-icon { font-size: 15px; width: 15px; height: 15px; }
+}
+
+.cqr-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+// ── Stack columns on mobile ──────────────────────────────────
+@media (max-width: $mobile) {
+  .cqr-body-cols {
+    flex-direction: column;
+    gap: $space-lg;
+  }
+
+  .cqr-history-col {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid $border-light;
+    padding-left: 0;
+    padding-top: $space-md;
+    max-height: 200px;
+  }
+}
+
+// ── Header subtitle ──────────────────────────────────────────
+.cqr-header-text {
+  flex: 1;
+  h2 { margin: 0; font-size: $font-size-xl; font-weight: $font-weight-semibold; color: $text-primary; }
+}
+.cqr-subtitle {
+  margin: 2px 0 0;
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}
+
+// ── Success card ─────────────────────────────────────────────
+.cqr-success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-md;
+  padding: $space-lg $space-xl;
+  background: $bg-primary;
+  border-radius: $radius-lg;
+  text-align: center;
+}
+
+.cqr-success-header {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $success;
+
+  .cqr-check-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: $success;
+  }
+}
+
+.cqr-code-wrap {
+  background: #fff;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: $space-lg;
+  display: inline-flex;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+
+  qr-code { display: block; }
+}
+
+.cqr-meta-row {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  background: #fff;
+  border: 1px solid $border-light;
+  border-radius: $radius-md;
+  padding: $space-sm $space-lg;
+  width: 100%;
+  justify-content: center;
+}
+
+.cqr-meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.cqr-meta-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.cqr-meta-value {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.cqr-meta-divider {
+  width: 1px;
+  height: 32px;
+  background: $border-color;
+  margin: 0 $space-sm;
+}
+
+.cqr-scan-hint {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ── Form fields ───────────────────────────────────────────────
+.cqr-field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.cqr-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.cqr-required { color: $error; margin-left: 2px; }
+.cqr-optional { color: $text-secondary; font-weight: $font-weight-normal; margin-left: 4px; font-size: $font-size-xs; }
+
+.cqr-select-wrap {
+  position: relative;
+
+  .cqr-select-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 18px;
+    color: $text-secondary;
+  }
+}
+
+.cqr-select {
+  width: 100%;
+  padding: 10px 36px 10px 12px;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  font-family: $font-family-body;
+  font-size: $font-size-sm;
+  color: $text-primary;
+  background: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, .15);
+  }
+
+  &:disabled { background: $bg-primary; color: $text-light; cursor: not-allowed; }
+}
+
+.cqr-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  font-family: $font-family-body;
+  font-size: $font-size-sm;
+  color: $text-primary;
+  background: #fff;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color .2s, box-shadow .2s;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, .15);
+  }
+
+  &:disabled { background: $bg-primary; color: $text-light; cursor: not-allowed; }
+  &::placeholder { color: $text-light; }
+}
+
+.cqr-field-error {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: $font-size-xs;
+  color: $error;
+  font-weight: $font-weight-medium;
+
+  mat-icon { font-size: 14px; width: 14px; height: 14px; }
+}
+
+// ── Toggle switch ─────────────────────────────────────────────
+.cqr-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+  background: $bg-primary;
+  border: 1px solid $border-light;
+  border-radius: $radius-md;
+  padding: $space-md $space-lg;
+  cursor: pointer;
+}
+
+.cqr-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cqr-toggle-title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.cqr-toggle-sub {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}
+
+.cqr-toggle-switch { position: relative; flex-shrink: 0; }
+
+.cqr-toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cqr-toggle-track {
+  display: block;
+  width: 44px;
+  height: 24px;
+  background: $border-color;
+  border-radius: 12px;
+  position: relative;
+  transition: background .2s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    transition: transform .2s;
+  }
+}
+
+.cqr-toggle-input:checked + .cqr-toggle-track {
+  background: $primary;
+
+  &::after { transform: translateX(20px); }
+}
+
+// ── Footer ───────────────────────────────────────────────────
+.cqr-footer {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-md $space-lg;
+  border-top: 1px solid $border-color;
+  background: $bg-lighter;
+
+  .cqr-btn-primary {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    font-weight: $font-weight-semibold;
+  }
+
+  button:not(.cqr-btn-primary) { margin-left: 0; }
+
+  // Push secondary buttons to right of primary
+  > button:first-child { margin-right: auto; }
+}
+
+// ── Divider between form and list ─────────────────────────────
+.cqr-list-divider {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: 0 $space-lg;
+  margin: $space-sm 0;
+  color: $text-secondary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $border-color;
+  }
+}
+
+// ── Generated QR list ────────────────────────────────────────
+.cqr-list {
+  padding: 0 $space-lg $space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.cqr-list-item {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-md;
+  background: #fff;
+  border: 1px solid $border-light;
+  border-radius: $radius-md;
+  transition: box-shadow .15s;
+
+  &:hover { box-shadow: $shadow-sm; }
+}
+
+.cqr-list-icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: $radius-md;
+  background: $primary-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; color: $primary-dark; }
+}
+
+.cqr-list-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cqr-list-name {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cqr-list-desc {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cqr-badge-pill {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  background: rgba($info, .1);
+  color: $info;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  border-radius: 99px;
+}
+
+.cqr-list-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.cqr-icon-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: $radius-md;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  color: $text-secondary;
+
+  &:hover { background: $bg-darker; color: $text-primary; }
+  &:disabled { opacity: .4; cursor: not-allowed; }
+
+  mat-icon { font-size: 17px; width: 17px; height: 17px; }
+}
+
+// ── Error message (reused) ────────────────────────────────────
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  background-color: rgba($error, 0.08);
+  border-left: 4px solid $error;
+  padding: $space-md;
+  border-radius: $radius-md;
+  color: $error;
+
+  mat-icon  { flex-shrink: 0; font-size: 18px; width: 18px; height: 18px; }
+  span      { font-size: $font-size-sm; }
+}
+
+.qr-success-section { display: flex; flex-direction: column; gap: $space-lg; }
+
+
+// ============================================
+// FORM STYLES
+// ============================================
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+
+  label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+
+    .required { color: $error; margin-left: 2px; }
+  }
+}
+
+.form-control {
+  width: 100%;
+  padding: $space-md;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  font-family: $font-family-body;
+  font-size: $font-size-sm;
+  color: $text-primary;
+  background-color: $bg-white;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: $bg-primary;
+    color: $text-light;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &::placeholder { color: $text-light; }
+}
+
+.checkbox-group {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: $space-md;
+}
+
+.checkbox-input {
+  width: 20px; height: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: $primary;
+
+  &:disabled { cursor: not-allowed; opacity: 0.6; }
+}
+
+.checkbox-label {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  cursor: pointer;
+}
+
+.error-text {
+  display: block;
+  font-size: $font-size-xs;
+  color: $error;
+  margin: 0;
+  font-weight: $font-weight-medium;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-lg;
+  padding: $space-2xl $space-lg;
+
+  p { margin: 0; color: $text-secondary; font-size: $font-size-sm; }
+}
+
+
+// ============================================
+// MODAL FOOTER
+// ============================================
+
+.qr-modal-footer {
+  display: flex;
+  gap: $space-md;
+  padding: $space-lg;
+  border-top: 1px solid $border-color;
+  background-color: $bg-primary;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-sm;
+    padding: 5px 10px;
+    background-color: $secondary;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    flex: 1;
+    min-width: 100px;
+    font-weight: $font-weight-semibold;
+    height: 40px;
+
+    // Spinner alignment inside button
+    mat-spinner {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  .qr-modal-content { max-width: 95%; max-height: 95vh; }
+
+  .qr-modal-footer {
+    flex-direction: column;
+    .action-btn { width: 100%; }
+  }
+}
+
+
+// ============================================
+// REQUEST TYPES LIST IN MODAL
+// ============================================
+
+.request-types-list-section {
+  margin-top: $space-lg;
+  padding-top: $space-lg;
+  border-top: 1px solid $border-color;
+}
+
+.list-title {
+  margin: 0 0 $space-md 0;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.request-types-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+
+  &::-webkit-scrollbar              { width: 6px; }
+  &::-webkit-scrollbar-track        { background: transparent; }
+  &::-webkit-scrollbar-thumb        { background: $border-color; border-radius: 3px;
+    &:hover { background: $text-light; }
+  }
+}
+
+.request-type-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-md;
+  background: $bg-primary;
+  border-radius: $radius-md;
+  border-left: 3px solid $primary;
+  transition: all 0.2s ease;
+
+  &:hover { box-shadow: 0 2px 8px rgba($primary, 0.15); }
+}
+
+.item-content { flex: 1; }
+
+.item-header {
+  display: flex;
+  gap: $space-sm;
+  align-items: center;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.qr-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  background: rgba($primary, 0.2);
+  color: $primary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  border-radius: $radius-sm;
+  flex-shrink: 0;
+}
+
+.type-name {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.badge-info {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba($info, 0.2);
+  color: $info;
+  font-size: $font-size-xs;
+  border-radius: $radius-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.item-description {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+
+  mat-icon { width: 18px; height: 18px; font-size: 18px; }
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-regenerate {
+  color: $primary;
+  &:hover:not(:disabled) { background: rgba($primary, 0.15); }
+}
+
+.btn-edit {
+  color: $info;
+  &:hover:not(:disabled) { background: rgba($info, 0.15); }
+}
+
+.btn-delete {
+  color: $error;
+  &:hover:not(:disabled) { background: rgba($error, 0.15); }
+}
+
+.list-divider {
+  height: 1px;
+  background: $border-color;
+  margin: $space-lg 0;
+}
+
+.editing-banner {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-md;
+  background: rgba($info, 0.1);
+  border-left: 3px solid $info;
+  border-radius: $radius-md;
+  margin-bottom: $space-lg;
+  color: $info;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  mat-icon { color: $info; }
+}
+
+
+// ============================================
+// PRINT SECTION IN RESTAURANT QR MODAL
+// ============================================
+
+.print-section {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  text-align: left;
+}
+
+.print-section-title {
+  margin: 0 0 $space-md 0;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+}
+
+.print-form-group {
+  margin-bottom: $space-md;
+
+  > label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+    margin-bottom: $space-xs;
+    flex-wrap: wrap;
+  }
+
+  select.form-control {
+    height: 50px;
+    cursor: pointer;
+  }
+}
+
+// ── Label preview card ─────────────────────────────────────────
+.label-preview-card {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: $space-md;
+  margin-bottom: $space-md;
+  background: rgba($info, 0.06);
+  border: 1px solid rgba($info, 0.25);
+  border-radius: $radius-md;
+  animation: fadeIn 0.25s ease;
+}
+
+.label-preview-dots {
+  display: grid;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.label-preview-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  background: $info;
+  opacity: 0.7;
+}
+
+.label-preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label-preview-name {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $info;
+}
+
+.label-preview-size,
+.label-preview-grid {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}
+
+.label-preview-link {
+  font-size: $font-size-xs;
+  color: $info;
+  text-decoration: none;
+  margin-top: 2px;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Copies stepper ─────────────────────────────────────────────
+.copies-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba($info, 0.1);
+  color: $info;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-sm;
+  padding: 2px 8px;
+  margin-left: 4px;
+}
+
+.copies-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.stepper-btn {
+  width: 36px; height: 42px;
+  background: $bg-light;
+  border: none;
+  color: $text-primary;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover:not(:disabled) { background: darken($bg-light, 5%); }
+  &:active               { background: darken($bg-light, 10%); }
+  &:disabled             { opacity: 0.5; cursor: not-allowed; }
+}
+
+.stepper-input {
+  width: 60px; height: 42px;
+  border: none;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  text-align: center;
+  font-size: $font-size-base;
+  color: $text-primary;
+  background: $bg-primary;
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  &:focus   { outline: none; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+// ── Margin fine-tune row ───────────────────────────────────────
+.tune-icon {
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  color: $text-secondary;
+}
+
+.margin-sublabel {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-regular;
+  color: $text-light;
+  font-style: italic;
+}
+
+.margin-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-sm;
+}
+
+.margin-field {
+  label {
+    display: block;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+    margin-bottom: 4px;
+  }
+}
+
+.margin-input {
+  height: 38px;
+  text-align: center;
+  font-size: $font-size-sm;
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+}
+
+// ── Print button ───────────────────────────────────────────────
+.btn-print {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  width: 100%;
+  padding: $space-md $space-lg;
+  background: $primary;
+  color: $text-primary;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 48px;
+  margin-top: $space-sm;
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+  // Mat spinner colour override inside yellow button
+  ::ng-deep .mat-mdc-progress-spinner circle,
+  ::ng-deep .mat-progress-spinner circle {
+    stroke: $text-primary !important;
+  }
+
+  &:hover:not(:disabled) {
+    background: $primary-dark;
+    box-shadow: 0 4px 12px rgba($primary, 0.3);
+  }
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+
+// ============================================
+// GENERATE BUTTON IN REQUEST TYPE LIST
+// ============================================
+
+.btn-generate {
+  padding: 6px 12px;
+  background-color: $primary;
+  color: $text-primary;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-left: $space-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-dark;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($primary, 0.3);
+  }
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+
+// ============================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================
+
+@media (max-width: $mobile) {
+  .qr-selection-container { padding-bottom: $space-xl; }
+
+  .card-body   { padding: $space-md; }
+  .card-footer { padding: $space-md; }
+
+  .btn {
+    padding: $space-md $space-lg;
+    font-size: $font-size-sm;
+  }
+}
+
+.heading-secondary {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: inline-block;
+  background-image: linear-gradient(to right, #fec200, #e0a201);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 0.2rem;
+  transition: all 0.2s;
+}

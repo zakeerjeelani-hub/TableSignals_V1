@@ -1,0 +1,13 @@
+<div class="gallery-container" >
+    
+    
+    <div class="image-container" style="height: 100%;width: 100%;">
+      <button mat-icon-button (click)="prevImage()" [disabled]="currentIndex === 0">◀</button>
+  
+      <img [src]="data.images[currentIndex]" [style.transform]="'scale(' + zoomLevel + ')'" alt="Gallery Image" height="100%" width="100%" (click)="closeDialog()" />
+  
+      <button mat-icon-button (click)="nextImage()" [disabled]="currentIndex === data.images.length - 1">▶</button>
+    </div>
+    
+  </div>
+  

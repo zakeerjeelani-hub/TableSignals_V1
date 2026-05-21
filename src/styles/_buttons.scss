@@ -1,0 +1,443 @@
+// ============================================
+// GLOBAL BUTTON SYSTEM
+// ============================================
+// All button variants, states, and styles defined here
+// Single source of truth for all buttons
+
+@import 'colors';
+@import 'typography';
+@import 'spacing';
+
+// ============================================
+// BASE BUTTON STYLES
+// ============================================
+
+.btn,
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gap-sm;
+  padding: $padding-button;
+  font-size: $button-font-size;
+  font-weight: $button-font-weight;
+  line-height: $button-line-height;
+  font-family: $font-family-primary;
+  border: none;
+  border-radius: $radius-button;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  user-select: none;
+  
+  // Disabled state
+  &:disabled {
+    opacity: $opacity-disabled;
+    cursor: not-allowed;
+    
+    &:hover,
+    &:focus {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+  
+  // Focus state
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+  
+  // Active state
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+// ============================================
+// BUTTON VARIANTS
+// ============================================
+
+// Primary button (Gold - main CTA)
+.btn-primary {
+  background: $primary;
+  color: $text-dark;
+  box-shadow: 0 2px 8px $primary-transparent-20;
+  
+  &:hover:not(:disabled) {
+    background: $primary-dark;
+    box-shadow: 0 4px 12px $primary-transparent-30;
+    transform: translateY(-2px);
+  }
+  
+  &:active:not(:disabled) {
+    background: $primary-darker;
+    transform: translateY(0);
+  }
+}
+
+// Secondary button (Blue - secondary CTA)
+.btn-secondary {
+  background: $secondary;
+  color: $text-inverse;
+  box-shadow: 0 2px 8px $secondary-transparent-12;
+  
+  &:hover:not(:disabled) {
+    background: $secondary-dark;
+    box-shadow: 0 4px 12px rgba(58, 157, 196, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  &:active:not(:disabled) {
+    background: darken($secondary-dark, 5%);
+    transform: translateY(0);
+  }
+}
+
+// Danger button (Red - delete/destructive)
+.btn-danger {
+  background: $danger;
+  color: $text-inverse;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.2);
+  
+  &:hover:not(:disabled) {
+    background: $danger-dark;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  &:active:not(:disabled) {
+    background: darken($danger-dark, 5%);
+    transform: translateY(0);
+  }
+}
+
+// Success button (Green - confirm)
+.btn-success {
+  background: $success;
+  color: $text-inverse;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.2);
+  
+  &:hover:not(:disabled) {
+    background: $success-dark;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  &:active:not(:disabled) {
+    background: darken($success-dark, 5%);
+    transform: translateY(0);
+  }
+}
+
+// Warning button (Orange - caution)
+.btn-warning {
+  background: $warning;
+  color: $text-inverse;
+  box-shadow: 0 2px 8px rgba(243, 156, 18, 0.2);
+  
+  &:hover:not(:disabled) {
+    background: $warning-dark;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  &:active:not(:disabled) {
+    background: darken($warning-dark, 5%);
+    transform: translateY(0);
+  }
+}
+
+// Info button (Cyan - information)
+.btn-info {
+  background: $info;
+  color: $text-inverse;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+  
+  &:hover:not(:disabled) {
+    background: $info-dark;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  &:active:not(:disabled) {
+    background: darken($info-dark, 5%);
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// BUTTON OUTLINE VARIANTS
+// ============================================
+
+// Outline buttons (border style, no background)
+.btn-outline-primary {
+  background: transparent;
+  border: 2px solid $primary;
+  color: $primary;
+  
+  &:hover:not(:disabled) {
+    background: $primary-transparent-8;
+    border-color: $primary-dark;
+    color: $primary-dark;
+  }
+}
+
+.btn-outline-secondary {
+  background: transparent;
+  border: 2px solid $secondary;
+  color: $secondary;
+  
+  &:hover:not(:disabled) {
+    background: $secondary-transparent-8;
+    border-color: $secondary-dark;
+    color: $secondary-dark;
+  }
+}
+
+.btn-outline-danger {
+  background: transparent;
+  border: 2px solid $danger;
+  color: $danger;
+  
+  &:hover:not(:disabled) {
+    background: rgba(231, 76, 60, 0.08);
+    border-color: $danger-dark;
+    color: $danger-dark;
+  }
+}
+
+// ============================================
+// BUTTON TEXT/GHOST VARIANTS
+// ============================================
+
+// Text buttons (no background, no border)
+.btn-text {
+  background: transparent;
+  color: $primary;
+  box-shadow: none;
+  
+  &:hover:not(:disabled) {
+    background: $primary-transparent-8;
+    color: $primary-dark;
+  }
+}
+
+.btn-text-secondary {
+  background: transparent;
+  color: $text-secondary;
+  box-shadow: none;
+  
+  &:hover:not(:disabled) {
+    background: $primary-transparent-5;
+    color: $text-dark;
+  }
+}
+
+// ============================================
+// BUTTON SIZES
+// ============================================
+
+// Small button
+.btn-sm {
+  padding: $padding-button-sm;
+  font-size: 0.8125rem;       // 13px
+  border-radius: $radius-button-sm;
+}
+
+// Large button
+.btn-lg {
+  padding: $padding-button-lg;
+  font-size: $font-size-lg;    // 18px
+  border-radius: $radius-button-lg;
+}
+
+// Extra large button
+.btn-xl {
+  padding: $space-lg $space-3xl;  // 24px 48px
+  font-size: $font-size-lg;
+  border-radius: $radius-button-lg;
+}
+
+// ============================================
+// BUTTON WIDTHS
+// ============================================
+
+// Full width button
+.btn-block {
+  width: 100%;
+  display: flex;
+}
+
+// Fixed width button
+.btn-fixed {
+  width: 120px;
+}
+
+// ============================================
+// BUTTON GROUPS
+// ============================================
+
+.btn-group {
+  display: flex;
+  gap: $gap-button-group;
+  flex-wrap: wrap;
+  
+  &.btn-group-vertical {
+    flex-direction: column;
+  }
+  
+  &.btn-group-centered {
+    justify-content: center;
+  }
+  
+  &.btn-group-right {
+    justify-content: flex-end;
+  }
+}
+
+// ============================================
+// BUTTON WITH ICONS
+// ============================================
+
+.btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: $gap-sm;
+  
+  mat-icon,
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+// Icon only button
+.btn-icon {
+  padding: $padding-button;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-button;
+  
+  &.btn-icon-sm {
+    width: 36px;
+    height: 36px;
+    padding: $padding-button-sm;
+  }
+  
+  &.btn-icon-lg {
+    width: 52px;
+    height: 52px;
+    padding: $padding-button-lg;
+  }
+}
+
+// ============================================
+// BUTTON LOADING STATE
+// ============================================
+
+.btn-loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid $text-light;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ============================================
+// LINK AS BUTTON
+// ============================================
+
+a.btn {
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// ============================================
+// BUTTON WITH BADGE
+// ============================================
+
+.btn-with-badge {
+  position: relative;
+  
+  .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: $radius-full;
+    background: $danger;
+    color: $text-inverse;
+  }
+}
+
+// ============================================
+// RESPONSIVE BUTTON STYLES
+// ============================================
+
+@media (max-width: $tablet-md - 1) {
+  .btn {
+    padding: $padding-button-sm;
+    font-size: $font-size-sm;
+  }
+  
+  .btn-lg {
+    padding: $padding-button;
+    font-size: $font-size-md;
+  }
+  
+  .btn-block {
+    width: 100%;
+  }
+}
+
+// ============================================
+// BUTTON ANIMATIONS
+// ============================================
+
+@mixin button-hover-lift {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@mixin button-press {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// ============================================
+// EXPORT SUMMARY
+// ============================================
+
+// Available button classes:
+// Variants: .btn-primary, .btn-secondary, .btn-danger, .btn-success, .btn-warning, .btn-info
+// Outline: .btn-outline-primary, .btn-outline-secondary, .btn-outline-danger
+// Text: .btn-text, .btn-text-secondary
+// Sizes: .btn-sm, .btn (default), .btn-lg, .btn-xl
+// Widths: .btn-block, .btn-fixed
+// Groups: .btn-group, .btn-group-vertical, .btn-group-centered
+// Special: .btn-icon, .btn-loading, .btn-with-badge
+// States: :hover, :active, :disabled, :focus-visible

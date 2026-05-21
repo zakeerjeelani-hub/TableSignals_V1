@@ -1,0 +1,301 @@
+<section class="open-page">
+  <div class="open-logo-wrap">
+    <img src="../../../assets/images/UserLogo_2.png" height="80" alt="logo">
+  </div>
+
+  <div class="open-restaurant-name" *ngIf="restaurantname">
+    {{ restaurantname }}
+  </div>
+
+  <div class="open-card">
+  <div *ngIf="qrType !== QR_TYPE_VIP || vipSubmitted">
+    <p>Download the Table Signals app today for enhanced functionality and a smoother workflow.</p>
+
+    <div class="store-button-row" *ngIf="isDeviceDetected">
+      <a *ngIf="isAndroid || (!isAndroid && !isIOS)" [href]="androidAppLink" target="_blank" class="browser-button">Google Play Store</a>
+      <a *ngIf="isIOS || (!isAndroid && !isIOS)" [href]="iosAppLink" target="_blank" class="browser-button">Apple App Store</a>
+    </div>
+
+    <p *ngIf="isDeviceDetected && !isAndroid && !isIOS">Open this page on your mobile device to download the app.</p>
+  </div>
+
+  <div class="continue-wrap" *ngIf="showContinueBrowser && (qrType !== QR_TYPE_VIP || vipSubmitted)">
+    <a class="continue-link" (click)="continueInBrowser()">Continue in Browser</a>
+  </div>
+
+  <div *ngIf="showVipPopup" class="vip-popup-container" (click)="closeVipPopup()">
+    <div class="vip-popup-content" (click)="$event.stopPropagation()">
+
+      <!-- Close -->
+      <button class="vip-close-btn" (click)="closeVipPopup()" aria-label="Close">✕</button>
+
+      <!-- Header -->
+      <div class="vip-header">
+        <!-- <div class="vip-logo-circle">
+          <span class="vip-logo-initial">{{ (restaurantname || 'R')[0] }}</span>
+        </div> -->
+        <div class="vip-header-text">
+          <div class="vip-header-join">Join {{ restaurantname || 'our restaurant' }}'s</div>
+          <div class="vip-header-club">VIP Club</div>
+          <div class="vip-header-tagline">Enjoy exclusive rewards, special offers &amp; more!</div>
+        </div>
+      </div>
+
+      <!-- Benefits strip — visible in both steps -->
+      <div class="vip-benefits-strip" *ngIf="!vipSubmitted">
+        <div class="vip-benefit">
+          <div class="vip-benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <div class="vip-benefit-label">Exclusive<br>Rewards</div>
+        </div>
+        <div class="vip-benefit-divider"></div>
+        <div class="vip-benefit">
+          <div class="vip-benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="20 12 20 22 4 22 4 12"/>
+              <rect x="2" y="7" width="20" height="5"/>
+              <line x1="12" y1="22" x2="12" y2="7"/>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+            </svg>
+          </div>
+          <div class="vip-benefit-label">Birthday<br>Surprises</div>
+        </div>
+        <div class="vip-benefit-divider"></div>
+        <div class="vip-benefit">
+          <div class="vip-benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+          </div>
+          <div class="vip-benefit-label">Special<br>Offers</div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="vip-body">
+
+        <!-- Success state -->
+        <div *ngIf="vipSubmitted" class="vip-success">
+          <h3>{{ vipSuccessTitle }}</h3>
+          <p class="vip-success-message">{{ vipSuccessMessage }}</p>
+          <div *ngIf="showReferralCode" class="vip-code-row">
+            <span class="vip-code-label">Verification Code:</span>
+            <span class="vip-code-value">{{ referralCode }}</span>
+            <mat-icon (click)="copyCode(referralCode)" style="cursor: pointer;">content_copy</mat-icon>
+          </div>
+          <div class="store-button-row success-buttons" *ngIf="isDeviceDetected">
+            <a *ngIf="isAndroid || (!isAndroid && !isIOS)" [href]="androidAppLink" target="_blank" class="browser-button">Download Android App</a>
+            <a *ngIf="isIOS || (!isAndroid && !isIOS)" [href]="iosAppLink" target="_blank" class="browser-button">Download iOS App</a>
+          </div>
+        </div>
+
+        <!-- Form state -->
+        <div *ngIf="!vipSubmitted">
+          <p class="vip-form-intro">Let's get you set up in just a few seconds.</p>
+
+          <!-- Mobile Number -->
+          <div class="vip-field">
+            <label class="vip-label">Mobile Number <span class="vip-required">*</span></label>
+            <div class="vip-input-wrap">
+              <svg class="vip-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.61 5 2 2 0 0 1 3.6 2.82h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.4a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 21.72 18z"/>
+              </svg>
+              <input
+                id="vipMobileNo"
+                type="tel"
+                [(ngModel)]="vipMobileNo"
+                (ngModelChange)="onVipMobileInput($event)"
+                [disabled]="isVipSubmitting || isVipChecking"
+                placeholder="(555) 123-4567"
+                inputmode="numeric"
+                maxlength="14"
+                class="vip-input">
+            </div>
+            <div class="vip-field-hint">We'll send you VIP updates &amp; offers.</div>
+          </div>
+
+          <!-- Email -->
+          <div class="vip-field">
+            <label class="vip-label">Email <span class="vip-optional">(optional)</span></label>
+            <div class="vip-input-wrap">
+              <svg class="vip-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <input
+                id="vipEmailID"
+                type="email"
+                [(ngModel)]="vipEmailID"
+                [disabled]="isVipSubmitting || isVipChecking"
+                placeholder="Enter email address"
+                class="vip-input">
+            </div>
+          </div>
+
+          <!-- Step 2: Registration fields -->
+          <div *ngIf="showVipRegistrationForm" class="vip-reg-block">
+            <div class="vip-dashed-divider"></div>
+
+            <div class="vip-field-row">
+              <div class="vip-field">
+                <label class="vip-label">First Name <span class="vip-required">*</span></label>
+                <div class="vip-input-wrap">
+                  <svg class="vip-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  <input id="vipFirstName" type="text" [(ngModel)]="vipFirstName" [disabled]="isVipSubmitting" placeholder="Enter first name" class="vip-input">
+                </div>
+              </div>
+              <div class="vip-field">
+                <label class="vip-label">Last Name <span class="vip-required">*</span></label>
+                <div class="vip-input-wrap">
+                  <svg class="vip-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  <input id="vipLastName" type="text" [(ngModel)]="vipLastName" [disabled]="isVipSubmitting" placeholder="Enter last name" class="vip-input">
+                </div>
+              </div>
+            </div>
+
+            <div class="vip-field-row">
+              <div class="vip-field">
+                <label class="vip-label">Birth Day <span class="vip-required">*</span></label>
+                <div class="vip-input-wrap">
+                  <svg class="vip-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  <input id="vipBirthDay" type="text" maxlength="2" [(ngModel)]="vipBirthDay" [disabled]="isVipSubmitting" placeholder="DD" class="vip-input">
+                </div>
+              </div>
+              <div class="vip-field">
+                <label class="vip-label">Birth Month <span class="vip-required">*</span></label>
+                <select id="vipBirthMonth" [(ngModel)]="vipBirthMonth" [disabled]="isVipSubmitting" class="vip-select">
+                  <option [ngValue]="null">Select month</option>
+                  <option *ngFor="let month of months" [ngValue]="month.value">{{ month.label }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="vip-field">
+              <label class="vip-label">City <span class="vip-required">*</span></label>
+              <div class="vip-input-wrap">
+                <svg class="vip-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                <input id="vipCity" type="text" [(ngModel)]="vipCity" [disabled]="isVipSubmitting" placeholder="Enter city" class="vip-input">
+              </div>
+            </div>
+
+            <div class="vip-consent">
+              <input type="checkbox" id="vipConsent" checked class="vip-checkbox">
+              <label for="vipConsent">I agree to receive SMS and email offers from {{ restaurantname || 'this restaurant' }}. You can unsubscribe anytime.</label>
+            </div>
+          </div>
+
+          <p *ngIf="vipError" class="vip-error">{{ vipError }}</p>
+
+          <!-- Step 1 button -->
+          <button class="vip-cta-btn" *ngIf="!showVipRegistrationForm" (click)="checkVipMembership()" [disabled]="isVipChecking">
+            <span *ngIf="!isVipChecking">Continue</span>
+            <span *ngIf="isVipChecking" class="vip-spinner-row">
+              <mat-spinner diameter="18"></mat-spinner>Checking...
+            </span>
+          </button>
+
+          <!-- Step 2 button -->
+          <button class="vip-cta-btn" *ngIf="showVipRegistrationForm" (click)="submitVipSignUp()" [disabled]="isVipSubmitting">
+            <span *ngIf="!isVipSubmitting">JOIN {{ (restaurantname || 'OUR RESTAURANT') | uppercase }}'S VIP CLUB</span>
+            <span *ngIf="isVipSubmitting" class="vip-spinner-row">
+              <mat-spinner diameter="18"></mat-spinner>Submitting...
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="vip-powered-by">
+        Powered by <strong>Table Signals</strong>
+        <svg width="14" height="14" viewBox="0 0 40 40" fill="none" style="vertical-align:middle;margin-left:3px;">
+          <circle cx="20" cy="18" r="14" fill="#F5A800"/>
+          <circle cx="20" cy="18" r="10" fill="#1A1A1A"/>
+          <path d="M14 30 L20 38 L26 30" fill="#F5A800"/>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============================================
+     CUSTOM REQUEST POPUP (qrType = 5)
+     ============================================ -->
+<div *ngIf="showCustomRequestPopup" class="custom-request-overlay" (click)="closeCustomRequestPopup()">
+  <div class="custom-request-modal" (click)="$event.stopPropagation()">
+
+    <div class="custom-request-header">
+      <h2 class="custom-request-title">Submit Your Request</h2>
+      <button class="close-button" (click)="closeCustomRequestPopup()" aria-label="Close Request Popup">
+        X
+      </button>
+    </div>
+
+    <div class="custom-request-body">
+      <div *ngIf="requestSuccess" class="success-message">
+        <span class="success-icon">OK</span>
+        <p>{{ 'Thank you! Your Request was sent to ' + restaurantname }}</p>
+      </div>
+
+      <div *ngIf="requestError && !requestSuccess" class="error-message">
+        <span class="error-icon">!</span>
+        <p>{{ requestError }}</p>
+      </div>
+
+      <div *ngIf="!requestSuccess" class="form-content">
+        <div class="form-group">
+          <label for="description" class="form-label">
+            Tell us what you need *
+          </label>
+          <textarea
+            id="description"
+            [(ngModel)]="customDescription"
+            [disabled]="isLoadingRequest"
+            placeholder="Please enter your request or description"
+            class="form-textarea"
+            rows="4">
+          </textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="custom-request-footer">
+      <button
+        *ngIf="!requestSuccess"
+        class="btn-submit"
+        (click)="submitCustomRequest()"
+        [disabled]="isLoadingRequest">
+        <span *ngIf="!isLoadingRequest">Submit Request</span>
+        <span *ngIf="isLoadingRequest">
+          <mat-spinner diameter="20"></mat-spinner>
+          Submitting...
+        </span>
+      </button>
+
+      <button
+        class="btn-cancel"
+        (click)="closeCustomRequestPopup()"
+        [disabled]="isLoadingRequest">
+        {{ requestSuccess ? 'Close' : 'Cancel' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showSuccessMessage" class="success-toast">
+  <p>{{ successMessage }}</p>
+</div>

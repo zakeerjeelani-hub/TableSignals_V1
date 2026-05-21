@@ -1,0 +1,13 @@
+{
+  "/api/v2": {
+    "target": "https://localhost:7087",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/Service": {
+    "target": "https://localhost:7087",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
+  

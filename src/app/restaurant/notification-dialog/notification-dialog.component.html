@@ -1,0 +1,192 @@
+<!-- ============================================
+UPDATED NOTIFICATION DIALOG TEMPLATE
+(Button for Save Only + Checkbox for Send + Save)
+============================================ -->
+
+<!-- File: notification-dialog.component.html -->
+
+<h2 mat-dialog-title style="display: flex; justify-content: space-between; align-items: center; margin: 0;">
+  {{ getDialogTitle() }}
+  <button mat-icon-button (click)="close()" style="margin: 0; padding: 0;">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
+
+<mat-dialog-content>
+  <!-- DETAILS VIEW -->
+  <div *ngIf="type === 'details'" class="details-container">
+    <mat-card>
+      <mat-card-content>
+        <div class="detail-row">
+          <span class="label">Membership Code:</span>
+          <span class="value">{{ user?.membershipCode }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Name:</span>
+          <span class="value">{{ user?.firstName }} {{ user?.lastName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Birth Day:</span>
+          <span class="value">{{ user?.birthDay }}/{{ user?.birthMonth }}</span>
+        </div>
+        <div class="detail-row" style="display: none;">
+          <span class="label">Phone:</span>
+          <span class="value">
+            <a [href]="'tel:' + user?.mobileNo">{{ user?.mobileNo }}</a>
+          </span>
+        </div>
+        <div class="detail-row" style="display: none;">
+          <span class="label">Email:</span>
+          <span class="value">
+            <a [href]="'mailto:' + user?.emailID">{{ user?.emailID }}</a>
+          </span>
+        </div>
+        <div class="detail-row">
+          <span class="label">City:</span>
+          <span class="value">{{ user?.city }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Created On:</span>
+          <span class="value">{{ user?.createdOn }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Total Visits:</span>
+          <span class="value">{{ user?.totalVisits }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Total Requests:</span>
+          <span class="value">{{ user?.totalRequests }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Total Deals:</span>
+          <span class="value">{{ user?.totalDeals }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- NOTIFICATION/BULK NOTIFICATION/EDIT TEMPLATE VIEW -->
+  <div *ngIf="type === 'notification' || type === 'bulk-notification' || type === 'edit-template'" class="notification-form">
+    
+    <!-- Template Selection Dropdown (only for new notifications) -->
+    <mat-form-field appearance="outline" 
+      style="width: 100%; margin-bottom: 16px;"
+      *ngIf="(type === 'notification' || type === 'bulk-notification' ||type === 'edit-template') && templates.length > 0">
+      <mat-label>Load from Template (Optional)</mat-label>
+      <mat-select [value]="selectedTemplate" (selectionChange)="onTemplateSelected($event.value)">
+        <mat-option [value]="null">-- None --</mat-option>
+        <mat-optgroup *ngFor="let template of templates" [label]="template.templateName">
+          <mat-option [value]="template">
+            {{ template.templateName }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Divider -->
+    <div class="template-divider" *ngIf="(type === 'notification' || type === 'bulk-notification') && templates.length > 0"></div>
+
+    <!-- Title Input -->
+    <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 16px;">
+      <mat-label>Title *</mat-label>
+      <input matInput 
+        [(ngModel)]="title" 
+        placeholder="Enter notification title"
+        maxlength="100">
+      <mat-hint align="end">{{ title.length }}/100</mat-hint>
+    </mat-form-field>
+
+    <!-- Body Input -->
+    <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 16px;">
+      <mat-label>Body *</mat-label>
+      <textarea matInput 
+        [(ngModel)]="body" 
+        placeholder="Enter notification message"
+        rows="4" 
+        maxlength="500"></textarea>
+      <mat-hint align="end">{{ body.length }}/500</mat-hint>
+    </mat-form-field>
+
+    <!-- Template Options Section (only for new notifications) -->
+    <div *ngIf="(type === 'notification' || type === 'bulk-notification')" class="template-options">
+      <!-- Save as Template Checkbox -->
+      <mat-checkbox 
+        [(ngModel)]="saveAsTemplate"
+        class="save-template-checkbox">
+        <mat-icon class="checkbox-icon">save</mat-icon>
+        Save as Template when sending
+      </mat-checkbox>
+    </div>
+    <div *ngIf="type === 'edit-template'" class="template-options">
+      <!-- Save as Template Checkbox -->
+      <mat-checkbox 
+        [(ngModel)]="saveAsTemplate"
+        class="save-template-checkbox">
+        <mat-icon class="checkbox-icon">save</mat-icon>
+        Update Template when sending
+      </mat-checkbox>
+    </div>
+    
+
+    <!-- Preview Card -->
+    <mat-card class="preview-card" *ngIf="title || body">
+      <mat-card-header>
+        <mat-card-title>Preview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="preview-title">{{ title || '(No title)' }}</div>
+        <div class="preview-body">{{ body || '(No message)' }}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</mat-dialog-content>
+
+<!-- ACTIONS -->
+<mat-dialog-actions class="dialog-actions">
+  <!-- Save as Template Button (for new notifications only) -->
+  <button mat-stroked-button color="primary"
+    *ngIf="(type === 'notification' || type === 'bulk-notification')"
+    (click)="saveTemplateOnly()"
+    [disabled]="isLoading || !title.trim() || !body.trim()">
+    <mat-icon>save</mat-icon>
+    Save as Template
+  </button>
+
+  <!-- Edit template buttons -->
+  <button mat-raised-button color="primary"
+    *ngIf="type === 'edit-template'"
+    [disabled]="isLoading || !title.trim() || !body.trim()"
+    (click)="updateTemplate()">
+    Update Template
+  </button>
+  <button mat-stroked-button color="primary"
+    *ngIf="type === 'edit-template'"
+    [disabled]="isLoading || !title.trim() || !body.trim()"
+    (click)="saveAsNewTemplate()">
+    <mat-icon>add</mat-icon>
+    Save as New
+  </button>
+  <button mat-raised-button color="warn"
+    *ngIf="type === 'edit-template'"
+    [disabled]="isLoading || !title.trim() || !body.trim()"
+    (click)="DeleteTemplate()">
+    Delete
+  </button>
+
+  <span class="actions-spacer"></span>
+
+  <!-- Send Button -->
+  <button mat-raised-button color="accent"
+    [disabled]="!title.trim() || !body.trim() || isLoading"
+    (click)="submit()">
+    <mat-icon>send</mat-icon>
+    Send
+  </button>
+
+  <!-- Close Button (for details) -->
+  <button mat-raised-button color="primary"
+    *ngIf="type === 'details'"
+    (click)="close()">
+    Close
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,141 @@
+<div class="page-main">
+
+  <!-- Header Ribbon -->
+  <div class="page-header-ribbon">
+    <div class="ribbon-left"><h1 class="page-title">Table Set Up</h1></div>
+    <div class="ribbon-right"><app-back-button></app-back-button></div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div><p>Loading...</p>
+    </div>
+
+    <form [formGroup]="form" *ngIf="!isLoading">
+
+      <!-- Area Selector -->
+      <div class="filter-bar">
+        <mat-form-field appearance="outline" class="filter-field-compact">
+          <mat-label>Select Restaurant Area</mat-label>
+          <mat-select id="areaSelect" formControlName="areaSelect" (selectionChange)="onAreaChange($event)">
+            <mat-option value="">-- Choose an Area --</mat-option>
+            <mat-option *ngFor="let area of areas" [value]="area.areaId">
+              <mat-icon class="option-icon">location_on</mat-icon> {{ area.areaName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('areaSelect')?.hasError('required')">Please select an area</mat-error>
+        </mat-form-field>
+
+        <!-- Toolbar Actions -->
+        <ng-container *ngIf="selectedAreaId">
+          <span class="toolbar-info" *ngIf="tables.length > 0">
+            <mat-icon>info</mat-icon> {{ tables.length }} table(s)
+          </span>
+          <button mat-raised-button [color]="isEditMode ? 'warn' : 'primary'" type="button" (click)="toggleEditMode()">
+            <mat-icon>{{ isEditMode ? 'close' : 'edit' }}</mat-icon>
+            {{ isEditMode ? 'Cancel' : (tables.length > 0 ? 'Edit All' : 'Add Tables') }}
+          </button>
+          <button mat-raised-button color="accent" type="button" (click)="addNewTable()" *ngIf="isEditMode">
+            <mat-icon>add</mat-icon> Add Table
+          </button>
+        </ng-container>
+      </div>
+
+      <!-- Tables Grid — View Mode -->
+      <div class="table-wrapper" *ngIf="selectedAreaId && tables.length > 0 && !isEditMode">
+        <div class="table-container">
+          <table class="page-table">
+            <thead>
+              <tr class="table-header-row">
+                <th class="column-header">Table No</th>
+                <th class="column-header">Table Name</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="tables">
+              <tr *ngFor="let table of tables.controls; let i = index" [formGroupName]="i" class="table-data-row">
+                <td class="column-cell">
+                  <span class="table-number-badge">{{ table.get('tableNo')?.value }}</span>
+                </td>
+                <td class="column-cell">{{ table.get('tableName')?.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tables Grid — Edit Mode -->
+      <div class="table-wrapper" *ngIf="selectedAreaId && isEditMode">
+        <div class="table-container">
+          <table class="page-table">
+            <thead>
+              <tr class="table-header-row">
+                <th class="column-header">Table No</th>
+                <th class="column-header">Table Name</th>
+                <th class="column-header">Actions</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="tables">
+              <tr *ngFor="let table of tables.controls; let i = index" [formGroupName]="i" class="table-data-row">
+                <td class="column-cell">
+                  <mat-form-field appearance="outline" class="inline-field">
+                    <input matInput formControlName="tableNo" type="number" min="1" placeholder="No">
+                    <mat-error *ngIf="table.get('tableNo')?.hasError('required')">Required</mat-error>
+                    <mat-error *ngIf="table.get('tableNo')?.hasError('min')">Min 1</mat-error>
+                    <mat-error *ngIf="table.get('tableNo')?.hasError('duplicateInArea')">⚠️ Duplicate in this area</mat-error>
+                    <mat-error *ngIf="table.get('tableNo')?.hasError('duplicateAcrossAreas')">
+                      ⚠️ Exists in {{ table.get('tableNo')?.getError('duplicateAcrossAreas')?.area }}
+                    </mat-error>
+                  </mat-form-field>
+                </td>
+                <td class="column-cell">
+                  <mat-form-field appearance="outline" class="inline-field">
+                    <input matInput formControlName="tableName" placeholder="Table name">
+                    <mat-error *ngIf="table.get('tableName')?.hasError('required')">Required</mat-error>
+                  </mat-form-field>
+                </td>
+                <td class="column-cell action-cell">
+                  <button mat-icon-button color="warn" type="button" (click)="removeTable(i)" matTooltip="Delete table">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <input type="hidden" formControlName="tableId" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="tables.length === 0 && !isEditMode && selectedAreaId">
+        <mat-icon class="empty-icon">table_chart</mat-icon>
+        <p class="empty-message">No tables in this area</p>
+        <p class="empty-hint">Click "Add Tables" to start adding</p>
+      </div>
+
+      <!-- No Area Selected -->
+      <div class="empty-state" *ngIf="!selectedAreaId && !isLoading">
+        <mat-icon class="empty-icon">arrow_upward</mat-icon>
+        <p class="empty-message">Select an area to manage tables</p>
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="form-actions" *ngIf="selectedAreaId && isEditMode">
+        <button mat-raised-button color="primary" type="button"
+          (click)="saveAllTables()" [disabled]="!form.valid || isSaving">
+          <mat-icon *ngIf="!isSaving">save</mat-icon>
+          <mat-spinner *ngIf="isSaving" diameter="18"></mat-spinner>
+          {{ isSaving ? 'Saving...' : 'Save All Tables' }}
+        </button>
+      </div>
+
+      <div class="form-actions" *ngIf="selectedAreaId && tables.length > 0 && !isEditMode">
+        <button mat-raised-button type="button" (click)="goToQR()" class="btn-qr">
+          <mat-icon>qr_code_2</mat-icon> QR Generator
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

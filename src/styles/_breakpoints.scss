@@ -1,0 +1,377 @@
+// ============================================
+// GLOBAL BREAKPOINTS & RESPONSIVE SYSTEM
+// ============================================
+// Mobile-first responsive design breakpoints
+// Define all breakpoints and media query mixins here
+
+// ============================================
+// BREAKPOINT DEFINITIONS
+// ============================================
+
+// Mobile breakpoints
+$mobile-xs: 320px;      // Extra small phones
+$mobile-sm: 375px;      // Small phones
+$mobile-md: 425px;      // Medium phones
+$mobile-lg: 480px;      // Large phones
+
+// Tablet breakpoints
+$tablet-sm: 600px;      // Small tablets
+$tablet-md: 768px;      // Standard tablets
+$tablet-lg: 1024px;     // Large tablets
+
+// Desktop breakpoints
+$desktop-sm: 1200px;    // Small desktops
+$desktop-md: 1440px;    // Medium desktops
+$desktop-lg: 1920px;    // Large desktops
+$desktop-xl: 2560px;    // Extra large desktops
+
+// ============================================
+// COMMON BREAKPOINT ALIASES
+// ============================================
+
+$breakpoint-mobile: $mobile-lg;           // 480px
+$breakpoint-tablet: $tablet-md;           // 768px
+$breakpoint-desktop: $desktop-sm;         // 1200px
+$breakpoint-wide: $desktop-lg;            // 1920px
+
+// ============================================
+// RESPONSIVE MIXINS (Mobile-First Approach)
+// ============================================
+
+// Mobile-first mixins
+@mixin mobile-only {
+  @media (max-width: #{$tablet-md - 1}) {
+    @content;
+  }
+}
+
+@mixin mobile-lg {
+  @media (min-width: $mobile-lg) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: $tablet-md) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media (min-width: $tablet-md) and (max-width: #{$desktop-sm - 1}) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: $desktop-sm) {
+    @content;
+  }
+}
+
+@mixin desktop-only {
+  @media (min-width: $desktop-sm) and (max-width: #{$desktop-lg - 1}) {
+    @content;
+  }
+}
+
+@mixin wide-up {
+  @media (min-width: $desktop-lg) {
+    @content;
+  }
+}
+
+@mixin wide-only {
+  @media (min-width: $desktop-lg) and (max-width: #{$desktop-xl - 1}) {
+    @content;
+  }
+}
+
+// ============================================
+// ALTERNATIVE BREAKPOINT MIXINS
+// ============================================
+
+// "Down" variants (max-width)
+@mixin down($width) {
+  @media (max-width: #{$width - 1}) {
+    @content;
+  }
+}
+
+// "Up" variants (min-width)
+@mixin up($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+// "Between" variants
+@mixin between($min, $max) {
+  @media (min-width: $min) and (max-width: #{$max - 1}) {
+    @content;
+  }
+}
+
+// ============================================
+// SPECIFIC DEVICE BREAKPOINTS
+// ============================================
+
+// iPhone breakpoints
+@mixin iphone-xs {
+  @media (max-width: 375px) {
+    @content;
+  }
+}
+
+@mixin iphone-sm {
+  @media (min-width: 375px) and (max-width: 414px) {
+    @content;
+  }
+}
+
+@mixin iphone-md {
+  @media (min-width: 414px) and (max-width: 480px) {
+    @content;
+  }
+}
+
+// iPad breakpoints
+@mixin ipad-portrait {
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin ipad-landscape {
+  @media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+    @content;
+  }
+}
+
+// ============================================
+// ORIENTATION-BASED MIXINS
+// ============================================
+
+@mixin portrait {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+// ============================================
+// PRINT MEDIA
+// ============================================
+
+@mixin print {
+  @media print {
+    @content;
+  }
+}
+
+@mixin no-print {
+  @media not print {
+    @content;
+  }
+}
+
+// ============================================
+// RESPONSIVE HELPERS
+// ============================================
+
+// Hide on mobile, show on tablet and up
+@mixin hide-mobile {
+  @media (max-width: #{$tablet-md - 1}) {
+    display: none !important;
+  }
+}
+
+// Hide on tablet and down, show on desktop
+@mixin hide-tablet-down {
+  @media (max-width: #{$desktop-sm - 1}) {
+    display: none !important;
+  }
+}
+
+// Show only on mobile
+@mixin show-mobile-only {
+  display: none;
+  
+  @media (max-width: #{$tablet-md - 1}) {
+    display: block;
+  }
+}
+
+// Show only on tablet
+@mixin show-tablet-only {
+  display: none;
+  
+  @media (min-width: $tablet-md) and (max-width: #{$desktop-sm - 1}) {
+    display: block;
+  }
+}
+
+// Show only on desktop
+@mixin show-desktop-only {
+  display: none;
+  
+  @media (min-width: $desktop-sm) {
+    display: block;
+  }
+}
+
+// ============================================
+// RESPONSIVE PADDING MIXIN
+// ============================================
+
+@mixin padding-responsive($mobile: 1rem, $tablet: 1.5rem, $desktop: 2rem) {
+  padding: $mobile;
+  
+  @media (min-width: $tablet-md) {
+    padding: $tablet;
+  }
+  
+  @media (min-width: $desktop-sm) {
+    padding: $desktop;
+  }
+}
+
+// ============================================
+// RESPONSIVE FONT SIZE MIXIN
+// ============================================
+
+@mixin font-size-responsive($mobile: 1rem, $tablet: 1.25rem, $desktop: 1.5rem) {
+  font-size: $mobile;
+  
+  @media (min-width: $tablet-md) {
+    font-size: $tablet;
+  }
+  
+  @media (min-width: $desktop-sm) {
+    font-size: $desktop;
+  }
+}
+
+// ============================================
+// RESPONSIVE MARGIN MIXIN
+// ============================================
+
+@mixin margin-responsive($mobile: 1rem, $tablet: 1.5rem, $desktop: 2rem) {
+  margin: $mobile;
+  
+  @media (min-width: $tablet-md) {
+    margin: $tablet;
+  }
+  
+  @media (min-width: $desktop-sm) {
+    margin: $desktop;
+  }
+}
+
+// ============================================
+// RESPONSIVE GAP MIXIN
+// ============================================
+
+@mixin gap-responsive($mobile: 1rem, $tablet: 1.5rem, $desktop: 2rem) {
+  gap: $mobile;
+  
+  @media (min-width: $tablet-md) {
+    gap: $tablet;
+  }
+  
+  @media (min-width: $desktop-sm) {
+    gap: $desktop;
+  }
+}
+
+// ============================================
+// RESPONSIVE GRID MIXIN
+// ============================================
+
+@mixin grid-responsive($mobile-cols: 1, $tablet-cols: 2, $desktop-cols: 3) {
+  display: grid;
+  grid-template-columns: repeat($mobile-cols, 1fr);
+  
+  @media (min-width: $tablet-md) {
+    grid-template-columns: repeat($tablet-cols, 1fr);
+  }
+  
+  @media (min-width: $desktop-sm) {
+    grid-template-columns: repeat($desktop-cols, 1fr);
+  }
+}
+
+// ============================================
+// CONTAINER QUERIES (Future: CSS Container Queries)
+// ============================================
+
+// Placeholder for future container query support
+// @mixin container-sm { @container (min-width: 400px) { @content; } }
+// @mixin container-md { @container (min-width: 700px) { @content; } }
+// @mixin container-lg { @container (min-width: 900px) { @content; } }
+
+// ============================================
+// RESPONSIVE UTILITY CLASSES
+// ============================================
+
+// Hide/Show utilities for different breakpoints
+.hide-mobile { @include hide-mobile; }
+.hide-tablet-down { @include hide-tablet-down; }
+.show-mobile-only { @include show-mobile-only; }
+.show-tablet-only { @include show-tablet-only; }
+.show-desktop-only { @include show-desktop-only; }
+
+// ============================================
+// PRINT STYLES
+// ============================================
+
+@include print {
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  
+  img {
+    max-width: 100% !important;
+  }
+  
+  @page {
+    margin: 0.5cm;
+  }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+}
+
+// ============================================
+// EXPORT SUMMARY
+// ============================================
+
+// Available variables for use in components:
+// Breakpoints: $mobile-lg, $tablet-md, $desktop-sm, $desktop-lg, etc.
+// Aliases: $breakpoint-mobile, $breakpoint-tablet, $breakpoint-desktop, etc.
+// Mixins: @include tablet-up, @include desktop-up, @include mobile-only, etc.
+// Alternative: @include up($width), @include down($width), @include between($min, $max)
+// Visibility: @include show-mobile-only, @include hide-tablet-down, etc.
+// Responsive: @include padding-responsive, @include font-size-responsive, etc.
+// Classes: .hide-mobile, .show-desktop-only, etc.

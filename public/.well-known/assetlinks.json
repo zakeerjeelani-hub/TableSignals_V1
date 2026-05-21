@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.rattletech.TableSignalApp",
+      "sha256_cert_fingerprints":
+        ["57:9E:08:E6:FD:C1:49:36:42:D8:63:4F:D9:AC:F6:02:6B:B8:15:FD:0F:2D:DD:B6:08:E8:99:F5:E5:FF:DF:76"]
+    }
+  }
+]

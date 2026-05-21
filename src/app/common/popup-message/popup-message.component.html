@@ -1,0 +1,8 @@
+<div class="popup-backdrop" *ngIf="isVisible">
+    <div class="popup-container" style="margin: 5px;">
+     <div style="border: 1px solid black;border-radius: 5px;padding: 10px;">
+      <p>{{ message }}</p>
+      <button (click)="closePopup()" class="btn-close">Close</button>
+    </div>
+    </div>
+  </div>

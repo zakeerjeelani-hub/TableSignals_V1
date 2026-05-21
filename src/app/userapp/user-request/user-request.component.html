@@ -1,0 +1,244 @@
+<div class="container justify-content-center align-items-center" style="margin:auto; max-width: 1000px !important;position: relative;">
+  <div class="clearfix"></div>
+  <div class="vspacer"></div>
+  <div class="vspacer"></div>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; ">
+    <img src="../../../assets/images/UserLogo_2.png" alt="logo" width="100%" style="max-width: 280px;">
+  
+    <div style="margin-top: -30px;position: absolute;right: 0;" >
+      <app-google-translate></app-google-translate>
+    </div>
+      <!-- <div style="margin: 0px!important;"> -->
+        <img id="iml" style="display: none;"  src="../../../assets/images/VIP.png" (click)="openVipPopup()"  height="45rm" width="150rm">
+        <!-- <button class="vip-join-btn"  (click)="openVipPopup()">
+          <span class="vip-icon">👑</span>
+          <span class="vip-text">Join VIP</span>
+        </button> -->
+      <!-- </div> -->
+  </div>
+  <div class="clearfix"></div>
+  <div class="vspacer"></div>
+  <section style="margin-top: 10px;">
+    <!-- Popup Messages -->
+    <app-popup-message
+      [message]="popupMessage"
+      [isVisible]="showPopup"
+      (closed)="closePopup()">
+    </app-popup-message>
+    
+    <!-- Session Expired Message -->
+    <div *ngIf="showScanAgainPopup" class="scan-again-popup">
+      <div class="scan-again-content">
+        <div class="scan-again-header">
+          <h2>{{ scanAgainTitle }}</h2>
+          <button class="close-btn" (click)="closeScanAgainPopup()">✖</button>
+        </div>
+        <div class="scan-again-body">
+          <!-- <div class="qr-icon">
+            <img src="assets/icons/qrcode.png" alt="QR Code" class="qr-image">
+          </div> -->
+          <p>{{ scanAgainMessage }}</p>
+        </div>
+        <div class="scan-again-footer">
+          <button class="btn btn-primary" (click)="closeScanAgainPopup()">OK</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Success Messages -->
+    <app-success-message 
+      *ngIf="uploadSuccess" 
+      [message]="'You are Connected\n Welcome to ' + restaurantname + ' \n Tap here anytime to request what you need! We are here to help!'">
+    </app-success-message>
+    
+    <app-success-message 
+      *ngIf="RequestSuccess" 
+      [message]="'Request Received\nOur team has been notified and will assist you shortly\n Thank you for your patience'">
+    </app-success-message>
+    
+    <div *ngIf="enableService">
+     
+      <mat-grid-list 
+      *ngIf="hasValidSession" 
+      cols="3" 
+      rowHeight="150px" 
+      gutterSize="10px" 
+      class="menu-grid">
+      <mat-grid-tile 
+        *ngFor="let item of menuItems" 
+        (click)="onItemClick(item)" 
+        class="menu-item">
+        <mat-card class="menu-card">
+          <mat-card-content>
+            <div class="menu-icon">
+              <img [src]="item.icon" alt="{{ item.label }}" />
+            </div>
+            <div class="menu-label">
+              {{ item.label }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+<div><span class="circle-indicator"></span>Use the green icons to add any additional details you'd like your server to know</div>
+  </div>
+    
+    <div *ngIf="!enableService" style="text-align: center;margin-top: 40%;margin-right: 10px;margin-left: 10px;">
+     <b> ---- We're Currently Offline ---</b><br>
+      This system is temporarily unavailable and not actively monitored.
+      Please speak directly with a staff member for assistance.
+    </div>
+    <!-- Menu Grid - Only show if session is valid -->
+  
+  </section>
+</div>
+
+<!-- Table Number Popup -->
+<div *ngIf="showTableNumberPopup" class="popup-container">
+  <div class="popup-content">
+    <!-- Close button -->
+    <button class="close-btn" [disabled]="isValidatingTable" (click)="closeTableNumberPopup()">✖</button>
+ <img src="../../../assets/images/AlmostThere.png" style="height: 40px;width: 40px;">   
+    <!-- Title -->
+    <h2 class="popup-title"><b>Enter Table Number</b></h2>
+    <p style="text-align: center;">
+      Please enter your table number to continue
+    </p>
+    
+    <!-- Input Field -->
+    <input 
+  type="text" 
+  [(ngModel)]="tableNumberInput"
+  (keypress)="onlyIntegerInput($event)"
+  class="table-number-input"
+  [disabled]="isValidatingTable"
+  (keyup.enter)="submitTableNumber()">
+    <!-- Buttons -->
+     <!-- Loading Indicator -->
+<div *ngIf="isValidatingTable" class="validation-loading">
+  <span class="spinner"></span>
+  <p>Validating table number...</p>
+</div>
+    <div class="button-group">
+      <button 
+  (click)="submitTableNumber()" 
+  class="btn-submit"
+  [disabled]="isValidatingTable">
+  {{ isValidatingTable ? 'Validating...' : 'Submit' }}
+</button>
+<button 
+  (click)="closeTableNumberPopup()" 
+  class="btn-submit"
+  [disabled]="isValidatingTable">
+  Cancel
+</button>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Request Popup -->
+<div *ngIf="showCustomPopup" class="popup-container">
+  <div class="popup-content">
+    <!-- Close button -->
+    <button class="close-btn" (click)="showCustomPopup = false">✖</button>
+ <img src="../../../assets/images/AlmostThere.png" style="height: 40px;width: 40px;">   
+    <!-- Title -->
+    <h2 class="popup-title"><b>{{popupTitle}}</b></h2>
+    <p style="text-align: left;">
+      {{popupDesc}}
+    </p>
+    <!-- Multiline Textbox -->
+    <textarea 
+      [(ngModel)]="customDescription"
+      placeholder="Additional notes here..."
+      class="custom-textarea" [maxLength]="100">
+    </textarea>
+    
+    <!-- Buttons -->
+    <div class="button-group">
+      <button (click)="submitCustomRequest()" class="btn-submit">Submit</button>
+      <button (click)="showCustomPopup = false" class="btn-submit">Cancel</button>
+    </div>
+  </div>
+</div>
+<!-- VIP Popup -->
+
+<div *ngIf="showVipPopup" class="vip-popup-container" (click)="closeVipPopup()">
+  <div class="vip-popup-content" (click)="$event.stopPropagation()">
+    
+    
+    <div class="vip-popup-header" >
+    
+   <div style="flex: 0 0 auto;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: right;
+    gap: 15px;
+    padding-right: 0px;"> <button style="background: transparent;"   (click)="closeVipPopup()">✖</button></div>
+      <span class="vip-crown">👑</span>
+      <h2 class="vip-popup-title">Join the Table Signals VIP Club!</h2>
+      <p class="vip-subtitle">Get the most out of every visit.</p>
+    </div>
+
+    <div class="vip-popup-body">
+      <div class="vip-benefits">
+        <div class="benefit-item">
+          <span class="benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 12 20 22 4 22 4 12"/>
+              <rect x="2" y="7" width="20" height="5"/>
+              <line x1="12" y1="22" x2="12" y2="7"/>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+            </svg>
+          </span>
+          <p><strong>Exclusive Deals</strong><br>Receive exclusive deals and notifications from your favorite restaurants</p>
+        </div>
+
+        <div class="benefit-item">
+          <span class="benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </span>
+          <p><strong>VIP Recognition</strong><br>Be recognized as a VIP guest and enjoy special perks during your visit</p>
+        </div>
+
+        <div class="benefit-item">
+          <span class="benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+          </span>
+          <p><strong>Surprise Rewards</strong><br>Get surprise rewards and early access to events</p>
+        </div>
+      </div>
+      <p class="vip-footer-text">Download the Table Signals App and sign up as a VIP today to start enjoying your benefits!</p>
+    </div>
+
+    <div class="vip-popup-footer">
+      <button class="btn-download-vip" (click)="downloadVipApp()">
+        <span class="download-icon">📱</span>
+        <span>Download & Join VIP</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Session Timer Display -->
+<div *ngIf="hasValidSession&&enableService" class="session-timer">
+  <div class="timer-icon">
+    <i class="fas fa-clock"></i>
+  </div>
+  <div class="timer-text">
+    Session: {{ sessionTimeRemaining }}
+  </div>
+  <button class="timer-refresh" (click)="refreshSession()">
+    <i class="fas fa-sync-alt"></i>
+  </button>
+</div>
+
+<div>
+  <app-adsense adClient="ca-pub-5594582413559915" adSlot="2025147703"></app-adsense>
+</div>

@@ -1,0 +1,454 @@
+// ============================================
+// GLOBAL UTILITIES, SHADOWS & ANIMATIONS
+// ============================================
+// Reusable utility classes, shadow definitions, and animations
+
+@import 'colors';
+@import 'spacing';
+@import 'breakpoints';
+
+// ============================================
+// FLEXBOX UTILITIES
+// ============================================
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.gap-sm { gap: $gap-sm; }
+.gap-md { gap: $gap-md; }
+.gap-lg { gap: $gap-lg; }
+.gap-xl { gap: $gap-xl; }
+
+.items-start { align-items: flex-start; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+.items-stretch { align-items: stretch; }
+
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+
+// ============================================
+// GRID UTILITIES
+// ============================================
+
+.grid {
+  display: grid;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  
+  @media (max-width: $tablet-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  
+  @media (max-width: $tablet-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: $mobile-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  
+  @media (max-width: $tablet-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// ============================================
+// TEXT UTILITIES
+// ============================================
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+.text-dark { color: $text-dark; }
+.text-primary { color: $primary; }
+.text-secondary { color: $secondary; }
+.text-success { color: $success; }
+.text-danger { color: $danger; }
+.text-warning { color: $warning; }
+.text-info { color: $info; }
+.text-light { color: $text-light; }
+.text-inverse { color: $text-inverse; }
+
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+
+.text-bold { font-weight: $font-weight-bold; }
+.text-semibold { font-weight: $font-weight-semibold; }
+.text-normal { font-weight: $font-weight-normal; }
+.text-light-weight { font-weight: $font-weight-light; }
+
+.text-sm { font-size: $font-size-sm; }
+.text-base { font-size: $font-size-base; }
+.text-lg { font-size: $font-size-lg; }
+.text-xl { font-size: $font-size-xl; }
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ============================================
+// BACKGROUND UTILITIES
+// ============================================
+
+.bg-primary { background-color: $bg-primary; }
+.bg-secondary { background-color: $bg-secondary; }
+.bg-tertiary { background-color: $bg-tertiary; }
+.bg-dark { background-color: $bg-dark; }
+.bg-light { background-color: $bg-secondary; }
+
+.bg-success { background-color: $success; }
+.bg-danger { background-color: $danger; }
+.bg-warning { background-color: $warning; }
+.bg-info { background-color: $info; }
+
+.bg-gold { background-color: $primary; }
+.bg-blue { background-color: $secondary; }
+
+// ============================================
+// BORDER UTILITIES
+// ============================================
+
+.border { border: 1px solid $border-color; }
+.border-top { border-top: 1px solid $border-color; }
+.border-bottom { border-bottom: 1px solid $border-color; }
+.border-left { border-left: 1px solid $border-color; }
+.border-right { border-right: 1px solid $border-color; }
+
+.border-light { border-color: $border-light; }
+.border-dark { border-color: $border-dark; }
+.border-primary { border-color: $primary; }
+.border-danger { border-color: $danger; }
+
+.rounded { border-radius: $radius-md; }
+.rounded-sm { border-radius: $radius-sm; }
+.rounded-lg { border-radius: $radius-lg; }
+.rounded-full { border-radius: $radius-full; }
+
+// ============================================
+// SHADOW UTILITIES
+// ============================================
+
+.shadow-none { box-shadow: none; }
+.shadow-sm { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+.shadow { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+.shadow-md { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12); }
+.shadow-lg { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); }
+.shadow-xl { box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); }
+.shadow-2xl { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25); }
+
+.shadow-primary { box-shadow: 0 4px 8px $shadow-primary; }
+.shadow-secondary { box-shadow: 0 4px 8px $shadow-secondary; }
+.shadow-success { box-shadow: 0 4px 8px $shadow-success; }
+.shadow-danger { box-shadow: 0 4px 8px $shadow-danger; }
+.shadow-warning { box-shadow: 0 4px 8px $shadow-warning; }
+.shadow-info { box-shadow: 0 4px 8px $shadow-info; }
+
+// ============================================
+// DISPLAY UTILITIES
+// ============================================
+
+.d-none { display: none !important; }
+.d-inline { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+.d-block { display: block !important; }
+.d-flex { display: flex !important; }
+.d-grid { display: grid !important; }
+.d-table { display: table !important; }
+.d-table-cell { display: table-cell !important; }
+
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
+
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.overflow-x-auto { overflow-x: auto; }
+.overflow-y-auto { overflow-y: auto; }
+
+// ============================================
+// WIDTH & HEIGHT UTILITIES
+// ============================================
+
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+.w-screen { width: 100vw; }
+
+.h-full { height: 100%; }
+.h-auto { height: auto; }
+.h-screen { height: 100vh; }
+
+.max-w-full { max-width: 100%; }
+.max-w-container { max-width: 1200px; }
+.max-w-md { max-width: 448px; }
+.max-w-lg { max-width: 512px; }
+.max-w-xl { max-width: 576px; }
+.max-w-2xl { max-width: 672px; }
+
+// ============================================
+// POSITIONING UTILITIES
+// ============================================
+
+.position-static { position: static; }
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
+.position-fixed { position: fixed; }
+.position-sticky { position: sticky; }
+
+.inset-0 { inset: 0; }
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+
+// ============================================
+// OPACITY UTILITIES
+// ============================================
+
+.opacity-0 { opacity: 0; }
+.opacity-25 { opacity: 0.25; }
+.opacity-50 { opacity: 0.5; }
+.opacity-75 { opacity: 0.75; }
+.opacity-100 { opacity: 1; }
+
+// ============================================
+// TRANSITION UTILITIES
+// ============================================
+
+.transition-all { transition: all 0.3s ease; }
+.transition-colors { transition: color 0.3s ease, background-color 0.3s ease; }
+.transition-opacity { transition: opacity 0.3s ease; }
+.transition-transform { transition: transform 0.3s ease; }
+
+.duration-fast { animation-duration: 0.15s; transition-duration: 0.15s; }
+.duration-base { animation-duration: 0.3s; transition-duration: 0.3s; }
+.duration-slow { animation-duration: 0.6s; transition-duration: 0.6s; }
+
+// ============================================
+// CURSOR UTILITIES
+// ============================================
+
+.cursor-auto { cursor: auto; }
+.cursor-default { cursor: default; }
+.cursor-pointer { cursor: pointer; }
+.cursor-wait { cursor: wait; }
+.cursor-not-allowed { cursor: not-allowed; }
+.cursor-move { cursor: move; }
+
+// ============================================
+// USER SELECT UTILITIES
+// ============================================
+
+.select-none { user-select: none; }
+.select-text { user-select: text; }
+.select-all { user-select: all; }
+
+// ============================================
+// HOVER & FOCUS UTILITIES
+// ============================================
+
+.hover\:opacity-80:hover { opacity: 0.8; }
+.hover\:opacity-90:hover { opacity: 0.9; }
+.hover\:scale-105:hover { transform: scale(1.05); }
+.hover\:translate-y-minus-2:hover { transform: translateY(-2px); }
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Animation utility classes
+.animate-fade-in { animation: fade-in 0.3s ease; }
+.animate-fade-out { animation: fade-out 0.3s ease; }
+.animate-slide-in-up { animation: slide-in-up 0.4s ease; }
+.animate-slide-in-down { animation: slide-in-down 0.4s ease; }
+.animate-slide-in-left { animation: slide-in-left 0.4s ease; }
+.animate-slide-in-right { animation: slide-in-right 0.4s ease; }
+.animate-scale-in { animation: scale-in 0.3s ease; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
+.animate-bounce { animation: bounce 1s ease infinite; }
+.animate-spin { animation: spin 1s linear infinite; }
+
+// ============================================
+// UTILITY RESPONSIVE CLASSES
+// ============================================
+
+@media (max-width: $tablet-md) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: block !important; }
+}
+
+@media (min-width: $tablet-md) {
+  .hide-tablet-up { display: none !important; }
+  .show-tablet-up { display: block !important; }
+}
+
+@media (min-width: $desktop-sm) {
+  .hide-desktop { display: none !important; }
+  .show-desktop { display: block !important; }
+}
+
+// ============================================
+// EXPORT SUMMARY
+// ============================================
+
+// Available utility classes:
+// Flexbox: .flex, .flex-center, .flex-col, .gap-md, .items-center, .justify-between
+// Grid: .grid, .grid-2, .grid-3, .grid-4
+// Text: .text-center, .text-bold, .text-danger, .text-truncate
+// Background: .bg-primary, .bg-secondary, .bg-success
+// Border: .border, .border-primary, .rounded, .rounded-full
+// Shadow: .shadow, .shadow-md, .shadow-lg, .shadow-primary
+// Display: .d-none, .d-flex, .d-grid
+// Width/Height: .w-full, .h-full, .max-w-container
+// Position: .position-relative, .inset-0, .z-50
+// Opacity: .opacity-50, .opacity-100
+// Transition: .transition-all, .duration-base
+// Animations: .animate-fade-in, .animate-slide-in-up, .animate-pulse
+// Responsive: .hide-mobile, .show-tablet-up, .show-desktop

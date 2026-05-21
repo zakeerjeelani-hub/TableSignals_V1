@@ -1,0 +1,201 @@
+<!-- ============================================
+QR CODE GENERATOR PAGE - CLEAN & RESPONSIVE
+============================================ -->
+
+<div class="qr-generator-container">
+  <!-- Header -->
+  <div class="qr-header">
+    <div class="qr-header-content">
+      <h1 class="qr-title">QR Code Generator</h1>
+      
+      <div class="qr-actions">
+        <button 
+          mat-icon-button 
+          (click)="goHome()" 
+          class="action-button"
+          matTooltip="Go to Dashboard"
+          aria-label="Go to dashboard">
+          <mat-icon>home</mat-icon>
+        </button>
+        <app-back-button></app-back-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="qr-content">
+    <form [formGroup]="qrForm" class="qr-form">
+      
+      <!-- Filters Section -->
+      <div class="filters-section">
+        <!-- Area Selection -->
+        <div class="form-group">
+          <label class="form-label">Select Area</label>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Choose an area</mat-label>
+            <mat-select 
+              formControlName="areaSelect" 
+              (selectionChange)="onAreaChange($event)">
+              <mat-option [value]="0">Select All Areas</mat-option>
+              <mat-option *ngFor="let area of areas; trackBy: trackByAreaId" [value]="area.areaId">
+                {{ area.areaName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Table Selection -->
+        <div class="form-group">
+          <label class="form-label">Select Tables</label>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Choose tables</mat-label>
+            <mat-select 
+              formControlName="tableSelect" 
+              (selectionChange)="onTableChange($event)" 
+              multiple
+              panelClass="table-select-panel">
+              
+              <!-- Select All Option - Works with Standalone -->
+              <mat-option 
+                [value]="'SELECT_ALL'" 
+                class="select-all-option"
+                (click)="handleSelectAllClick()">
+                <mat-checkbox [checked]="selectAllToggle">
+                  {{ selectAllToggle ? 'Deselect All Tables' : 'Select All Tables' }}
+                </mat-checkbox>
+              </mat-option>
+
+              <mat-divider></mat-divider>
+
+              <!-- Tables List -->
+              <mat-optgroup label="Tables" *ngIf="!isLoadingTables">
+                <mat-option 
+                  *ngFor="let table of tables; trackBy: trackByTableId"
+                  [value]="table.tableId"
+                  class="table-option">
+                  {{ table.tableName }}
+                </mat-option>
+              </mat-optgroup>
+
+              <!-- Loading State -->
+              <mat-optgroup *ngIf="isLoadingTables">
+                <mat-option disabled class="loading-option">
+                  <mat-spinner diameter="16"></mat-spinner>
+                  <span>Loading tables...</span>
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Selected Count -->
+          <div class="selection-info" *ngIf="getSelectedTableCount() > 0">
+            {{ getSelectedTableCount() }} of {{ tables.length }} tables selected
+          </div>
+        </div>
+
+        <!-- QR Size Selection -->
+        <div class="form-group">
+          <label class="form-label">QR Code Size</label>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Choose size</mat-label>
+            <mat-select 
+              formControlName="qrSize" 
+              (selectionChange)="onSizeChange($event)">
+              <mat-option *ngFor="let size of qrSizes" [value]="size.size">
+                {{ size.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Hidden Form Fields -->
+      <div style="display: none;">
+        <input type="number" id="extraMarginTop" formControlName="extraMarginTop">
+        <input type="number" id="extraMarginLeft" formControlName="extraMarginLeft">
+        <input type="number" id="extraMarginBetween" formControlName="extraMarginBetween">
+      </div>
+
+      <!-- Action Buttons -->
+      <div *ngIf="showSelectAll" class="action-buttons">
+        <button 
+          type="button" 
+          mat-raised-button 
+          color="primary"
+          (click)="downloadSelectedQRCodes()"
+          class="btn-download">
+          <mat-icon>download</mat-icon>
+          Download QR Codes
+        </button>
+
+        <button 
+          type="button" 
+          mat-raised-button 
+          color="accent"
+          (click)="printSelectedQRCodes()"
+          class="btn-print">
+          <mat-icon>print</mat-icon>
+          Print QR Codes
+        </button>
+      </div>
+
+      <!-- QR Codes Grid -->
+      <div class="qr-grid-section" *ngIf="qrCodes.length > 0">
+        <!-- Select All Checkbox -->
+        <div class="select-all-checkbox" *ngIf="showSelectAll">
+          <input 
+            type="checkbox" 
+            id="selectAll" 
+            [checked]="allSelected" 
+            (change)="onSelectAll($event)" 
+            class="checkbox-input">
+          <label for="selectAll" class="checkbox-label">Select All QR Codes</label>
+        </div>
+
+        <!-- QR Codes Grid -->
+        <div class="qr-grid" formArrayName="tables">
+          <div *ngFor="let qr of qrCodes; let i = index; trackBy: trackByQRIndex" class="qr-card">
+            <!-- Checkbox -->
+            <div class="qr-checkbox">
+              <input 
+                type="checkbox" 
+                [id]="'qr-' + i" 
+                [formControlName]="i" 
+                (change)="onSelectQr(qr, $event)"
+                class="checkbox-input">
+              <label [for]="'qr-' + i" class="checkbox-label"></label>
+            </div>
+
+            <!-- QR Code -->
+            <div class="qr-code-container">
+              <qr-code 
+                [value]="qr.qrData" 
+                [size]="qrForm.get('qrSize')?.value" 
+                canvas="true">
+              </qr-code>
+            </div>
+
+            <!-- Table Name -->
+            <p class="qr-label">{{ qr.tableName }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="qrCodes.length === 0 && showSelectAll === false" class="empty-state">
+        <mat-icon class="empty-icon">qr_code_2</mat-icon>
+        <p class="empty-text">Select an area and tables to generate QR codes</p>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div *ngIf="isLoadingAllAreas" class="loading-overlay" role="status" aria-live="polite">
+    <div class="spinner-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading tables...</p>
+    </div>
+  </div>
+
+</div>

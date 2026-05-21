@@ -1,0 +1,76 @@
+<div class="page-main">
+
+  <!-- Header Ribbon -->
+  <div class="page-header-ribbon">
+    <div class="ribbon-left"><h1 class="page-title">Areas</h1></div>
+    <div class="ribbon-right"><app-back-button></app-back-button></div>
+  </div>
+
+  <div class="page-content">
+    <form [formGroup]="form">
+
+      <!-- Area Count Selector + Add Button -->
+      <div class="filter-bar">
+        <mat-form-field appearance="outline" class="filter-field-compact">
+          <mat-label>Number of areas</mat-label>
+          <mat-select id="numberSelect" formControlName="numberSelect" (selectionChange)="onNumberChange($event)">
+            <mat-option *ngFor="let num of numbers" [value]="num" [disabled]="disableDropdownValue(num)">{{ num }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="accent" type="button" (click)="addTextbox()">
+          <mat-icon>add</mat-icon> Add Area
+        </button>
+      </div>
+
+      <!-- Areas Table -->
+      <div class="table-wrapper" *ngIf="textboxes.controls.length > 0">
+        <div class="table-container">
+          <table class="page-table">
+            <thead>
+              <tr class="table-header-row">
+                <th class="column-header" style="width:50px">#</th>
+                <th class="column-header">Area Name</th>
+                <th class="column-header" style="width:60px">Delete</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="textboxes">
+              <tr *ngFor="let textbox of textboxes.controls; let i = index"
+                  [formGroupName]="i" class="table-data-row">
+                <td class="column-cell">{{ i + 1 }}</td>
+                <td class="column-cell">
+                  <mat-form-field appearance="outline" class="inline-field">
+                    <input matInput formControlName="areaName" placeholder="Area name">
+                  </mat-form-field>
+                  <input type="hidden" formControlName="areaID">
+                </td>
+                <td class="column-cell action-cell">
+                  <button mat-icon-button color="warn" type="button" (click)="deleteArea(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="textboxes.controls.length === 0">
+        <mat-icon class="empty-icon">location_off</mat-icon>
+        <p class="empty-message">No areas added yet</p>
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="button"
+          (click)="saveValues()" [disabled]="!form.valid || isSaving">
+          <mat-icon>save</mat-icon> {{ isSaving ? 'Saving...' : 'Save' }}
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="GoToTables()">
+          <mat-icon>table_chart</mat-icon> Tables
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

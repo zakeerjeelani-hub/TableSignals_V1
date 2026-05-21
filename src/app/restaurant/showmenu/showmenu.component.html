@@ -1,0 +1,24 @@
+<div style="display: flex;float: right;margin-right:20px ;">
+    
+  </div>
+    <div class="dashboard-container">
+        
+        <span id="spanhead" class="dashboard-content" style="display: flex; text-align: left; margin-left: 10%; margin-right: 10%; border: 1px solid #fec200; border-radius: 10px;">
+            
+            <span style="width: 100%!important;">
+                <button class="btn" style="padding: 15px; border-radius: 20px;display: flex;float: right;margin-right:20px ;" (click)="Back()">Main Menu</button>
+<div class="menu-container">
+    <h3>Menu</h3>
+    
+    <div class="menu-grid" style="margin-left: 10px;overflow: scroll;height:800px">
+        
+      <div *ngFor="let img of menuImages;let i = index" class="menu-item" (click)="openGallery(i)">
+        <img [src]="img" alt="Menu Image" class="menu-img" height="300px" width="250px" style="margin-left: 25px;"  />
+      </div>
+    </div>
+  </div>
+            </span>
+        </span>
+        
+  </div>
+ 

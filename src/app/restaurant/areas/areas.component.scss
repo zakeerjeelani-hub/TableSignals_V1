@@ -1,0 +1,57 @@
+// === Design Tokens ===
+$primary: #fec200; $primary-dark: #e5b000; $primary-light: rgba(254,194,0,.1);
+$text-primary: #1a1a1a; $text-secondary: #666;
+$bg-white: #fff; $bg-light: #f8f9fb; $bg-lighter: #fafbfc; $border-light: #e0e0e0;
+$sp-sm:6px; $sp-md:8px; $sp-lg:12px; $sp-xl:16px; $sp-xxl:32px;
+$r-md:8px; $sh-md:0 4px 6px rgba(0,0,0,.1);
+
+// === Root ===
+.page-main { width:100%; background:$bg-light; min-height:calc(100vh - 100px); display:flex; flex-direction:column; }
+
+// === Header Ribbon ===
+.page-header-ribbon {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:$sp-md $sp-lg; gap:$sp-lg; margin-bottom:$sp-md;
+  background:linear-gradient(135deg,$primary-light 0%,$bg-lighter 100%);
+  border-bottom:2px solid $primary; border-radius:$r-md;
+}
+.ribbon-left { flex:0 0 auto; }
+.ribbon-right { display:flex; gap:$sp-lg; align-items:center; }
+.page-title { font-size:1.5rem; font-weight:900; color:$primary; margin:0; text-transform:uppercase; letter-spacing:.05em; }
+
+// === Content ===
+.page-content { display:flex; flex-direction:column; gap:$sp-lg; padding:$sp-xl $sp-md; background:$bg-white; flex:1; }
+
+// === Filter Bar ===
+.filter-bar { display:flex; gap:$sp-md; align-items:flex-end; flex-wrap:wrap; }
+.filter-field-compact { min-width:200px; flex:0 1 auto; }
+
+// === Table Wrapper ===
+.table-wrapper { background:$bg-white; border-radius:$r-md; overflow:hidden; display:flex; flex-direction:column; box-shadow:$sh-md; }
+.table-container { overflow-x:auto; flex:1; }
+.page-table { width:100%; border-collapse:collapse; }
+.table-header-row { background:$bg-lighter; border-bottom:2px solid $primary; }
+.table-data-row { border-bottom:1px solid $border-light; transition:background .15s; &:hover { background:#fafafa; } &:last-child { border-bottom:none; } }
+.column-header { font-size:.75rem; font-weight:900; color:$text-primary; padding:$sp-md $sp-sm !important; text-transform:uppercase; letter-spacing:.05em; background:$bg-lighter; border-bottom:2px solid $primary; white-space:nowrap; }
+.column-cell { padding:$sp-md $sp-sm !important; font-size:.85rem; color:$text-secondary; }
+.action-cell { text-align:center; }
+
+// === Inline Field ===
+.inline-field { width:100%; ::ng-deep .mat-mdc-form-field-subscript-wrapper { margin-bottom:0; } }
+
+// === Empty State ===
+.empty-state {
+  display:flex; flex-direction:column; align-items:center; gap:$sp-lg; padding:$sp-xxl;
+  background:$bg-lighter; border-radius:$r-md; border:2px dashed $border-light; text-align:center;
+  .empty-icon { font-size:56px; width:56px; height:56px; color:$text-secondary; opacity:.45; }
+  .empty-message { margin:0; color:$text-secondary; font-size:.85rem; font-weight:700; }
+}
+
+// === Form Actions ===
+.form-actions { display:flex; gap:$sp-md; padding-top:$sp-md; }
+
+// === Button Overrides ===
+::ng-deep .mat-mdc-raised-button[color="accent"] {
+  background-color:$primary !important; color:$text-primary !important; font-weight:900;
+  &:hover:not(:disabled) { background-color:$primary-dark !important; }
+}

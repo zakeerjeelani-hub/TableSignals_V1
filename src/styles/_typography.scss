@@ -1,0 +1,328 @@
+// ============================================
+// GLOBAL TYPOGRAPHY SYSTEM
+// ============================================
+// Defines all font sizes, weights, families, and line heights
+// Single source of truth for all text styling
+
+// ============================================
+// FONT FAMILIES
+// ============================================
+
+// Primary font family
+$font-family-primary: 'Segoe UI', Tahoma, sans-serif;
+
+// Secondary font family (for special uses)
+$font-family-secondary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+// Monospace font (for code)
+$font-family-mono: 'Courier New', monospace;
+
+// ============================================
+// FONT WEIGHTS
+// ============================================
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// ============================================
+// FONT SIZES (rem-based, 16px = 1rem)
+// ============================================
+
+// Size scale (in rems)
+$font-size-xs: 0.625rem;       // 10px
+$font-size-sm: 0.75rem;        // 12px
+$font-size-base: 0.875rem;     // 14px
+$font-size-md: 1rem;           // 16px
+$font-size-lg: 1.125rem;       // 18px
+$font-size-xl: 1.25rem;        // 20px
+$font-size-2xl: 1.5rem;        // 24px
+$font-size-3xl: 1.875rem;      // 30px
+$font-size-4xl: 2.25rem;       // 36px
+$font-size-5xl: 3rem;          // 48px
+
+// ============================================
+// LINE HEIGHTS
+// ============================================
+
+// Line height scale
+$line-height-tight: 1.2;       // Tight spacing
+$line-height-normal: 1.5;      // Normal spacing
+$line-height-relaxed: 1.75;    // Relaxed spacing
+$line-height-loose: 2;         // Loose spacing
+
+// ============================================
+// LETTER SPACING
+// ============================================
+
+$letter-spacing-tighter: -0.05em;
+$letter-spacing-tight: -0.025em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.025em;
+$letter-spacing-wider: 0.05em;
+$letter-spacing-widest: 0.1em;
+
+// ============================================
+// TYPOGRAPHY SCALES
+// ============================================
+
+// Heading styles
+$h1-font-size: $font-size-5xl;      // 48px
+$h1-font-weight: $font-weight-bold; // 700
+$h1-line-height: $line-height-tight; // 1.2
+
+$h2-font-size: $font-size-4xl;      // 36px
+$h2-font-weight: $font-weight-bold; // 700
+$h2-line-height: $line-height-tight; // 1.2
+
+$h3-font-size: $font-size-3xl;      // 30px
+$h3-font-weight: $font-weight-bold; // 700
+$h3-line-height: $line-height-normal; // 1.5
+
+$h4-font-size: $font-size-2xl;      // 24px
+$h4-font-weight: $font-weight-semibold; // 600
+$h4-line-height: $line-height-normal; // 1.5
+
+$h5-font-size: $font-size-xl;       // 20px
+$h5-font-weight: $font-weight-semibold; // 600
+$h5-line-height: $line-height-normal; // 1.5
+
+$h6-font-size: $font-size-lg;       // 18px
+$h6-font-weight: $font-weight-semibold; // 600
+$h6-line-height: $line-height-normal; // 1.5
+
+// Body text styles
+$body-font-size: $font-size-base;   // 14px
+$body-font-weight: $font-weight-normal; // 400
+$body-line-height: $line-height-normal; // 1.5
+
+// Large body text
+$body-lg-font-size: $font-size-md;  // 16px
+$body-lg-font-weight: $font-weight-normal; // 400
+$body-lg-line-height: $line-height-normal; // 1.5
+
+// Small body text
+$body-sm-font-size: $font-size-sm;  // 12px
+$body-sm-font-weight: $font-weight-normal; // 400
+$body-sm-line-height: $line-height-normal; // 1.5
+
+// Extra small text
+$body-xs-font-size: $font-size-xs;  // 10px
+$body-xs-font-weight: $font-weight-normal; // 400
+$body-xs-line-height: $line-height-tight; // 1.2
+
+// Label text
+$label-font-size: $font-size-sm;    // 12px
+$label-font-weight: $font-weight-semibold; // 600
+$label-line-height: $line-height-normal; // 1.5
+
+// Caption text
+$caption-font-size: $font-size-xs;  // 10px
+$caption-font-weight: $font-weight-normal; // 400
+$caption-line-height: $line-height-tight; // 1.2
+
+// Button text
+$button-font-size: $font-size-base;  // 14px
+$button-font-weight: $font-weight-semibold; // 600
+$button-line-height: $line-height-normal; // 1.5
+
+// ============================================
+// TEXT TRANSFORM
+// ============================================
+
+$text-transform-none: none;
+$text-transform-uppercase: uppercase;
+$text-transform-lowercase: lowercase;
+$text-transform-capitalize: capitalize;
+
+// ============================================
+// PREDEFINED TYPOGRAPHY MIXINS
+// ============================================
+
+// Heading mixins
+@mixin heading-h1 {
+  font-size: $h1-font-size;
+  font-weight: $h1-font-weight;
+  line-height: $h1-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin heading-h2 {
+  font-size: $h2-font-size;
+  font-weight: $h2-font-weight;
+  line-height: $h2-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin heading-h3 {
+  font-size: $h3-font-size;
+  font-weight: $h3-font-weight;
+  line-height: $h3-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin heading-h4 {
+  font-size: $h4-font-size;
+  font-weight: $h4-font-weight;
+  line-height: $h4-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin heading-h5 {
+  font-size: $h5-font-size;
+  font-weight: $h5-font-weight;
+  line-height: $h5-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin heading-h6 {
+  font-size: $h6-font-size;
+  font-weight: $h6-font-weight;
+  line-height: $h6-line-height;
+  font-family: $font-family-primary;
+}
+
+// Body text mixins
+@mixin body-text {
+  font-size: $body-font-size;
+  font-weight: $body-font-weight;
+  line-height: $body-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin body-lg {
+  font-size: $body-lg-font-size;
+  font-weight: $body-lg-font-weight;
+  line-height: $body-lg-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin body-sm {
+  font-size: $body-sm-font-size;
+  font-weight: $body-sm-font-weight;
+  line-height: $body-sm-line-height;
+  font-family: $font-family-primary;
+}
+
+@mixin body-xs {
+  font-size: $body-xs-font-size;
+  font-weight: $body-xs-font-weight;
+  line-height: $body-xs-line-height;
+  font-family: $font-family-primary;
+}
+
+// Label mixin
+@mixin label-text {
+  font-size: $label-font-size;
+  font-weight: $label-font-weight;
+  line-height: $label-line-height;
+  font-family: $font-family-primary;
+}
+
+// Caption mixin
+@mixin caption-text {
+  font-size: $caption-font-size;
+  font-weight: $caption-font-weight;
+  line-height: $caption-line-height;
+  font-family: $font-family-primary;
+}
+
+// Button text mixin
+@mixin button-text {
+  font-size: $button-font-size;
+  font-weight: $button-font-weight;
+  line-height: $button-line-height;
+  font-family: $font-family-primary;
+}
+
+// ============================================
+// RESPONSIVE TYPOGRAPHY
+// ============================================
+
+// Mobile breakpoint adjustments
+@mixin typography-responsive {
+  // On mobile, reduce heading sizes by ~20%
+  @media (max-width: 768px) {
+    h1 {
+      font-size: $font-size-4xl;  // 36px instead of 48px
+    }
+    h2 {
+      font-size: $font-size-3xl;  // 30px instead of 36px
+    }
+    h3 {
+      font-size: $font-size-2xl;  // 24px instead of 30px
+    }
+  }
+}
+
+// ============================================
+// COMMON TYPOGRAPHY COMBINATIONS
+// ============================================
+
+// For form labels
+@mixin form-label {
+  @include label-text;
+  color: $text-dark;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+// For form helper text
+@mixin form-helper {
+  @include body-sm;
+  color: $text-secondary;
+  margin-top: 0.25rem;
+}
+
+// For error messages
+@mixin error-text {
+  @include body-sm;
+  color: $danger;
+}
+
+// For success messages
+@mixin success-text {
+  @include body-sm;
+  color: $success;
+}
+
+// For disabled text
+@mixin disabled-text {
+  @include body-text;
+  color: $text-light;
+}
+
+// ============================================
+// TRUNCATION UTILITIES
+// ============================================
+
+// Single line truncation
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Multi-line truncation
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ============================================
+// EXPORT SUMMARY
+// ============================================
+
+// Available variables for use in components:
+// Families: $font-family-primary, $font-family-secondary, $font-family-mono
+// Weights: $font-weight-light through $font-weight-extrabold
+// Sizes: $font-size-xs through $font-size-5xl
+// Line heights: $line-height-tight through $line-height-loose
+// Heading sizes: $h1-font-size through $h6-font-size
+// Body sizes: $body-font-size, $body-lg-font-size, $body-sm-font-size
+// Mixins: @include heading-h1, @include body-text, @include form-label, etc.

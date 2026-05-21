@@ -1,0 +1,433 @@
+// ============================================
+// TOP-MENU COMPONENT - RESPONSIVE & DESIGN FIX
+// ============================================
+
+// Design System Variables
+$primary-color: #fec200;
+$primary-dark: #e5b000;
+$primary-light: rgba(254, 194, 0, 0.1);
+$secondary-color: #3a9dc4;
+$text-primary: #1a1a1a;
+$text-secondary: #666666;
+$bg-primary: #f8f9fb;
+$bg-white: #ffffff;
+$border-color: #e0e0e0;
+
+// Spacing
+$space-xs: 8px;
+$space-sm: 12px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+
+// Border Radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+// Breakpoints
+$mobile: 599px;
+$tablet: 768px;
+$desktop: 1024px;
+
+// ============================================
+// HEADER CONTAINER - MAIN WRAPPER
+// ============================================
+
+.header-container {
+  width: calc(100% - 20%); // 10% margin left and right
+  margin: 0 auto;
+  margin-left: 10%;
+  margin-right: 10%;
+  background: var(--ts-header-bg, linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%));
+  padding: $space-lg 0px;
+  border-bottom: 2px solid var(--ts-accent, #fec200);
+  border-radius: 10px;
+  box-shadow: $shadow-sm;
+  position: relative;
+  top: 0;
+  z-index: 100;
+
+  @media (max-width: $tablet) {
+    width: calc(100% - 15%); // 7.5% margin on tablet
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    padding: $space-md $space-sm;
+  }
+
+  @media (max-width: $mobile) {
+    width: 100%; // Full width on mobile
+    margin-left: 0;
+    margin-right: 0;
+    padding: $space-sm;
+    border-bottom: 2px solid $primary-color;
+  }
+}
+
+// ============================================
+// TOP MENU - MAIN FLEX LAYOUT
+// ============================================
+
+.top-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 80px;
+  gap: $space-lg;
+
+  @media (max-width: $tablet) {
+    min-height: 70px;
+    gap: $space-md;
+  }
+
+  @media (max-width: $mobile) {
+    min-height: auto;
+    flex-wrap: wrap;
+    gap: $space-sm;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+// ============================================
+// LOGO SECTION - LEFT
+// ============================================
+
+.logo-section {
+  flex: 0 0 auto;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: $tablet) {
+    padding: $space-sm;
+  }
+
+  @media (max-width: $mobile) {
+    padding: $space-xs;
+  }
+
+  img {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: $tablet) {
+      width: 120px;
+    }
+
+    @media (max-width: $mobile) {
+      width: 100px;
+    }
+  }
+}
+
+// ============================================
+// RESTAURANT NAME SECTION - CENTER
+// ============================================
+
+.restaurant-name-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 $space-lg;
+  min-width: 0; // Prevent overflow
+
+  @media (max-width: $tablet) {
+    padding: 0 $space-md;
+  }
+
+  @media (max-width: $mobile) {
+    flex: 1 1 100%;
+    padding: 0 $space-sm;
+    order: 3;
+  }
+}
+
+.restaurant-name {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: linear-gradient(to right, var(--ts-accent, #fec200), var(--ts-accent-2, #e5b000));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.2rem;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  @media (max-width: $tablet) {
+    font-size: 1.8rem;
+    letter-spacing: 0.1rem;
+  }
+
+  @media (max-width: $mobile) {
+    font-size: 1.4rem;
+    letter-spacing: 0.05rem;
+  }
+}
+
+// ============================================
+// RIGHT SECTION - SIGN OUT + TOGGLE
+// ============================================
+
+.right-section {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-md;
+  padding-right: $space-md;
+
+  @media (max-width: $tablet) {
+    padding-right: $space-sm;
+    gap: $space-sm;
+  }
+
+  @media (max-width: $mobile) {
+    padding: 0;
+    width: 100%;
+    order: 2;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-sm;
+  }
+}
+
+// ============================================
+// BUTTON STYLES
+// ============================================
+
+.btn,
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: $space-sm $space-lg;
+  display: inline-block;
+  border-radius: $radius-full;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: $tablet) {
+    padding: $space-xs $space-md;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: $mobile) {
+    padding: $space-xs $space-sm;
+    font-size: 0.85rem;
+    flex: 0 1 auto;
+  }
+}
+
+.btn--green {
+  background-color: var(--ts-action, #3a9dc4);
+  color: var(--ts-text-on-action, #ffffff);
+  border: 2px solid transparent;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+    color: $bg-white;
+  }
+
+  &:focus {
+    outline: 2px solid $secondary-color;
+    outline-offset: 2px;
+  }
+}
+
+// ============================================
+// SERVICE TOGGLE SECTION
+// ============================================
+
+.service-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-sm;
+
+  @media (max-width: $mobile) {
+    flex-direction: row;
+    gap: $space-sm;
+    align-items: center;
+  }
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-md;
+  background: var(--ts-toggle-bg, rgba(254, 194, 0, 0.08));
+  border-radius: $radius-md;
+  border: 1px solid var(--ts-toggle-border, rgba(254, 194, 0, 0.25));
+
+  @media (max-width: $mobile) {
+    gap: $space-xs;
+    padding: $space-xs $space-sm;
+  }
+}
+
+// ============================================
+// TOGGLE SWITCH STYLES
+// ============================================
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  cursor: pointer;
+
+  @media (max-width: $mobile) {
+    width: 45px;
+    height: 24px;
+  }
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .toggle-slider {
+      background-color: #4caf50;
+    }
+
+    &:checked + .toggle-slider:before {
+      transform: translateX(24px);
+
+      @media (max-width: $mobile) {
+        transform: translateX(21px);
+      }
+    }
+
+    &:focus + .toggle-slider {
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+    }
+  }
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 26px;
+  transition: all 0.4s ease;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: $bg-white;
+    border-radius: 50%;
+    transition: transform 0.4s ease;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.toggle-label {
+  font-size: 13px;
+  color: var(--ts-muted-text, #666666);
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+
+  @media (max-width: $mobile) {
+    font-size: 12px;
+  }
+}
+
+.service-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ts-muted-text, #666666);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  @media (max-width: $mobile) {
+    display: none;
+  }
+}
+
+
+// ============================================
+// ACCESSIBILITY & STATES
+// ============================================
+
+button:focus,
+input:focus {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// ============================================
+// UTILITY CLASS OVERRIDES
+// ============================================
+
+.header-container[style*="padding-bottom: 0px"] {
+  padding-bottom: $space-lg !important;
+
+  @media (max-width: $tablet) {
+    padding-bottom: $space-md !important;
+  }
+
+  @media (max-width: $mobile) {
+    padding-bottom: $space-sm !important;
+  }
+}
+
+// ============================================
+// END TOP-MENU COMPONENT
+// ============================================

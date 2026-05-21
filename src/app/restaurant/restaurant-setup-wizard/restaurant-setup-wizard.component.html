@@ -1,0 +1,337 @@
+<div class="wizard-container">
+            <mat-horizontal-stepper #stepper [selectedIndex]="currentStep" [linear]="false" (selectionChange)="onStepChange($event)">
+
+                <!-- Step 1: Setup Type Selection -->
+                <mat-step [stepControl]="setupTypeForm" [editable]="true">
+                    <ng-template matStepLabel>Setup</ng-template>
+                    
+                    <form [formGroup]="setupTypeForm">
+                        <div class="step-content">
+                            <h2>Restaurant Setup</h2>
+                            <p>Choose your setup type</p>
+
+                            <!-- ✅ Restaurant ID Display (from localStorage) -->
+                            <div class="restaurant-id-display" style="display: none;">
+                                <mat-icon>info</mat-icon>
+                                <span>Restaurant ID: <strong>{{ restaurantId }}</strong></span>
+                            </div>
+
+                            <!-- Setup Type Radio Group -->
+                            <div style="margin-top: 20px;">
+                                <p><strong>Choose Setup Type</strong></p>
+                                <mat-radio-group formControlName="setupType" class="setup-type-group">
+                                    <mat-radio-button value="quick" class="radio-option">
+                                        <div class="radio-content">
+                                            <strong>Quick Set Up</strong>
+                                            <p class="radio-description">Create Quick Setup with default tables and areas</p>
+                                        </div>
+                                    </mat-radio-button>
+
+                                    <mat-radio-button value="custom" class="radio-option">
+                                        <div class="radio-content">
+                                            <strong>Custom Set Up</strong>
+                                            <p class="radio-description">Create Custom Setup with manually set up areas and tables</p>
+                                        </div>
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button mat-raised-button matStepperPrevious [disabled]="currentStep === 0">
+                                Back
+                            </button>
+                            <button mat-raised-button matStepperNext [disabled]="!setupTypeForm.valid || restaurantId <= 0" color="primary">
+                                Next
+                            </button>
+                        </div>
+                    </form>
+                </mat-step>
+
+                <!-- Step 2: Area Type Selection -->
+                <mat-step [stepControl]="areaTypeForm" [editable]="true">
+                    <ng-template matStepLabel>Area Setup</ng-template>
+                    
+                    <form [formGroup]="areaTypeForm">
+                        <div class="step-content">
+                            <h2>Configure Table Areas</h2>
+                            <p>Choose whether you want to create a single area or multiple areas.</p>
+
+                            <mat-radio-group formControlName="areaType" class="area-type-group">
+                                <mat-radio-button value="single" class="radio-option">
+                                    <div class="radio-content">
+                                        <strong>Single Area</strong>
+                                        <p class="radio-description">Create one area with a name and table count</p>
+                                    </div>
+                                </mat-radio-button>
+
+                                <mat-radio-button value="multiple" class="radio-option">
+                                    <div class="radio-content">
+                                        <strong>Multiple Areas</strong>
+                                        <p class="radio-description">Create multiple areas with names and table counts</p>
+                                    </div>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <div class="step-actions">
+                            <button mat-raised-button matStepperPrevious>
+                                Back
+                            </button>
+                            <button mat-raised-button matStepperNext [disabled]="!areaTypeForm.valid" color="primary">
+                                Next
+                            </button>
+                        </div>
+                    </form>
+                </mat-step>
+
+                <!-- Step 3: Area Configuration (Single or Multiple) -->
+                <mat-step [editable]="true">
+                    <ng-template matStepLabel>Area Details</ng-template>
+
+                    <div class="step-content">
+                        <!-- Single Area Form -->
+                        <form [formGroup]="singleAreaForm" *ngIf="areaType === 'single'">
+                            <h2>Configure Single Area</h2>
+                            <p>Enter the area name and how many tables it should have.</p>
+
+                            <!-- Area Name -->
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Area Name</mat-label>
+                                <input matInput type="text" formControlName="areaName" placeholder="e.g., Main Hall" required>
+                                <mat-error *ngIf="(singleAreaForm.get('areaName')?.touched || singleAreaForm.get('areaName')?.dirty) && singleAreaForm.get('areaName')?.hasError('required')">
+                                    Area name is required
+                                </mat-error>
+                                <mat-error *ngIf="(singleAreaForm.get('areaName')?.touched || singleAreaForm.get('areaName')?.dirty) && singleAreaForm.get('areaName')?.hasError('pattern')">
+                                    Area name cannot be blank
+                                </mat-error>
+                            </mat-form-field>
+
+                            <!-- Number of Tables -->
+                            <mat-form-field appearance="outline" class="full-width">
+                                <mat-label>Number of Tables</mat-label>
+                                <input matInput type="number" formControlName="tableCount" placeholder="e.g., 10" required>
+                                <mat-error *ngIf="(singleAreaForm.get('tableCount')?.touched || singleAreaForm.get('tableCount')?.dirty) && singleAreaForm.get('tableCount')?.hasError('required')">
+                                    Table count is required
+                                </mat-error>
+                                <mat-error *ngIf="(singleAreaForm.get('tableCount')?.touched || singleAreaForm.get('tableCount')?.dirty) && singleAreaForm.get('tableCount')?.hasError('min')">
+                                    Must have at least 1 table
+                                </mat-error>
+                            </mat-form-field>
+
+                            <!-- Info text showing auto-calculated table range -->
+                            <p class="info-text" *ngIf="singleAreaForm.get('areaName')?.value && singleAreaForm.get('tableCount')?.value && singleAreaForm.get('tableCount')?.value > 0">
+                                <mat-icon>info</mat-icon>
+                                <strong>{{ singleAreaForm.get('areaName')?.value }}</strong> will have <strong>{{ getSingleAreaTableRange().count }}</strong> tables
+                                <br>
+                                <small>Table Numbers: <strong>{{ getSingleAreaTableRange().start }} - {{ getSingleAreaTableRange().end }}</strong></small>
+                            </p>
+                        </form>
+
+                        <!-- Multiple Areas Form -->
+                        <form [formGroup]="multipleAreasForm" *ngIf="areaType === 'multiple'">
+                            <h2>Configure Multiple Areas</h2>
+                            <p>Define area names and table counts. Table numbers will be assigned automatically.</p>
+
+                            <div class="areas-list" formArrayName="areas">
+                                <mat-card class="area-card" *ngFor="let area of areasArray.controls; let i = index">
+                                    <mat-card-content [formGroupName]="i">
+                                        <div class="area-header">
+                                            <h3>Area {{ i + 1 }}</h3>
+                                            <button mat-icon-button (click)="removeArea(i)" *ngIf="areasArray.length > 1" color="warn" type="button">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </div>
+
+                                        <!-- Area Name -->
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Area Name</mat-label>
+                                            <input matInput type="text" formControlName="areaName" placeholder="e.g., Ground Floor" required>
+                                            <mat-error *ngIf="(area.get('areaName')?.touched || area.get('areaName')?.dirty) && area.get('areaName')?.hasError('required')">
+                                                Area name is required
+                                            </mat-error>
+                                            <mat-error *ngIf="(area.get('areaName')?.touched || area.get('areaName')?.dirty) && area.get('areaName')?.hasError('pattern')">
+                                                Area name cannot be blank
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <!-- Number of Tables -->
+                                        <mat-form-field appearance="outline" class="full-width">
+                                            <mat-label>Number of Tables</mat-label>
+                                            <input matInput type="number" formControlName="tableCount" placeholder="e.g., 10" required>
+                                            <mat-error *ngIf="(area.get('tableCount')?.touched || area.get('tableCount')?.dirty) && area.get('tableCount')?.hasError('required')">
+                                                Table count is required
+                                            </mat-error>
+                                            <mat-error *ngIf="(area.get('tableCount')?.touched || area.get('tableCount')?.dirty) && area.get('tableCount')?.hasError('min')">
+                                                Must have at least 1 table
+                                            </mat-error>
+                                        </mat-form-field>
+
+                                        <!-- Info text showing auto-calculated table range for this area -->
+                                        <p class="info-text" *ngIf="getMultipleAreasTableRanges()[i]?.areaName && getMultipleAreasTableRanges()[i]?.tableCount > 0">
+                                            <mat-icon>info</mat-icon>
+                                            <strong>{{ getMultipleAreasTableRanges()[i]?.areaName }}</strong>: 
+                                            <strong>{{ getMultipleAreasTableRanges()[i]?.tableCount }}</strong> tables
+                                            <br>
+                                            <small>Table Numbers: <strong>{{ getMultipleAreasTableRanges()[i]?.tableStart }} - {{ getMultipleAreasTableRanges()[i]?.tableEnd }}</strong></small>
+                                        </p>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+
+                            <!-- Summary of all areas -->
+                            <div class="areas-summary" *ngIf="multipleAreasForm.valid && areasArray.length > 0">
+                                <h3>Summary</h3>
+                                <div class="summary-grid">
+                                    <div class="summary-item" *ngFor="let area of getMultipleAreasTableRanges(); let i = index">
+                                        <div class="summary-label">{{ area.areaName }}</div>
+                                        <div class="summary-value">{{ area.tableStart }}-{{ area.tableEnd }}</div>
+                                        <div class="summary-count">({{ area.tableCount }} tables)</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add Area Button -->
+                            <button mat-raised-button (click)="addArea()" color="accent" class="add-area-btn" type="button" [disabled]="!canAddAnotherArea()">
+                                <mat-icon>add</mat-icon>
+                                Add Another Area
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="step-actions">
+                        <button mat-raised-button matStepperPrevious>
+                            Back
+                        </button>
+                        <button mat-raised-button matStepperNext color="primary" [disabled]="!canProceed()" type="button">
+                            Next
+                        </button>
+                    </div>
+                </mat-step>
+
+                <!-- Step 4: Upload Menu Images (Optional) -->
+                <mat-step [stepControl]="imagesForm" [editable]="true">
+                    <ng-template matStepLabel>Upload Menu</ng-template>
+
+                    <form [formGroup]="imagesForm">
+                        <div class="step-content">
+                            <h2>Upload Menu Images</h2>
+                            <p>Upload images of your menu. This is optional.</p>
+
+                            <!-- File Upload Area -->
+                            <div class="file-upload-area">
+                                <input #fileInput type="file" hidden multiple accept="image/*" (change)="onImageSelected($event)">
+                                
+                                <button mat-raised-button (click)="fileInput.click()" color="accent" class="upload-btn" type="button">
+                                    <mat-icon>cloud_upload</mat-icon>
+                                    Choose Images
+                                </button>
+                                
+                                <p class="upload-info">
+                                    <mat-icon>info</mat-icon>
+                                    Select one or more image files (PNG, JPG, etc.)
+                                </p>
+                            </div>
+
+                            <!-- Image Previews -->
+                            <div class="image-previews" *ngIf="uploadedImagePreviews.length > 0">
+                                <h3>Selected Images ({{ uploadedImagePreviews.length }})</h3>
+                                
+                                <div class="preview-grid">
+                                    <div class="preview-item" *ngFor="let preview of uploadedImagePreviews; let i = index">
+                                        <img [src]="preview" alt="Preview {{ i + 1 }}">
+                                        <p>Image {{ i + 1 }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- No Images Message -->
+                            <div class="no-images" *ngIf="uploadedImagePreviews.length === 0">
+                                <mat-icon>image_not_supported</mat-icon>
+                                <p>No images selected yet</p>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button mat-raised-button matStepperPrevious type="button">
+                                Back
+                            </button>
+                            <button mat-raised-button (click)="submitForm()" color="primary" [disabled]="isSubmitting" type="button">
+                                <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
+                                <span *ngIf="!isSubmitting">Create Restaurant Setup</span>
+                                <span *ngIf="isSubmitting">Creating...</span>
+                            </button>
+                        </div>
+                    </form>
+                </mat-step>
+
+            </mat-horizontal-stepper>
+</div>
+
+<!-- QR Code Modal Popup -->
+<div class="qr-modal-overlay" *ngIf="showQRPopup" (click)="closeQRCodePopup()">
+  <div class="qr-modal-content" (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="qr-modal-header">
+      <h2>Restaurant Setup Complete! 🎉</h2>
+      <button class="close-btn" (click)="closeQRCodePopup()" mat-icon-button>
+        <mat-icon>X</mat-icon>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="qr-modal-body">
+      <p class="success-message">Your restaurant areas and tables have been created successfully!</p>
+      
+      <!-- QR Code Display -->
+      <div class="qr-code-container">
+      <!-- ✅ CORRECT -->
+<qr-code 
+  [value]="qrData" 
+  [size]="250" canvas="true">
+</qr-code>
+      </div>
+
+      <!-- QR Info -->
+      <div class="qr-info">
+        <mat-icon>info</mat-icon>
+        <p>Scan this QR code to access your restaurant on the web app</p>
+      </div>
+
+      <!-- QR URL Display -->
+      <div class="qr-url-section" style="display: none;">
+        <label>QR Code URL:</label>
+        <div class="qr-url-box">
+          <code>{{ qrData }}</code>
+          <button mat-icon-button class="copy-btn" (click)="copyQRURL()" matTooltip="Copy URL">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Restaurant Info -->
+      <div class="restaurant-info" style="display: none;">
+        <div class="info-item">
+          <span class="label">Restaurant ID:</span>
+          <span class="value">{{ restaurantId }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="qr-modal-footer">
+      <button mat-raised-button (click)="downloadQRCode()" color="accent" class="action-btn" >
+        <mat-icon>download</mat-icon>
+        Download QR Code
+      </button>
+      <button mat-raised-button (click)="copyQRURL()" class="action-btn" style="display: none;">
+        <mat-icon>content_copy</mat-icon>
+        Copy URL
+      </button>
+      <button mat-raised-button (click)="closeQRCodePopup()" color="primary" class="action-btn">
+        <mat-icon>done</mat-icon>
+        Done
+      </button>
+    </div>
+  </div>
+</div>

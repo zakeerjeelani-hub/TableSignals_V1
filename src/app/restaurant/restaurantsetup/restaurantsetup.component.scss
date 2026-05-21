@@ -1,0 +1,22 @@
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+  }
+  
+  
+  .heading-secondary {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: inline-block;
+    
+    background-image: linear-gradient(to right, #fec200, #e0a201);
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: .2rem;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+}

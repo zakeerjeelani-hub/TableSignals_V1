@@ -1,0 +1,709 @@
+<div class="page-main">
+  <header class="header-ribbon">
+    <div class="header-left">
+      <h1 class="page-title">Manage QR</h1>
+    </div>
+    <div class="header-right">
+      <app-back-button></app-back-button>
+    </div>
+  </header>
+
+  <div class="qr-selection-container">
+
+    <!-- Info Banner -->
+    <div class="info-banner" style="display: none;">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <div class="info-text">
+        <p class="info-title">Choose Your QR Distribution Method</p>
+        <p class="info-description">Select from different QR code options based on your restaurant's needs. You can manage multiple QR codes simultaneously.</p>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="cards-grid">
+
+      <!-- Card 1: Restaurant-Wide QR -->
+      <div class="qr-card" (click)="selectOption('restaurant')"
+           [class.active]="selectedOption === 'restaurant'"
+           [@cardHover]>
+        <div class="card-header">
+          <div class="card-icon restaurant-icon" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <div class="badge new-badge">Restaurant-Wide QR</div>
+        </div>
+        <div class="card-body">
+          <p class="card-description">Single QR code that lets customers choose their table on arrival</p>
+          <div class="features-list">
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Single QR code</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Customer table selection</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Easy distribution</span>
+            </div>
+          </div>
+          <div class="use-case">
+            <p class="use-case-label">Best for:</p>
+            <p class="use-case-text">Entrance signage, social media, or QR code at reception desk</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="showQRCodePopup()">
+            Generate Restaurant QR
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: Table-Specific QR -->
+      <div class="qr-card" (click)="selectOption('table')"
+           [class.active]="selectedOption === 'table'"
+           [@cardHover]>
+        <div class="card-header">
+          <div class="card-icon table-icon" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <line x1="12" y1="3" x2="12" y2="21"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+            </svg>
+          </div>
+          <div class="badge new-badge" style="font: bold;">Individual Table QR</div>
+        </div>
+        <div class="card-body">
+          <p class="card-description">Generate separate QR codes for each table in your restaurant</p>
+          <div class="features-list">
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Unique code per table</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Direct table connection</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Easy table identification</span>
+            </div>
+          </div>
+          <div class="use-case">
+            <p class="use-case-label">Best for:</p>
+            <p class="use-case-text">Restaurants wanting to display QR codes on physical tables or printed menus</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="handleTableQR()">
+            Generate Table QRs
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: VIP Member QR -->
+      <div class="qr-card" (click)="selectOption('vip')"
+           [class.active]="selectedOption === 'vip'"
+           [@cardHover]>
+        <div class="card-header">
+          <div class="card-icon vip-icon" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+          </div>
+          <div class="badge new-badge">VIP Member QR</div>
+        </div>
+        <div class="card-body">
+          <p class="card-description">Exclusive QR for VIP registration and member benefits program</p>
+          <div class="features-list">
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>VIP registration flow</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Special deals &amp; offers</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Member loyalty rewards</span>
+            </div>
+          </div>
+          <div class="use-case">
+            <p class="use-case-label">Best for:</p>
+            <p class="use-case-text">Attracting premium customers with exclusive offers and rewards program</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="handleVipQR()">
+            Generate VIP QR
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4: Custom QR -->
+      <div class="qr-card" (click)="selectOption('custom')"
+           [class.active]="selectedOption === 'custom'"
+           [@cardHover]>
+        <div class="card-header">
+          <div class="card-icon custom-icon" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path>
+            </svg>
+          </div>
+          <div class="badge new-badge">Custom QR</div>
+        </div>
+        <div class="card-body">
+          <p class="card-description">Create custom QR codes with personalized request types and descriptions</p>
+          <div class="features-list">
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Custom request types</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Add descriptions</span>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+              </svg>
+              <span>Flexible configuration</span>
+            </div>
+          </div>
+          <div class="use-case">
+            <p class="use-case-label">Best for:</p>
+            <p class="use-case-text">Creating QR codes for specific use cases, promotions, or custom flows</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="handleCustomQR()">
+            Generate Custom QR
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 5: Coming Soon -->
+      <div class="qr-card coming-soon" [@cardHover]>
+        <div class="card-header">
+          <div class="card-icon locked-icon" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="badge feature-badge">Coming Soon</div>
+        </div>
+        <div class="card-body">
+          <p class="card-description">Additional QR distribution methods coming soon</p>
+          <div class="features-list placeholder-features">
+            <div class="feature-item placeholder">
+              <div class="placeholder-box"></div>
+            </div>
+            <div class="feature-item placeholder">
+              <div class="placeholder-box"></div>
+            </div>
+            <div class="feature-item placeholder">
+              <div class="placeholder-box"></div>
+            </div>
+          </div>
+          <div class="use-case">
+            <p class="use-case-label">Stay tuned for:</p>
+            <p class="use-case-text">Event QR codes, promotion codes, loyalty programs, and more</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-disabled" disabled>
+            Coming Soon
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Info Section -->
+    <div class="bottom-section" style="display: none;">
+      <div class="info-cards-row">
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+          </div>
+          <div class="info-card-content">
+            <h3 class="info-card-title">Manage Multiple QRs</h3>
+            <p class="info-card-text">You can generate and manage multiple QR types simultaneously</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+          </div>
+          <div class="info-card-content">
+            <h3 class="info-card-title">Update Anytime</h3>
+            <p class="info-card-text">Edit or regenerate your QR codes whenever needed</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+          </div>
+          <div class="info-card-content">
+            <h3 class="info-card-title">Download &amp; Print</h3>
+            <p class="info-card-text">Download as image or PDF for printing on menus and signage</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================
+     RESTAURANT-WIDE QR MODAL
+     ============================================ -->
+<div class="qr-modal-overlay1" *ngIf="showQRPopup" (click)="closeSingleQRCodePopup()">
+  <div class="qr-modal-content1" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="qr-modal-header">
+      <h2>QR Set Up</h2>
+      <button class="close-btn" (click)="closeSingleQRCodePopup()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="qr-modal-body">
+
+      <!-- LEFT: QR display -->
+      <div class="qr-left-col">
+        <p class="success-message">QR for: {{ restaurantname }}</p>
+
+        <!-- QR Code Display -->
+        <div class="qr-code-container">
+          <qr-code
+            [value]="SingleqrData"
+            [size]="250"
+            canvas="true">
+          </qr-code>
+        </div>
+
+        <!-- QR Info -->
+        <div class="qr-info">
+          <p>Scan this QR code to access your restaurant on the app</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Print controls -->
+      <div class="qr-right-col">
+        <!-- Print Section -->
+        <div class="print-section">
+        <h3 class="print-section-title">Print QR Labels</h3>
+
+        <!-- Label Sheet Dropdown -->
+        <div class="print-form-group">
+          <label for="qrSizeSelect">Label sheet size</label>
+          <select
+            id="qrSizeSelect"
+            [(ngModel)]="selectedQRSize"
+            (change)="onQRSizeChange()"
+            class="form-control">
+            <option *ngFor="let size of qrSizes" [ngValue]="size.avery">
+              {{ size.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Live Preview Card (shown once a size is selected) -->
+        <div class="label-preview-card" *ngIf="selectedLayout">
+          <div class="label-preview-dots"
+               [style.grid-template-columns]="'repeat(' + selectedLayout.cols + ', 8px)'">
+            <div class="label-preview-dot"
+                 *ngFor="let d of getDotArray(selectedLayout.rows * selectedLayout.cols)">
+            </div>
+          </div>
+          <div class="label-preview-info">
+            <div class="label-preview-name">
+              {{ selectedLayout.avery.startsWith('S') ? 'Spartan' : 'Avery' }} {{ selectedLayout.avery }}
+            </div>
+            <div class="label-preview-size">
+              {{ selectedLayout.labelW / 96 | number:'1.0-1' }}" ×
+              {{ selectedLayout.labelH / 96 | number:'1.0-1' }}" square labels
+            </div>
+            <div class="label-preview-grid">
+              {{ selectedLayout.cols }} cols × {{ selectedLayout.rows }} rows
+              · {{ selectedLayout.cols * selectedLayout.rows }} per sheet
+            </div>
+            <a class="label-preview-link"
+               *ngIf="!selectedLayout.avery.startsWith('S')"
+               href="https://www.avery.com/templates/{{ selectedLayout.avery }}"
+               target="_blank"
+               rel="noopener noreferrer">
+              View Avery template ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Copies + page count badge -->
+        <div class="print-form-group">
+          <label>No. Of QRs
+            <span class="copies-badge" *ngIf="selectedQRSize">{{ getPageInfo() }}</span>
+          </label>
+          <div class="copies-stepper">
+            <button class="stepper-btn" (click)="decrementCopies()" type="button"
+                    [disabled]="isPrinting">−</button>
+            <input
+              type="number"
+              [(ngModel)]="numberOfQRCopies"
+              class="stepper-input"
+              min="1"
+              max="500"
+              [disabled]="isPrinting" />
+            <button class="stepper-btn" (click)="incrementCopies()" type="button"
+                    [disabled]="isPrinting">+</button>
+          </div>
+        </div>
+
+        <!-- Margin Fine-tune (always visible, compact 3-col row) -->
+        <div class="print-form-group" *ngIf="selectedQRSize">
+          <label>
+            <mat-icon class="tune-icon">tune</mat-icon>
+            Margin fine-tune
+            <span class="margin-sublabel">pre-filled from Avery spec — adjust only if misaligned</span>
+          </label>
+          <div class="margin-row">
+            <div class="margin-field">
+              <label for="marginTop">Top (px)</label>
+              <input type="number" id="marginTop"
+                     [(ngModel)]="extraMarginTop"
+                     class="form-control margin-input"
+                     [disabled]="isPrinting" />
+            </div>
+            <div class="margin-field">
+              <label for="marginLeft">Left (px)</label>
+              <input type="number" id="marginLeft"
+                     [(ngModel)]="extraMarginLeft"
+                     class="form-control margin-input"
+                     [disabled]="isPrinting" />
+            </div>
+            <div class="margin-field">
+              <label for="marginBetween">Gap (px)</label>
+              <input type="number" id="marginBetween"
+                     [(ngModel)]="extraMarginBetween"
+                     class="form-control margin-input"
+                     [disabled]="isPrinting" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Print Button -->
+        <button
+          class="btn-print"
+          (click)="printRestaurantQR()"
+          [disabled]="!selectedQRSize || isPrinting">
+
+          <!-- Spinner shown while printing -->
+          <mat-spinner
+            *ngIf="isPrinting"
+            diameter="18"
+            color="accent">
+          </mat-spinner>
+
+          <!-- Icon shown when idle -->
+          <mat-icon *ngIf="!isPrinting">print</mat-icon>
+
+          {{ isPrinting ? 'Preparing print...' : 'Print QR Labels' }}
+        </button>
+
+      </div><!-- /.print-section -->
+      </div><!-- /.qr-right-col -->
+    </div><!-- /.qr-modal-body -->
+
+    <!-- Footer -->
+    <div class="qr-modal-footer">
+
+      <!-- Download button with loader -->
+      <button
+        mat-raised-button
+        (click)="downloadQRCode()"
+        color="accent"
+        class="action-btn"
+        [disabled]="isDownloading">
+
+        <mat-spinner *ngIf="isDownloading" diameter="18"></mat-spinner>
+        {{ isDownloading ? 'Downloading...' : 'Download QR Code' }}
+      </button>
+
+      <button mat-raised-button color="primary" (click)="closeSingleQRCodePopup()" class="action-btn">
+        Done
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================
+     CUSTOM QR MODAL
+     ============================================ -->
+<div class="qr-modal-overlay" *ngIf="showCustomQRModal" (click)="closeCustomQRModal()">
+  <div class="qr-modal-content custom-qr-modal" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="qr-modal-header">
+      <div class="cqr-header-text">
+        <h2>{{ editingQRId ? 'Edit Custom QR' : 'Custom QR Generator' }}</h2>
+        <p class="cqr-subtitle">{{ editingQRId ? 'Update the details for this QR code' : 'Create a QR code for any request type' }}</p>
+      </div>
+      <button class="close-btn" (click)="closeCustomQRModal()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="qr-modal-body custom-qr-body">
+
+      <!-- Error Banner -->
+      <div *ngIf="customQRError" class="error-message">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ customQRError }}</span>
+      </div>
+
+      <!-- ── Success / QR Display ── -->
+      <div *ngIf="customQRSuccess && generatedCustomQRData" class="cqr-success-card">
+        <div class="cqr-success-header">
+          <mat-icon class="cqr-check-icon">check_circle</mat-icon>
+          <span>Custom QR generated successfully!</span>
+        </div>
+        <div class="cqr-code-wrap">
+          <qr-code [value]="generatedCustomQRData" [size]="220" canvas="true"></qr-code>
+        </div>
+        <div class="cqr-meta-row">
+          <div class="cqr-meta-item">
+            <span class="cqr-meta-label">QR ID</span>
+            <span class="cqr-meta-value">#{{ generatedCustomQRId }}</span>
+          </div>
+          <div class="cqr-meta-divider"></div>
+          <div class="cqr-meta-item">
+            <span class="cqr-meta-label">Restaurant Info</span>
+            <span class="cqr-meta-value">{{ customQRForm.isRestaurantInfo ? 'Included' : 'Not included' }}</span>
+          </div>
+        </div>
+        <p class="cqr-scan-hint">Scan this code to route customers directly to your request flow</p>
+      </div>
+
+      <!-- ── Form + History side by side ── -->
+      <div *ngIf="!customQRSuccess" class="cqr-body-cols">
+
+        <!-- Left: Form -->
+        <div class="cqr-form-col">
+
+          <div *ngIf="isLoadingRequestTypes" class="loading-container">
+            <mat-spinner diameter="36"></mat-spinner>
+            <p>Loading request types&hellip;</p>
+          </div>
+
+          <div *ngIf="!isLoadingRequestTypes" class="form-content">
+
+            <!-- Request Type -->
+            <div class="cqr-field">
+              <label class="cqr-label" for="requestType">
+                Request Type <span class="cqr-required">*</span>
+              </label>
+              <div class="cqr-select-wrap">
+                <select
+                  id="requestType"
+                  [(ngModel)]="customQRForm.requestTypeId"
+                  (change)="onRequestTypeChange(customQRForm.requestTypeId)"
+                  [disabled]="isSavingCustomQR"
+                  class="cqr-select">
+                  <option [value]="null">— Select a request type —</option>
+                  <option *ngFor="let type of requestTypes; trackBy: trackByRequestTypeId" [value]="type.requestTypeID">
+                    {{ type.requestName }}
+                  </option>
+                </select>
+                <mat-icon class="cqr-select-arrow">expand_more</mat-icon>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="cqr-field">
+              <label class="cqr-label" for="description">
+                Description
+                <span *ngIf="customQRForm.isRestaurantInfo" class="cqr-required">*</span>
+                <span *ngIf="!customQRForm.isRestaurantInfo" class="cqr-optional">(optional)</span>
+              </label>
+              <textarea
+                id="description"
+                [(ngModel)]="customQRForm.description"
+                placeholder="Describe what this QR code does&hellip;"
+                class="cqr-textarea"
+                rows="3"
+                [disabled]="isDescriptionDisabled() || isSavingCustomQR">
+              </textarea>
+              <span *ngIf="isDescriptionInvalid()" class="cqr-field-error">
+                <mat-icon>warning</mat-icon> Description is required when Restaurant Info is selected
+              </span>
+            </div>
+
+            <!-- Toggle -->
+            <label class="cqr-toggle-row" for="isRestaurantInfo">
+              <span class="cqr-toggle-text">
+                <span class="cqr-toggle-title">Include Restaurant Info</span>
+                <span class="cqr-toggle-sub">Embed restaurant details inside the QR payload</span>
+              </span>
+              <span class="cqr-toggle-switch">
+                <input
+                  id="isRestaurantInfo"
+                  type="checkbox"
+                  [(ngModel)]="customQRForm.isRestaurantInfo"
+                  [disabled]="isSavingCustomQR"
+                  class="cqr-toggle-input">
+                <span class="cqr-toggle-track"></span>
+              </span>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- Right: History panel (only when there are existing QRs and not editing) -->
+        <div class="cqr-history-col"
+             *ngIf="!isLoadingRequestTypes && generatedRequestTypes.length > 0 && !editingQRId">
+          <div class="cqr-history-header">
+            <mat-icon>history</mat-icon>
+            <span>Previously generated</span>
+          </div>
+          <div class="cqr-history-list">
+            <div *ngFor="let type of generatedRequestTypes; trackBy: trackByRequestTypeId" class="cqr-list-item">
+              <div class="cqr-list-icon">
+                <mat-icon>qr_code_2</mat-icon>
+              </div>
+              <div class="cqr-list-info">
+                <span class="cqr-list-name">{{ type.requestName }}</span>
+                <span *ngIf="type.description" class="cqr-list-desc">{{ type.description }}</span>
+              </div>
+              <span *ngIf="type.isRestaurantInfo" class="cqr-badge-pill">Info</span>
+              <div class="cqr-list-actions">
+                <button class="cqr-icon-btn" (click)="generateQRFromList(type)" [disabled]="isSavingCustomQR" title="Regenerate">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+                <button class="cqr-icon-btn" (click)="startEditQR(type)" [disabled]="isSavingCustomQR" title="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="qr-modal-footer cqr-footer">
+
+      <!-- Primary action -->
+      <button
+        *ngIf="!customQRSuccess"
+        mat-raised-button
+        color="primary"
+        (click)="saveCustomQR()"
+        [disabled]="isSavingCustomQR || isLoadingRequestTypes"
+        class="action-btn cqr-btn-primary">
+        <mat-spinner *ngIf="isSavingCustomQR" diameter="18"></mat-spinner>
+        <mat-icon *ngIf="!isSavingCustomQR">{{ editingQRId ? 'save' : 'qr_code' }}</mat-icon>
+        {{ isSavingCustomQR ? (editingQRId ? 'Updating…' : 'Generating…') : (editingQRId ? 'Update QR' : 'Generate QR') }}
+      </button>
+
+      <button
+        *ngIf="customQRSuccess"
+        mat-raised-button
+        color="primary"
+        (click)="downloadCustomQRCode()"
+        class="action-btn cqr-btn-primary"
+        [disabled]="isDownloading">
+        <mat-spinner *ngIf="isDownloading" diameter="18"></mat-spinner>
+        <mat-icon *ngIf="!isDownloading">download</mat-icon>
+        {{ isDownloading ? 'Downloading…' : 'Download QR' }}
+      </button>
+
+      <!-- Secondary actions -->
+      <button
+        *ngIf="customQRSuccess"
+        mat-stroked-button
+        (click)="resetCustomQRForm()"
+        class="action-btn">
+        <mat-icon>add</mat-icon> Create Another
+      </button>
+
+      <button
+        *ngIf="editingQRId && !customQRSuccess"
+        mat-stroked-button
+        (click)="cancelEditQR()"
+        [disabled]="isSavingCustomQR"
+        class="action-btn">
+        Cancel Edit
+      </button>
+
+      <button
+        *ngIf="!editingQRId || customQRSuccess"
+        mat-stroked-button
+        (click)="closeCustomQRModal()"
+        class="action-btn">
+        Close
+      </button>
+    </div>
+
+  </div>
+</div>

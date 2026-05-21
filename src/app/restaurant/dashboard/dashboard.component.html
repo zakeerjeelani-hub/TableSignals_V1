@@ -1,0 +1,310 @@
+<div class="dashboard" >
+  <!-- Success Message -->
+  <app-success-message
+    *ngIf="statusSuccess"
+    [message]="'Request Completed'">
+  </app-success-message>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Compact Header Ribbon -->
+    <div class="dashboard-header-ribbon">
+      <div class="ribbon-left">
+        <h1 class="page-title">Dashboard</h1>
+      </div>
+
+      <div class="ribbon-center">
+        <span class="vip-stat-inline">
+          <span class="vip-label">Total VIPs:</span>
+          <span class="vip-count">{{ totalVIPMembers }}</span>
+        </span>
+        <span class="vip-stat-inline">
+          <span class="vip-label">New:</span>
+          <span class="vip-count">{{ vipMembersToday }}</span>
+        </span>
+      </div>
+
+      <div class="ribbon-right">
+        <time class="current-date">{{ currentDate | date: 'MMM d, hh:mm a' }}</time>
+        <app-back-button ></app-back-button>
+      </div>
+    </div>
+
+    <!-- Filters & Legend in Single Row -->
+    <div class="filters-and-legend">
+      <div class="filters-section">
+        <mat-form-field appearance="outline" class="filter-field-compact">
+          <mat-label>Area</mat-label>
+          <mat-select
+            [value]="selectedArea"
+            (selectionChange)="onAreaChange($event)"
+            aria-label="Select area to filter dashboard">
+            <mat-option value="">All</mat-option>
+            <mat-option *ngFor="let area of areas; trackBy: trackByAreaId" [value]="area.areaName">
+              {{ area.areaName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field-compact">
+          <mat-label>Status</mat-label>
+          <mat-select
+            [value]="selectedStatus"
+            (selectionChange)="onStatusChange($event)"
+            aria-label="Filter by request status">
+            <mat-option value="All">All</mat-option>
+            <mat-option value="In-Progress">In-Progress</mat-option>
+            <mat-option value="Completed">Completed</mat-option>
+            <mat-option value="Not-Attended">Not Attended</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Color Legend -->
+      <div class="color-legend-compact">
+        <div
+          *ngFor="let color of colorDescriptions; trackBy: trackByColor"
+          class="legend-item-compact">
+          <div
+            class="legend-box-compact"
+            [style.background-color]="color.color"
+            [attr.aria-label]="'Requests ' + color.description">
+            {{ color.count }}
+          </div>
+          <span class="legend-label-compact">{{ color.description }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Section (More Space) -->
+    <div class="table-wrapper">
+      <div class="table-container">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="dashboard-table"
+          role="grid"
+          aria-label="Restaurant requests dashboard table">
+
+          <!-- Membership Code Column -->
+          <ng-container matColumnDef="membershipCode">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="column-header">
+              ⭐
+            </th>
+            <td mat-cell *matCellDef="let element" class="column-cell">
+              <span *ngIf="element.membershipCode && element.membershipCode.trim()" class="vip-indicator">
+                ⭐
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Request Time Column -->
+          <ng-container matColumnDef="requestTime">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="column-header">
+              Time
+            </th>
+            <td mat-cell *matCellDef="let element" class="column-cell">
+              {{ element.requestTime | date: 'hh:mm:ss a' }}
+            </td>
+          </ng-container>
+
+          <!-- Area Name Column -->
+          <ng-container matColumnDef="areaName">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="column-header">
+              Area
+            </th>
+            <td mat-cell *matCellDef="let element" class="column-cell">
+              {{ element.areaName }}
+            </td>
+          </ng-container>
+
+          <!-- Table Name Column -->
+          <ng-container matColumnDef="tableName">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="column-header">
+              Table
+            </th>
+            <td mat-cell *matCellDef="let element" class="column-cell">
+              {{ element.tableName }}
+            </td>
+          </ng-container>
+
+          <!-- Request Name Column -->
+          <ng-container matColumnDef="requestName">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="column-header">
+              Request
+            </th>
+            <td mat-cell *matCellDef="let element" class="column-cell">
+              <div class="request-name-cell">
+                <span class="request-name">{{ element.requestName }}</span>
+                <button
+                  *ngIf="element.customDescription && element.customDescription !== ''"
+                  mat-icon-button
+                  class="info-button"
+                  (click)="showPopup(element.customDescription, $event)"
+                  [matTooltip]="element.customDescription"
+                  aria-label="Show request details">
+                  <img
+                    src="assets/images/Info.png"
+                    alt="Request details"
+                    class="info-icon">
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Time Difference Column -->
+          <ng-container matColumnDef="timeDifference">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              class="column-header">
+              Timer
+            </th>
+            <td mat-cell *matCellDef="let element" class="column-cell">
+              <button
+                class="timer-button"
+                [matTooltip]="element.requestCompletedDate"
+                aria-label="Request timer">
+                {{ element.timeDifference }}
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              class="column-header">
+              Action
+            </th>
+            <td mat-cell *matCellDef="let element" class="column-cell action-cell">
+              <!-- Status Badge for Completed/Not Attended -->
+              <ng-container *ngIf="element.color === 'N/A'">
+                <span
+                  *ngIf="!element.status"
+                  class="status-badge status-completed"
+                  role="status"
+                  aria-label="Request completed">
+                  Completed
+                </span>
+                <span
+                  *ngIf="element.status"
+                  class="status-badge status-not-attended"
+                  role="status"
+                  aria-label="Request not attended">
+                  Not Attended
+                </span>
+              </ng-container>
+
+              <!-- Action Buttons -->
+              <ng-container *ngIf="element.color !== 'N/A'">
+                <button
+                  class="action-button"
+                  (click)="completeUserRequest(element)"
+                  [attr.aria-label]="'Mark request for ' + element.tableName + ' as complete'"
+                  [ngSwitch]="element.color">
+
+                  <img
+                    *ngSwitchCase="'#90EE90'"
+                    src="assets/images/green.png"
+                    alt="Mark complete (0-5 min)"
+                    class="action-icon">
+
+                  <img
+                    *ngSwitchCase="'#FFFF00'"
+                    src="assets/images/yellow.png"
+                    alt="Mark complete (5-10 min)"
+                    class="action-icon">
+
+                  <img
+                    *ngSwitchCase="'#F95055'"
+                    src="assets/images/red.png"
+                    alt="Mark complete (10-15 min)"
+                    class="action-icon">
+                </button>
+              </ng-container>
+            </td>
+          </ng-container>
+
+          <!-- Table Header & Rows -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-data-row"></tr>
+        </table>
+      </div>
+
+      <!-- Paginator -->
+      <mat-paginator
+        [pageSizeOptions]="[25, 50, 100]"
+        aria-label="Select page of requests">
+      </mat-paginator>
+    </div>
+  </div>
+
+  <!-- Popup Modal -->
+  <div
+    *ngIf="popupVisible"
+    class="popup-overlay"
+    (click)="closePopup()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Request details popup">
+
+    <div
+      class="popup-content"
+      (click)="$event.stopPropagation()">
+
+      <!-- Close Button -->
+      <button
+        class="popup-close"
+        (click)="closePopup()"
+        aria-label="Close popup">
+        ✕
+      </button>
+
+      <!-- Popup Header -->
+      <div class="popup-header">
+        <img
+          src="assets/images/AlmostThere.png"
+          alt="Request icon"
+          class="popup-icon">
+        <h2 class="popup-title">Request Details</h2>
+      </div>
+
+      <!-- Popup Description -->
+      <div class="popup-description">
+        <p>{{ customDescription }}</p>
+      </div>
+
+      <!-- Popup Footer -->
+      <button
+        class="popup-footer-button"
+        (click)="closePopup()"
+        aria-label="Close popup">
+        Close
+      </button>
+    </div>
+  </div>
+</div>

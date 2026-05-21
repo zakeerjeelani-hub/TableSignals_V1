@@ -1,0 +1,173 @@
+<div class="page-main">
+
+  <!-- Header Ribbon -->
+  <div class="page-header-ribbon">
+    <div class="ribbon-left"><h1 class="page-title">Users</h1></div>
+    <div class="ribbon-right"><app-back-button></app-back-button></div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <mat-form-field appearance="outline" class="filter-field-compact">
+        <mat-label>Search users</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by name, email, city...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="openAddUserDialog()">
+        <mat-icon>add</mat-icon> Add User
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div><p>Loading...</p>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort class="page-table">
+
+          <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef style="display:none"></th>
+            <td mat-cell *matCellDef="let user" style="display:none">{{ user.userId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="column-header">Username</th>
+            <td mat-cell *matCellDef="let user" class="column-cell">{{ user.userName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="column-header">First Name</th>
+            <td mat-cell *matCellDef="let user" class="column-cell">{{ user.firstName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="column-header">Last Name</th>
+            <td mat-cell *matCellDef="let user" class="column-cell">{{ user.lastName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="emailID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="column-header">Email</th>
+            <td mat-cell *matCellDef="let user" class="column-cell">{{ user.emailID }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="phoneNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="column-header">Phone</th>
+            <td mat-cell *matCellDef="let user" class="column-cell">{{ user.phoneNo }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="isServiceEnabled">
+            <th mat-header-cell *matHeaderCellDef class="column-header">Notifications</th>
+            <td mat-cell *matCellDef="let user" class="column-cell">
+              <label class="toggle-switch">
+                <input type="checkbox" [checked]="user.isServiceEnabled" (change)="enabledisableservice(user)">
+                <span class="toggle-slider"></span>
+              </label>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="roleName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="column-header">Role</th>
+            <td mat-cell *matCellDef="let user" class="column-cell">
+              <mat-chip-set>
+                <mat-chip [color]="getRoleChipColor(user.roleName)" highlighted>{{ user.roleName }}</mat-chip>
+              </mat-chip-set>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="column-header" style="width:90px">Actions</th>
+            <td mat-cell *matCellDef="let user" class="column-cell action-cell" style="width:90px">
+              <button mat-icon-button color="primary" (click)="openEditUserDialog(user)" matTooltip="Edit user">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteUser(user)" matTooltip="Delete user">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-data-row"></tr>
+        </table>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </div>
+</div>
+
+<!-- Dialog Template -->
+<ng-template #userDialogTemplate>
+  <div class="user-dialog">
+    <h2 mat-dialog-title class="dialog-title-row">
+      <span class="dialog-title-text">
+        <mat-icon>{{ isEditing ? 'edit' : 'person_add' }}</mat-icon>
+        {{ isEditing ? 'Edit User' : 'Add New User' }}
+      </span>
+      <button mat-icon-button (click)="closeDialog()" class="dialog-close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </h2>
+    <mat-dialog-content>
+      <form class="user-form">
+        <input type="hidden" [(ngModel)]="userForm.restaurantId" name="restaurantId">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Username</mat-label>
+            <input matInput [(ngModel)]="userForm.userName" name="userName" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>First Name</mat-label>
+            <input matInput [(ngModel)]="userForm.firstName" name="firstName">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Last Name</mat-label>
+            <input matInput [(ngModel)]="userForm.lastName" name="lastName">
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Email ID</mat-label>
+            <input matInput type="email" [(ngModel)]="userForm.emailID" name="emailID" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Password</mat-label>
+            <input matInput type="text" [(ngModel)]="userForm.password" name="password" [required]="!isEditing">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Phone Number</mat-label>
+            <input matInput [(ngModel)]="userForm.phoneNo" name="phoneNo">
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Role</mat-label>
+            <mat-select [(ngModel)]="userForm.roleID" name="roleID" required (selectionChange)="onRoleChange($event)">
+              <mat-option *ngFor="let role of availableRoles; trackBy: trackByRoleId" [value]="role.roleId">{{ role.roleName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="userForm.mode" name="mode">
+              <mat-option value="Active">Active</mat-option>
+              <mat-option value="Inactive">Inactive</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button (click)="closeDialog()" [disabled]="isLoading" class="btn-cancel">
+        Cancel
+      </button>
+      <button mat-raised-button (click)="saveUser()" [disabled]="isLoading" class="btn-save">
+        <mat-icon>save</mat-icon> {{ isEditing ? 'Update' : 'Save' }}
+      </button>
+    </mat-dialog-actions>
+  </div>
+</ng-template>

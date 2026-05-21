@@ -1,0 +1,35 @@
+.back-button {
+    margin: 8px;
+    
+    // Optional styles to match your app theme
+    // color: #your-primary-color;
+    // background-color: rgba(0, 0, 0, 0.05);
+    
+    // Optional hover effect
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+  }
+
+
+
+  .btn--green {
+    background-color: #3a9dc4;
+    color: #fff;
+}
+.btn--green:hover {
+    color: #e0a201;
+}
+.btn, .btn:link, .btn:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 7px 25px;
+    display: inline-block;
+    border-radius: 10rem;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    position: relative;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+}

@@ -1,0 +1,157 @@
+<form [formGroup]="form" class="signup-wrap">
+  <div class="signup-section">
+    <div class="signup-row">
+
+      <!-- ================================================
+           LEFT: Steps info (desktop only)
+      ================================================ -->
+      <div class="info-col">
+        <div class="steps-card">
+          <h6 class="card-head">Register in 4 Easy Steps!</h6>
+
+          <div class="step-item">
+            <img src="../../../assets/images/Points1.png" alt="1" class="step-img">
+            <span style="width: 100%;">Enter your business details and create your account.</span>
+          </div>
+          <div class="step-item">
+            <img src="../../../assets/images/Points2.png" alt="2" class="step-img">
+            <span>Verify your account via our confirmation email.</span>
+          </div>
+          <div class="step-item">
+            <img src="../../../assets/images/Points3.png" alt="3" class="step-img">
+            <span>Sign in to access your personalised dashboard.</span>
+          </div>
+          <div class="step-item">
+            <img src="../../../assets/images/Points4.png" alt="4" class="step-img">
+            <span>Manage guest requests effortlessly from your dashboard.</span>
+          </div>
+
+          <div class="how-section">
+            <h4 class="how-title">How It Works</h4>
+            <ul class="how-list">
+              <li><strong>1. Register &amp; Verify Email</strong> — Create your account and verify via email.</li>
+              <li><strong>2. Add Tables &amp; Areas</strong> — Define seating and assign tables.</li>
+              <li><strong>3. Generate QR</strong> — Create table-specific QR codes.</li>
+              <li><strong>4. Print &amp; Place QR</strong> — Stick QR codes on tables.</li>
+              <li>🚀 Customers can now scan for a seamless experience!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================
+           RIGHT: Registration Form
+      ================================================ -->
+      <div class="form-col">
+        <div class="form-card">
+
+          <img src="../../../assets/images/Table Signals_Alerts-01.png" alt="logo" class="form-logo">
+          <h6 class="card-head">Restaurant Sign Up</h6>
+
+          <div class="form-body">
+            <app-success-message *ngIf="uploadSuccess" [message]="message"></app-success-message>
+            <app-errormessage *ngIf="uploaderror" [message]="message"></app-errormessage>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>Restaurant Name</mat-label>
+              <input matInput formControlName="restaurantName" required>
+              <mat-error *ngIf="(form.get('restaurantName')?.touched || form.get('restaurantName')?.dirty) && form.get('restaurantName')?.hasError('required')">Restaurant Name is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>Email ID</mat-label>
+              <input matInput type="email" formControlName="emailID" required>
+              <mat-error *ngIf="(form.get('emailID')?.touched || form.get('emailID')?.dirty) && form.get('emailID')?.hasError('required')">Email is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="passwordVisible ? 'text' : 'password'" formControlName="password" required>
+              <mat-icon matSuffix style="cursor:pointer"
+                (mouseenter)="passwordVisible = true"
+                (mouseleave)="passwordVisible = false">
+                {{ passwordVisible ? 'visibility' : 'visibility_off' }}
+              </mat-icon>
+              <mat-error *ngIf="(form.get('password')?.touched || form.get('password')?.dirty) && form.get('password')?.hasError('required')">Password is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>Phone No</mat-label>
+              <input
+                matInput
+                formControlName="phoneNo"
+                maxlength="14"
+                inputmode="numeric"
+                placeholder="(555) 123-4567"
+                (input)="onPhoneNoInput($event)"
+                required>
+              <mat-error *ngIf="(form.get('phoneNo')?.touched || form.get('phoneNo')?.dirty) && form.get('phoneNo')?.hasError('required')">Phone number is required.</mat-error>
+              <mat-error *ngIf="(form.get('phoneNo')?.touched || form.get('phoneNo')?.dirty) && form.get('phoneNo')?.hasError('invalidPhone')">Please enter a valid 10-digit phone number.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>Web Site</mat-label>
+              <input matInput formControlName="webSite">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address">
+            </mat-form-field>
+
+            <div class="field-row">
+              <mat-form-field appearance="outline" class="half-field">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city">
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="half-field">
+                <mat-label>Zip</mat-label>
+                <input matInput formControlName="zip">
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>Country</mat-label>
+              <mat-select formControlName="countryId" (selectionChange)="onCountryChange($event)">
+                <mat-option *ngFor="let country of countries; trackBy: trackByCountryId" [value]="country.countryId">
+                  {{ country.countryName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-field">
+              <mat-label>State</mat-label>
+              <mat-select formControlName="stateId" (selectionChange)="onStateChange($event)">
+                <mat-option *ngFor="let state of states; trackBy: trackByStateId" [value]="state.stateId">
+                  {{ state.stateName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- Hidden: social media -->
+            <div style="display:none" formArrayName="socialMediaArray">
+              <label *ngFor="let platform of socialMediaPlatforms; let i = index">
+                <input type="checkbox" [formControlName]="i">
+              </label>
+            </div>
+
+            <div class="form-buttons">
+              <button class="btn-register" type="button" (click)="RestaurantSignup()" [disabled]="isLoading">
+                Register
+              </button>
+              <button class="btn-login" type="button" (click)="Cancel()">
+                Login
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+</form>

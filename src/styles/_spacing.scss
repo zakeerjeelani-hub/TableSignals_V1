@@ -1,0 +1,296 @@
+// ============================================
+// GLOBAL SPACING SYSTEM
+// ============================================
+// 8px base spacing scale - easy to scale and maintain
+// All padding, margin, and gap values defined here
+
+// ============================================
+// SPACING SCALE (8px base unit)
+// ============================================
+
+$space-2xs: 0.25rem;    // 4px
+$space-xs: 0.5rem;      // 8px
+$space-sm: 0.75rem;     // 12px
+$space-md: 1rem;        // 16px
+$space-lg: 1.5rem;      // 24px
+$space-xl: 2rem;        // 32px
+$space-2xl: 2.5rem;     // 40px
+$space-3xl: 3rem;       // 48px
+$space-4xl: 4rem;       // 64px
+$space-5xl: 5rem;       // 80px
+
+// ============================================
+// PADDING SCALE
+// ============================================
+
+$padding-2xs: $space-2xs;
+$padding-xs: $space-xs;
+$padding-sm: $space-sm;
+$padding-md: $space-md;
+$padding-lg: $space-lg;
+$padding-xl: $space-xl;
+$padding-2xl: $space-2xl;
+$padding-3xl: $space-3xl;
+
+// Component-specific padding
+$padding-button: $space-md $space-lg;              // 16px 24px
+$padding-button-sm: $space-sm $space-md;          // 12px 16px
+$padding-button-lg: $space-lg $space-2xl;         // 24px 40px
+$padding-input: $space-md;                        // 16px
+$padding-input-sm: $space-sm;                     // 12px
+$padding-card: $space-xl;                         // 32px
+$padding-card-sm: $space-lg;                      // 24px
+$padding-modal: $space-2xl;                       // 40px
+$padding-section: $space-3xl;                     // 48px
+
+// ============================================
+// MARGIN SCALE
+// ============================================
+
+$margin-2xs: $space-2xs;
+$margin-xs: $space-xs;
+$margin-sm: $space-sm;
+$margin-md: $space-md;
+$margin-lg: $space-lg;
+$margin-xl: $space-xl;
+$margin-2xl: $space-2xl;
+$margin-3xl: $space-3xl;
+
+// Component-specific margins
+$margin-heading: 0 0 $space-lg 0;                 // Bottom margin only
+$margin-paragraph: 0 0 $space-md 0;               // Bottom margin only
+$margin-button-group: $space-md;                  // Gap between buttons
+
+// ============================================
+// GAP/ROW GAP SCALE
+// ============================================
+
+$gap-2xs: $space-2xs;
+$gap-xs: $space-xs;
+$gap-sm: $space-sm;
+$gap-md: $space-md;
+$gap-lg: $space-lg;
+$gap-xl: $space-xl;
+
+// Component-specific gaps
+$gap-button-group: $space-sm;                     // Gap between button groups
+$gap-form-group: $space-lg;                       // Gap between form fields
+$gap-list-item: $space-md;                        // Gap between list items
+$gap-grid-col: $space-lg;                         // Gap between grid columns
+$gap-grid-row: $space-lg;                         // Gap between grid rows
+$gap-header-icon-text: $space-md;                 // Gap between icon and text in header
+
+// ============================================
+// BORDER RADIUS SCALE
+// ============================================
+
+$radius-none: 0;
+$radius-xs: 2px;
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-2xl: 20px;
+$radius-full: 9999px;
+
+// Component-specific border radius
+$radius-button: $radius-md;                       // 8px
+$radius-button-sm: $radius-sm;                    // 4px
+$radius-button-lg: $radius-md;                    // 8px
+$radius-input: $radius-md;                        // 8px
+$radius-card: $radius-lg;                         // 12px
+$radius-modal: $radius-lg;                        // 12px
+$radius-badge: $radius-full;                      // Full circle
+$radius-tab: $radius-md;                          // 8px
+$radius-avatar: $radius-full;                     // Full circle
+
+// ============================================
+// COMMONLY USED SPACING COMBINATIONS
+// ============================================
+
+// Padding combinations (vertical / horizontal)
+$padding-button-md: $space-md $space-lg;          // 16px 24px
+$padding-button-sm: $space-sm $space-md;          // 12px 16px
+$padding-button-lg: $space-lg $space-2xl;         // 24px 40px
+
+// Padding combinations (top right bottom left)
+$padding-card-standard: $space-xl;                // 32px all sides
+$padding-section-standard: $space-3xl;            // 48px all sides
+$padding-modal-standard: $space-2xl;              // 40px all sides
+
+// Input padding
+$padding-input-standard: $space-md;               // 16px
+
+// ============================================
+// BREAKPOINT-SPECIFIC SPACING
+// ============================================
+
+// Mobile spacing (reduced)
+$space-mobile-2xs: 0.25rem;   // 4px
+$space-mobile-xs: 0.5rem;     // 8px
+$space-mobile-sm: 0.5rem;     // 8px (reduced from 12px)
+$space-mobile-md: 0.75rem;    // 12px (reduced from 16px)
+$space-mobile-lg: 1rem;       // 16px (reduced from 24px)
+$space-mobile-xl: 1.5rem;     // 24px (reduced from 32px)
+$space-mobile-2xl: 2rem;      // 32px (reduced from 40px)
+
+// Tablet spacing (moderate)
+$space-tablet-md: 1rem;       // 16px
+$space-tablet-lg: 1.5rem;     // 24px
+$space-tablet-xl: 2rem;       // 32px
+
+// Desktop spacing (full)
+$space-desktop-md: 1rem;      // 16px
+$space-desktop-lg: 1.5rem;    // 24px
+$space-desktop-xl: 2rem;      // 32px
+
+// ============================================
+// MIXIN FOR PADDING VARIATIONS
+// ============================================
+
+@mixin padding-symmetric($vertical: $space-md, $horizontal: $space-lg) {
+  padding: $vertical $horizontal;
+}
+
+@mixin padding-all($value: $space-md) {
+  padding: $value;
+}
+
+@mixin padding-vertical($value: $space-md) {
+  padding-top: $value;
+  padding-bottom: $value;
+}
+
+@mixin padding-horizontal($value: $space-lg) {
+  padding-left: $value;
+  padding-right: $value;
+}
+
+// ============================================
+// MIXIN FOR MARGIN VARIATIONS
+// ============================================
+
+@mixin margin-symmetric($vertical: $space-md, $horizontal: 0) {
+  margin: $vertical $horizontal;
+}
+
+@mixin margin-all($value: $space-md) {
+  margin: $value;
+}
+
+@mixin margin-vertical($value: $space-md) {
+  margin-top: $value;
+  margin-bottom: $value;
+}
+
+@mixin margin-horizontal($value: 0) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+// ============================================
+// MIXIN FOR GAP VARIATIONS
+// ============================================
+
+@mixin gap($value: $gap-md) {
+  gap: $value;
+}
+
+@mixin gap-responsive($desktop: $gap-lg, $tablet: $gap-md, $mobile: $gap-sm) {
+  gap: $desktop;
+  
+  @media (max-width: 1024px) {
+    gap: $tablet;
+  }
+  
+  @media (max-width: 768px) {
+    gap: $mobile;
+  }
+}
+
+// ============================================
+// RESET MARGINS/PADDINGS
+// ============================================
+
+@mixin reset-margin {
+  margin: 0;
+}
+
+@mixin reset-padding {
+  padding: 0;
+}
+
+@mixin reset-margins-paddings {
+  margin: 0;
+  padding: 0;
+}
+
+// ============================================
+// UTILITY SPACING CLASSES (Optional)
+// ============================================
+
+// These can be used as helper classes if needed
+.p-2xs { padding: $padding-2xs; }
+.p-xs { padding: $padding-xs; }
+.p-sm { padding: $padding-sm; }
+.p-md { padding: $padding-md; }
+.p-lg { padding: $padding-lg; }
+.p-xl { padding: $padding-xl; }
+.p-2xl { padding: $padding-2xl; }
+.p-3xl { padding: $padding-3xl; }
+
+.m-2xs { margin: $margin-2xs; }
+.m-xs { margin: $margin-xs; }
+.m-sm { margin: $margin-sm; }
+.m-md { margin: $margin-md; }
+.m-lg { margin: $margin-lg; }
+.m-xl { margin: $margin-xl; }
+.m-2xl { margin: $margin-2xl; }
+.m-3xl { margin: $margin-3xl; }
+
+// Padding directional
+.pt-sm { padding-top: $padding-sm; }
+.pt-md { padding-top: $padding-md; }
+.pt-lg { padding-top: $padding-lg; }
+
+.pb-sm { padding-bottom: $padding-sm; }
+.pb-md { padding-bottom: $padding-md; }
+.pb-lg { padding-bottom: $padding-lg; }
+
+.pl-sm { padding-left: $padding-sm; }
+.pl-md { padding-left: $padding-md; }
+.pl-lg { padding-left: $padding-lg; }
+
+.pr-sm { padding-right: $padding-sm; }
+.pr-md { padding-right: $padding-md; }
+.pr-lg { padding-right: $padding-lg; }
+
+// Margin directional
+.mt-sm { margin-top: $margin-sm; }
+.mt-md { margin-top: $margin-md; }
+.mt-lg { margin-top: $margin-lg; }
+
+.mb-sm { margin-bottom: $margin-sm; }
+.mb-md { margin-bottom: $margin-md; }
+.mb-lg { margin-bottom: $margin-lg; }
+
+.ml-sm { margin-left: $margin-sm; }
+.ml-md { margin-left: $margin-md; }
+.ml-lg { margin-left: $margin-lg; }
+
+.mr-sm { margin-right: $margin-sm; }
+.mr-md { margin-right: $margin-md; }
+.mr-lg { margin-right: $margin-lg; }
+
+// ============================================
+// EXPORT SUMMARY
+// ============================================
+
+// Available variables for use in components:
+// Spacing: $space-2xs through $space-5xl (4px to 80px)
+// Padding: $padding-xs through $padding-3xl
+// Margin: $margin-xs through $margin-3xl
+// Border radius: $radius-xs through $radius-full
+// Component-specific: $padding-button, $gap-form-group, etc.
+// Mixins: @include padding-symmetric, @include gap-responsive, etc.
+// Utility classes: .p-md, .m-lg, .pt-sm, .pb-md, etc.

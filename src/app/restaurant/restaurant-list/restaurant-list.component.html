@@ -1,0 +1,52 @@
+
+<div>
+<div class="restaurant-container">
+  <span id="spanhead" class="dashboard-content" style="display: flex; text-align: left; margin-left: 2%; margin-right: 2%; border: 1px solid #fec200; border-radius: 10px;">
+    
+    <span>
+        
+    <h2>Registered Restaurants</h2>
+  
+    <!-- Filter Input -->
+    <!-- <mat-form-field appearance="outline">
+      <mat-label>S earch Restaurants</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Enter name, email, or city">
+    </mat-form-field> -->
+  
+    <!-- Restaurant Grid -->
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  
+        <!-- Restaurant Name Column -->
+        <ng-container matColumnDef="restaurantName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Restaurant Name</th>
+          <td mat-cell *matCellDef="let restaurant">{{ restaurant.restaurantName }}</td>
+        </ng-container>
+  
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let restaurant">{{ restaurant.emailID }}</td>
+        </ng-container>
+  
+        <!-- City Column -->
+        <ng-container matColumnDef="city">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+          <td mat-cell *matCellDef="let restaurant">{{ restaurant.city }}</td>
+        </ng-container>
+  
+        <!-- Created On Column -->
+        <ng-container matColumnDef="createdOn">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Created On</th>
+          <td mat-cell *matCellDef="let restaurant">{{ restaurant.createdOn | date:'mediumDate' }}</td>
+        </ng-container>
+  
+        <!-- Table Headers & Rows -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+      </table>
+    </div>
+  </span></span>
+  </div>
+  </div>

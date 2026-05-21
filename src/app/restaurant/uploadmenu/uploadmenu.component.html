@@ -1,0 +1,243 @@
+<!-- ============================================
+UPLOAD MENU COMPONENT - CLEAN VERSION (NO MENUS)
+============================================ -->
+
+<!-- Main Container -->
+<div class="upload-menu">
+  <!-- Header -->
+  <!-- <header class="header-section">
+    <div class="header-left">
+      <h1 class="page-title">Upload Menu</h1>
+    </div>
+    <div class="header-right">
+      <button
+        mat-icon-button
+        (click)="goHome()"
+        aria-label="Go to dashboard"
+        matTooltip="Go to dashboard"
+        class="nav-button">
+        <mat-icon>home</mat-icon>
+      </button>
+      <app-back-button></app-back-button>
+    </div>
+  </header> -->
+ <header class="header-ribbon">
+    <div class="header-left">
+      <h1 class="page-title">Upload Menu</h1>
+    </div>
+    <div class="header-right">
+      <app-back-button></app-back-button>
+    </div>
+  </header>
+  <!-- Messages -->
+  <div *ngIf="successMessage" class="alert alert-success" role="status" aria-live="polite">
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ successMessage }}</span>
+    <button mat-icon-button (click)="successMessage = ''" aria-label="Close message">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error" role="alert" aria-live="polite">
+    <mat-icon>error</mat-icon>
+    <span>{{ errorMessage }}</span>
+    <button mat-icon-button (click)="errorMessage = ''" aria-label="Close message">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <!-- Upload Section -->
+    <section class="upload-section" aria-label="Upload menu images">
+      <div class="section-header">
+        <h2 class="section-title">Upload Images</h2>
+        <p class="section-hint">PNG, JPG, GIF (max 5MB each)</p>
+      </div>
+
+      <!-- File Input -->
+      <div class="file-input-wrapper">
+        <input
+          type="file"
+          id="fileUpload"
+          (change)="onFileSelected($event)"
+          multiple
+          accept="image/*"
+          class="file-input"
+          aria-label="Select images to upload"/>
+
+        <label for="fileUpload" class="file-input-label">
+          <div class="file-input-icon">
+            <mat-icon>cloud_upload</mat-icon>
+          </div>
+          <div class="file-input-text">
+            <span class="file-input-title">Click to select or drag images here</span>
+            <span class="file-input-subtitle">PNG, JPG, GIF • Max 5MB per file</span>
+          </div>
+        </label>
+      </div>
+
+      <!-- Image Preview Before Upload -->
+      <div *ngIf="selectedImages.length > 0" class="preview-section" aria-label="Selected images preview">
+        <div class="preview-header">
+          <h3 class="preview-title">Selected Images ({{ selectedImages.length }})</h3>
+          <button
+            mat-icon-button
+            (click)="clearSelectedImages()"
+            aria-label="Clear selected images"
+            matTooltip="Clear all">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+
+        <div class="preview-grid">
+          <div *ngFor="let img of selectedImages; let i = index" class="preview-item">
+            <img [src]="img.preview" [alt]="img.name" class="preview-image"/>
+            <div class="preview-name">{{ img.name }}</div>
+          </div>
+        </div>
+
+        <!-- Upload Progress -->
+        <div *ngIf="isUploading" class="upload-progress" aria-live="polite" aria-label="Upload progress">
+          <mat-progress-bar
+            mode="indeterminate"
+            class="progress-bar">
+          </mat-progress-bar>
+          <span class="progress-text">Uploading...</span>
+        </div>
+
+        <!-- Upload Button -->
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="uploadImages()"
+          [disabled]="isUploading || selectedImages.length === 0"
+          class="upload-button"
+          aria-label="Upload selected images">
+          <mat-icon *ngIf="!isUploading">cloud_upload</mat-icon>
+          <mat-icon *ngIf="isUploading">hourglass_empty</mat-icon>
+          {{ isUploading ? 'Uploading...' : 'Upload ' + selectedImages.length + ' Image(s)' }}
+        </button>
+      </div>
+    </section>
+
+    <!-- Uploaded Gallery Section -->
+    <section
+      *ngIf="uploadedImages.length > 0 || isLoading"
+      class="gallery-section"
+      aria-label="Uploaded menu images gallery">
+
+      <div class="section-header">
+        <h2 class="section-title">Uploaded Images ({{ uploadedImages.length }})</h2>
+        <button
+          mat-icon-button
+          (click)="fetchUploadedImages()"
+          [disabled]="isLoading"
+          matTooltip="Refresh gallery"
+          aria-label="Refresh uploaded images">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="loading-state" role="status" aria-live="polite">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <p class="loading-text">Loading images...</p>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div *ngIf="!isLoading && uploadedImages.length > 0" class="gallery-wrapper">
+        <div class="gallery-grid">
+          <div *ngFor="let img of uploadedImages" class="gallery-item">
+            <div class="gallery-image-wrapper">
+              <img
+                [src]="img"
+                alt="Uploaded menu image"
+                class="gallery-image"
+                (click)="showZoom(img, $event)"/>
+
+              <div class="gallery-overlay">
+                <button
+                  mat-icon-button
+                  (click)="showZoom(img, $event)"
+                  matTooltip="Preview"
+                  aria-label="Preview image"
+                  class="overlay-button">
+                  <mat-icon>zoom_in</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <label class="gallery-checkbox">
+              <input
+                type="checkbox"
+                [checked]="isImageSelected(img)"
+                (change)="toggleImageSelection(img)"
+                [attr.aria-label]="'Select image for deletion'"/>
+              <span class="checkbox-label">Select</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Delete Section -->
+        <div *ngIf="uploadedImages.length > 0" class="delete-section">
+          <div class="delete-info">
+            <p class="delete-count">
+              {{ selectedDeleteCount === 0 ? 'No images selected' : selectedDeleteCount + ' image(s) selected' }}
+            </p>
+          </div>
+
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="deleteSelectedImages()"
+            [disabled]="selectedDeleteCount === 0 || isDeleting"
+            class="delete-button"
+            aria-label="Delete selected images">
+            <mat-icon *ngIf="!isDeleting">delete</mat-icon>
+            <mat-icon *ngIf="isDeleting">hourglass_empty</mat-icon>
+            {{ isDeleting ? 'Deleting...' : 'Delete Selected (' + selectedDeleteCount + ')' }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Empty State -->
+    <section *ngIf="!isLoading && uploadedImages.length === 0 && !selectedImages.length" class="empty-state">
+      <div class="empty-icon">
+        <mat-icon>image</mat-icon>
+      </div>
+      <h3 class="empty-title">No images uploaded yet</h3>
+      <p class="empty-text">Upload your first menu image to get started</p>
+    </section>
+  </div>
+</div>
+
+<!-- Zoom Modal -->
+<div
+  *ngIf="showZoomedImg"
+  class="zoom-modal"
+  (click)="closeZoom()"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image preview modal">
+
+  <div class="zoom-overlay" (click)="$event.stopPropagation()">
+    <button
+      class="zoom-close"
+      (click)="closeZoom()"
+      aria-label="Close preview">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="zoom-container">
+      <img
+        [src]="showZoomedImg"
+        alt="Zoomed menu image"
+        class="zoom-image"
+        (click)="$event.stopPropagation()"/>
+    </div>
+
+    <div class="zoom-hint">Click or press ESC to close</div>
+  </div>
+</div>

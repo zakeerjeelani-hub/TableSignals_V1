@@ -1,0 +1,76 @@
+<form [formGroup]="form" (submit)="onLogin()">
+    <div  style="background-color: #FFFFFF9E!important;width: 300px;padding-left: 10px;margin-top: 25px;height: 350px;border-radius: 10px;">
+    <h5  style="text-transform: capitalize;     
+    margin-left:13%;
+    font-weight: 600;
+    line-height: 29px;
+    font-size: 24px;
+    color:rgba(0, 0, 0, 0.85);
+    font-family: 'Roboto', Sans-serif;
+    
+" >
+        Restaurant Login
+    </h5>
+    <div class="form__group" style="padding-bottom: 10px;" >
+                                    
+        <!-- <qr-code val ></qr-code> -->
+        
+        <input type="text" class="form__input1" 
+        
+        placeholder="User Name" id="username" style="
+        width: 75%;border-left: 3px solid red;"
+         required="" formControlName="username">
+        
+        <div class="clearfix"></div>
+        <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="error-message" style="float: left;display: flex;">
+            <font style="color: red;"><small *ngIf="form.get('username')?.errors?.['required'] || form.get('username')?.touched">User Name is required.</small>
+            </font>
+          </div>
+<div class="vspacer"></div>
+<div class="vspacer"></div>
+        
+    </div>
+    <div class="form__group" style="height: 50px;">
+                                    
+        <input type="Password" autocomplete="new-password" class="form__input1" placeholder="Password" id="password" 
+        style="width: 75%;border-left: 3px solid red;" required="" formControlName="password"  (keydown.enter)="onLogin()" >
+        
+        <div class="clearfix"></div>
+        <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="error-message" >
+            <font style="color: red;"><small *ngIf="form.get('password')?.errors?.['required']">Password is required.</small>
+            </font>
+          </div>
+          <div class="clearfix"></div>
+          <div *ngIf="this.isinvalid" class="error-message" style="float: left;display: flex;">
+            <font style="color: red;"><small > Invalid credentials.</small>
+            </font>
+          </div>
+          <div class="vspacer"></div>   
+          
+          <div style="width: 100%;">
+          <div style="width: 60%;float:left">
+            <button class="hyperlink-button" (click)="forgotpassword()" >Forgot Password?</button> 
+        </div>
+        <div class="form__group" style="float:left;margin-top: 20px;"  >
+            <button class="btn1"   (click)="onLogin()" [disabled]="isLoading" style="cursor:pointer;">Login</button>
+            <!-- <button class="btn1"  (click)="Register()">Register</button> -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="vspacer"></div>
+        <div class="vspacer"></div>
+        <div class="vspacer"></div>
+    <div class="vspacer"></div>
+    <div style="margin-top: 20px;">
+        <p style="float: left;color:#7A7A7A;font-size: 14px; font-family: 'ROBOTO'"><b>Don’t have an account.</b> Register Today!</p>
+    </div>
+        <div class="clearfix"></div>
+        <div class="vspacer"></div>
+    <div style="margin-top: 60px;">
+    <button class="btn1" style="margin-left: 25% ;float: left;"    (click)="Register()">Register</button>
+</div>
+    </div>
+    </div>
+    
+
+</div>
+</form>

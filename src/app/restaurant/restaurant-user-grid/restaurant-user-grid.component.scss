@@ -1,0 +1,102 @@
+// === Design Tokens ===
+$primary: #fec200; $primary-dark: #e5b000; $primary-light: rgba(254,194,0,.1);
+$text-primary: #1a1a1a; $text-secondary: #666;
+$bg-white: #fff; $bg-light: #f8f9fb; $bg-lighter: #fafbfc; $border-light: #e0e0e0;
+$sp-xs:4px; $sp-sm:6px; $sp-md:8px; $sp-lg:12px; $sp-xl:16px; $sp-xxl:32px;
+$r-sm:4px; $r-md:8px; $r-lg:12px; $r-full:999px;
+$sh-sm:0 1px 2px rgba(0,0,0,.05); $sh-md:0 4px 6px rgba(0,0,0,.1);
+
+// === Root ===
+.page-main { width:100%; background:$bg-light; min-height:calc(100vh - 100px); display:flex; flex-direction:column; }
+
+// === Header Ribbon ===
+.page-header-ribbon {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:$sp-md $sp-lg; gap:$sp-lg; margin-bottom:$sp-md;
+  background:linear-gradient(135deg,$primary-light 0%,$bg-lighter 100%);
+  border-bottom:2px solid $primary; border-radius:$r-md;
+}
+.ribbon-left { flex:0 0 auto; }
+.ribbon-right { display:flex; gap:$sp-lg; align-items:center; flex:0 0 auto; }
+.page-title { font-size:1.5rem; font-weight:900; color:$primary; margin:0; text-transform:uppercase; letter-spacing:.05em; white-space:nowrap; }
+
+// === Content ===
+.page-content { display:flex; flex-direction:column; gap:$sp-lg; padding:$sp-xl $sp-md; background:$bg-white; flex:1; }
+
+// === Filter Bar ===
+.filter-bar { display:flex; gap:$sp-md; align-items:flex-end; flex-wrap:wrap; }
+.filter-field-compact { min-width:240px; flex:1; }
+
+// === Table Wrapper (mirrors dashboard) ===
+.table-wrapper { background:$bg-white; border-radius:$r-md; overflow:hidden; width:100%; display:flex; flex-direction:column; box-shadow:$sh-md; }
+.table-container { overflow-x:auto; flex:1;
+  &::-webkit-scrollbar { width:6px; height:6px; }
+  &::-webkit-scrollbar-track { background:$bg-lighter; }
+  &::-webkit-scrollbar-thumb { background:$border-light; border-radius:3px; &:hover { background:$text-secondary; } }
+}
+.page-table { width:100%; border-collapse:collapse; }
+
+// === Column Classes ===
+.table-header-row { background:$bg-lighter; border-bottom:2px solid $primary; }
+.table-data-row { border-bottom:1px solid $border-light; transition:background .15s;
+  &:hover { background:#fafafa; } &:last-child { border-bottom:none; }
+}
+.column-header {
+  font-size:.75rem; font-weight:900; color:$text-primary; padding:$sp-md $sp-sm !important;
+  text-transform:uppercase; letter-spacing:.05em; background:$bg-lighter; border-bottom:2px solid $primary; white-space:nowrap;
+}
+.column-cell { padding:$sp-md $sp-sm !important; font-size:.85rem; color:$text-secondary; }
+.action-cell { text-align:center; white-space:nowrap; }
+
+// === Paginator ===
+::ng-deep .mat-mdc-paginator {
+  background:$bg-lighter; border-top:1px solid $border-light; padding:$sp-md; font-size:.8rem;
+  .mat-mdc-paginator-container { justify-content:space-between; min-height:auto; padding:0; gap:$sp-lg; }
+}
+
+// === Loading / Empty ===
+.loading-state {
+  display:flex; flex-direction:column; align-items:center; gap:$sp-lg; padding:$sp-xxl;
+  background:$bg-lighter; border-radius:$r-md; border:1px solid $border-light;
+  .spinner { width:44px; height:44px; border:4px solid $border-light; border-top-color:$primary; border-radius:50%; animation:spin .8s linear infinite; }
+  p { margin:0; color:$text-secondary; font-size:.75rem; font-weight:700; }
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+// === Toggle Switch ===
+.toggle-switch { position:relative; display:inline-block; width:50px; height:24px;
+  input { opacity:0; width:0; height:0; }
+}
+.toggle-slider {
+  position:absolute; cursor:pointer; inset:0; background:#ccc; border-radius:24px; transition:.4s;
+  &:before { position:absolute; content:""; height:18px; width:18px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:.4s; box-shadow:0 2px 4px rgba(0,0,0,.2); }
+}
+input:checked + .toggle-slider { background:#4caf50; }
+input:checked + .toggle-slider:before { transform:translateX(26px); }
+
+// === Button Overrides ===
+::ng-deep .mat-mdc-raised-button[color="accent"] {
+  background-color:$primary !important; color:$text-primary !important; font-weight:900;
+  &:hover:not(:disabled) { background-color:$primary-dark !important; }
+}
+
+// === Add/Edit User Dialog ===
+.user-dialog { min-width:560px; @media(max-width:600px){ min-width:unset; width:100%; } }
+
+.dialog-title-row {
+  display:flex !important; align-items:center; justify-content:space-between;
+  border-bottom:2px solid $primary; padding-bottom:$sp-md !important; margin-bottom:0 !important;
+}
+.dialog-title-text { display:flex; align-items:center; gap:$sp-md; font-size:1rem; font-weight:900; text-transform:uppercase; letter-spacing:.04em; }
+.dialog-close-btn { color:$text-secondary; margin-left:auto; flex-shrink:0; &:hover { background:$primary-light; } }
+
+.user-form { display:flex; flex-direction:column; gap:$sp-lg; padding-top:$sp-md; }
+.form-row {
+  display:flex; gap:$sp-md; flex-wrap:wrap;
+  .form-field { flex:1; min-width:160px; }
+}
+
+.btn-cancel { color:$text-secondary !important; border:1px solid $border-light !important; }
+.btn-save { background:$primary !important; color:$text-primary !important; font-weight:700 !important;
+  &:hover:not(:disabled) { background:$primary-dark !important; }
+}

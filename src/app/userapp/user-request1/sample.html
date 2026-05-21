@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TableSignals</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FDF6EC;
+    --orange: #F5A623;
+    --orange-dark: #E09010;
+    --green-dark: #1E4D2B;
+    --text-dark: #1a1a1a;
+    --text-mid: #444;
+    --text-muted: #888;
+    --card-bg: #ffffff;
+    --border: #e8e0d4;
+    --yellow-card: #FFC107;
+    --yellow-light: #FFF8E1;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: #e5ddd0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+
+  .phone-shell {
+    width: 390px;
+    height: 844px;
+    background: var(--bg);
+    border-radius: 44px;
+    /* box-shadow: 0 30px 80px rgba(0,0,0,0.35), 0 0 0 10px #111, 0 0 0 11px #333; */
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Status bar */
+  .status-bar {
+    background: var(--bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px 4px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .status-icons svg { width: 16px; height: 16px; }
+
+  /* Header */
+  .header {
+    background: var(--bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 20px 12px;
+  }
+  .header .menu-icon { font-size: 22px; color: var(--text-dark); cursor: pointer; line-height:1; }
+  .header .logo {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 1px;
+    color: var(--text-dark);
+  }
+  .logo-pin {
+    width: 30px; height: 30px;
+    background: var(--text-dark);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-pin-inner {
+    width: 12px; height: 12px;
+    background: var(--bg);
+    border-radius: 50%;
+    transform: rotate(45deg);
+  }
+  .bell-wrap { position: relative; cursor: pointer; }
+  .bell-wrap svg { width: 26px; height: 26px; }
+  .bell-dot {
+    position: absolute; top: -3px; right: -3px;
+    width: 10px; height: 10px; background: #e53935; border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+
+  /* Table banner */
+  .table-banner {
+    margin: 0 16px 10px;
+    background: linear-gradient(to right, #FFF0B0 0%, #FFFAE8 50%, #FDF6EC 100%);
+    border-radius: 14px;
+    padding: 10px 18px;
+    text-align: center;
+  }
+  .table-banner .table-name {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 17px; color: var(--text-dark);
+  }
+  .table-banner .table-sub {
+    font-size: 13px; color: var(--text-mid); margin-top: 2px;
+  }
+
+  /* Tab bar */
+  .tabs {
+    display: flex; gap: 10px;
+    padding: 0 16px 10px;
+  }
+  .tab {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 9px 4px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px;
+    color: var(--text-dark); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab.active { border-color: var(--orange); color: var(--orange); }
+  .tab:hover { border-color: var(--orange); }
+  .tab-icon { font-size: 16px; }
+
+  /* Section titles */
+  .section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 16px 4px;
+  }
+  .section-title {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 16px; color: var(--text-dark);
+  }
+  .section-sub {
+    padding: 0 16px 10px;
+    font-size: 12.5px; color: var(--text-mid);
+  }
+  .section-sub span { color: var(--orange); font-weight: 700; }
+  .info-icon {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--orange); color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 900; cursor: pointer;
+  }
+
+  /* Quick Requests */
+  .quick-requests {
+    display: flex; gap: 10px;
+    padding: 0 16px 12px;
+  }
+  .qr-card {
+    flex: 1;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 8px 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .qr-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+  .qr-card.yellow { background: var(--yellow-card); border-color: var(--yellow-card); }
+  .qr-card .qr-icon { font-size: 26px; }
+  .qr-card .qr-label {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 13px;
+    color: var(--text-dark); text-align: center; line-height: 1.2;
+  }
+  .add-note-btn {
+    background: #C8E6C9;
+    border: none;
+    color: var(--green-dark);
+    border-radius: 50px;
+    padding: 5px 12px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 11px;
+    cursor: pointer; display: flex; align-items: center; gap: 3px;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .add-note-btn:hover { background: #a5d6a7; }
+
+  /* Service Requests */
+  .service-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; padding: 0 16px 12px;
+  }
+  .svc-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px;
+    color: var(--text-dark); cursor: pointer; transition: all 0.2s;
+  }
+  .svc-btn:hover { border-color: var(--orange); box-shadow: 0 3px 10px rgba(0,0,0,0.07); }
+  .svc-btn .svc-icon { font-size: 20px; }
+
+  /* Message Server */
+  .msg-banner {
+    margin: 0 16px 12px;
+    background: var(--green-dark);
+    border-radius: 14px;
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .msg-banner:hover { background: #255c34; }
+  .msg-banner .msg-icon { font-size: 22px; flex-shrink: 0; }
+  .msg-banner .msg-content { flex: 1; }
+  .msg-banner .msg-title {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px; color: #fff;
+  }
+  .msg-banner .msg-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 1px; }
+  .msg-banner .msg-arrow { color: rgba(255,255,255,0.8); font-size: 20px; font-weight: 700; }
+
+  /* Specials */
+  .specials-header {
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 16px 10px;
+  }
+  .specials-header .fire { font-size: 18px; }
+  .specials-scroll {
+    display: flex; gap: 12px;
+    padding: 0 16px 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .specials-scroll::-webkit-scrollbar { display: none; }
+  .special-card {
+    flex-shrink: 0; width: 170px;
+    background: var(--card-bg);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer; transition: transform 0.2s;
+  }
+  .special-card:hover { transform: scale(1.02); }
+  .special-img {
+    width: 100%; height: 100px; object-fit: cover;
+    background: #ddd;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+  }
+  .special-img.cocktail { background: linear-gradient(135deg, #2c5364, #203a43, #0f2027); }
+  .special-img.tacos { background: linear-gradient(135deg, #c47a1a, #8B4513, #d2691e); }
+  .special-info { padding: 10px 12px; }
+  .special-info .sp-title {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: var(--text-dark);
+  }
+  .special-info .sp-sub { font-size: 12px; color: var(--text-mid); margin-top: 2px; }
+  .special-info .sp-sub.orange { color: var(--orange); font-weight: 700; }
+
+  /* Dots */
+  .dots { display: flex; justify-content: center; gap: 5px; padding: 4px 0 12px; }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #ccc; transition: background 0.2s;
+  }
+  .dot.active { background: var(--orange); }
+
+  /* Ad banner */
+  .ad-banner {
+    margin: 0 16px 12px;
+    border: 2px dashed var(--orange);
+    border-radius: 12px;
+    padding: 11px 16px;
+    display: flex; align-items: center; gap: 14px;
+    background: var(--yellow-light);
+  }
+  .ad-label {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 14px; color: var(--text-dark);
+    white-space: nowrap;
+  }
+  .ad-content { flex: 1; }
+  .ad-content .ad-title { font-size: 13px; color: var(--text-mid); font-weight: 600; }
+  .ad-content .ad-url { font-size: 12px; color: var(--orange); }
+  .ad-img { font-size: 30px; }
+
+  /* Bottom nav */
+  .bottom-nav {
+    background: var(--card-bg);
+    border-top: 1.5px solid var(--border);
+    display: flex; justify-content: space-around;
+    padding: 10px 0 20px;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    cursor: pointer; flex: 1; transition: all 0.2s;
+  }
+  .nav-item .nav-icon { font-size: 22px; }
+  .nav-item .nav-label {
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 11px;
+    color: var(--text-muted);
+  }
+  .nav-item.active .nav-label { color: var(--orange); }
+  .nav-item.active .nav-icon-svg path,
+  .nav-item.active .nav-icon-svg rect { fill: var(--orange); }
+
+  .content-area {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-shell">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>5:44</span>
+    <div class="status-icons">
+      <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="8" width="3" height="13" rx="1"/><rect x="7" y="5" width="3" height="16" rx="1"/><rect x="12" y="2" width="3" height="19" rx="1"/><rect x="17" y="0" width="3" height="21" rx="1" opacity="0.3"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="18" height="11" rx="2"/><rect x="21" y="10" width="2" height="5" rx="1"/><rect x="3" y="8" width="14" height="9" rx="1" fill="white" opacity="0.9"/></svg>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="menu-icon">☰</div>
+    <div class="logo">
+      <div class="logo-pin"><div class="logo-pin-inner"></div></div>
+      TABLE SIGNALS
+    </div>
+    <div class="bell-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <div class="bell-dot"></div>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- Table Banner -->
+    <div class="table-banner">
+      <div class="table-name">Table 14 &bull; Sunset Grill</div>
+      <div class="table-sub">Need something? Tap below.</div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab">
+        <span class="tab-icon">⭐</span> VIP
+      </div>
+      <div class="tab">
+        <span class="tab-icon">📋</span> Menu
+      </div>
+      <div class="tab active">
+        <span class="tab-icon">🏷️</span> Specials
+      </div>
+    </div>
+
+    <!-- Quick Requests -->
+    <div class="section-header">
+      <div class="section-title">Quick Requests</div>
+      <div class="info-icon">i</div>
+    </div>
+    <div class="section-sub">Tap <span>"Add Note"</span> for special requests</div>
+
+    <div class="quick-requests">
+      <!-- Order Food -->
+      <div class="qr-card">
+        <div class="qr-icon">🍴</div>
+        <div class="qr-label">Order Food</div>
+        <button class="add-note-btn">+ Add Note</button>
+      </div>
+      <!-- Refill Drink -->
+      <div class="qr-card">
+        <div class="qr-icon">🥤</div>
+        <div class="qr-label">Refill Drink</div>
+        <button class="add-note-btn">+ Add Note</button>
+      </div>
+      <!-- Request Bill -->
+      <div class="qr-card yellow">
+        <div class="qr-icon">🧾</div>
+        <div class="qr-label">Request Bill</div>
+      </div>
+    </div>
+
+    <!-- Service Requests -->
+    <div class="section-header" style="padding-bottom: 10px;">
+      <div class="section-title">Service Requests</div>
+    </div>
+    <div class="service-grid">
+      <div class="svc-btn"><span class="svc-icon">💧</span> Water</div>
+      <div class="svc-btn"><span class="svc-icon">🍴</span> Silverware</div>
+      <div class="svc-btn"><span class="svc-icon">📦</span> Takeout Box</div>
+      <div class="svc-btn"><span class="svc-icon">🚻</span> Restroom</div>
+    </div>
+
+    <!-- Message Server -->
+    <div class="msg-banner">
+      <div class="msg-icon">💬</div>
+      <div class="msg-content">
+        <div class="msg-title">Message Server</div>
+        <div class="msg-sub">Ask anything or send a note</div>
+      </div>
+      <div class="msg-arrow">›</div>
+    </div>
+
+    <!-- Ad Banner -->
+    <div class="ad-banner">
+      <div class="ad-label">Advertise Here</div>
+      <div class="ad-content">
+        <div class="ad-title">Your Sponsored Ad</div>
+        <div class="ad-url">www.example.com</div>
+      </div>
+      <div class="ad-img">🍕</div>
+    </div>
+
+  </div><!-- end content area -->
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <span style="font-size:22px;">🏠</span>
+      <span class="nav-label" style="color: var(--orange);">Home</span>
+    </div>
+    <div class="nav-item">
+      <span style="font-size:22px;">🔗</span>
+      <span class="nav-label">Share</span>
+    </div>
+    <div class="nav-item">
+      <span style="font-size:22px;">⭐</span>
+      <span class="nav-label">Review</span>
+    </div>
+    <div class="nav-item">
+      <span style="font-size:22px;">❓</span>
+      <span class="nav-label">Help</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

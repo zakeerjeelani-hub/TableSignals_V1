@@ -1,0 +1,35 @@
+<div class="header-container" >
+  <div class="top-menu">
+    <!-- Logo Section - Left -->
+    <div class="logo-section">
+      <img src="../../../../assets/images/Logo.png" alt="logo">
+    </div>
+
+    <!-- Restaurant Name - Center -->
+    <div class="restaurant-name-section">
+      <h2 class="restaurant-name">{{restaurantname}}</h2>
+    </div>
+
+    <!-- Right Section - Sign Out + Toggle -->
+    <div class="right-section" >
+      <!-- Sign Out Button -->
+      <button class="btn btn--green" (click)="SignOut()" aria-label="Sign out from the system">Sign Out</button>
+      
+      <!-- Service Toggle Below -->
+      <div class="service-toggle" >
+        <div class="toggle-container">
+          <label class="toggle-switch"   [attr.aria-label]="enableService ? 'Restaurant is on' : 'Restaurant is off'">
+            <input 
+              type="checkbox" 
+              [checked]="enableService" 
+              (change)="enabledisableservice()">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">{{enableService ? 'Restaurant On' : 'Restaurant Off'}}</span>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

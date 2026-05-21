@@ -1,0 +1,86 @@
+<div class="row" style="margin-top: 0px; padding-bottom: 0px;">
+    <app-top-menu></app-top-menu>
+  </div>
+  <div>
+    <div class="dashboard-container">
+      <!-- <button class="sidenav-toggle" ></button> -->
+      <span id="spanhead" class="dashboard-content" style="display: flex; text-align: left; margin-left: 12.5%; margin-right: 12.5%; border: 1px solid #fec200; border-radius: 10px;">
+        <app-left-menu *ngIf="sidenavVisible" class="ii"></app-left-menu>
+        <span style="width: 80%!important;">
+          <div style="margin-top: 10px;  width: 100%; min-width: 100%;"></div>
+          <div class="u-margin-bottom-small" style="display: flex; justify-content: space-between; align-items: center;margin-left: 10px;">
+          
+            <div style="display: flex;float: right;width: 100%;"> 
+              
+              <div style="display: flex; align-items: center;width: 50%;">    
+                <h2 class="heading-secondary" >Table Setup</h2>
+              </div>
+              <div style="text-align:right; position:relative;width: 50%;"><app-back-button ></app-back-button>
+                <button  mat-icon-button aria-label="Go to dashboard" (click)="goHome()" class="nav-button" style="margin-top: 10px;">
+                  <mat-icon>home</mat-icon>
+                </button></div>
+            </div>
+          
+            
+          </div>
+  
+          <form [formGroup]="form"  class="dynamic-textboxes-container">
+  
+            <!-- Area Dropdown -->
+            <mat-form-field appearance="fill">
+              <mat-label>Select a Area</mat-label>
+              <mat-select id="areaSelect" formControlName="areaSelect" (selectionChange)="onAreaChange($event)">
+                <mat-option value="">Select</mat-option> <!-- Default "Select" option -->
+                <mat-option *ngFor="let area of areas" [value]="area.areaId">{{ area.areaName }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+            <!-- Number of tables dropdown -->
+            <mat-form-field appearance="fill" >
+              <mat-label>Select number</mat-label>
+              <mat-select id="numberSelect" formControlName="numberSelect" (selectionChange)="onNumberChange($event)">
+                <mat-option [value]="null" >Select number</mat-option> <!-- Placeholder option -->
+                <mat-option *ngFor="let num of numbers" [value]="num"  [disabled]="disabledNumbers.has(num)">{{ num }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+            <!-- Dynamic Table Textboxes -->
+            <div formArrayName="tables" class="textbox-grid">
+              <div *ngFor="let table of tables.controls; let i = index" [formGroupName]="i" class="textbox-item" >
+<div style="float: left;width:100%">
+  <div  style="float: left;width:90%">
+                <mat-form-field appearance="fill" class="two-column" style="width: 95%;">
+                  <!-- <mat-label>Table Name {{ i + 1 }}</mat-label> -->
+                  <input matInput formControlName="tableName" />
+                  <mat-error *ngIf="table.get('tableName')?.errors?.['required']">
+                    Table name is required
+                  </mat-error>
+                  <mat-error *ngIf="table.get('tableName')?.errors?.['duplicate']">
+                    This table name already exists
+                  </mat-error>
+                </mat-form-field>
+                <input type="hidden" formControlName="tableId" />
+              </div>
+              <div style="float: left;vertical-align: middle;">
+                  <button mat-icon-button color="warn" style="margin-top: 12px;" (click)="removeTable(i)" *ngIf="tables.length > 0" >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Add Table Button -->
+             <div style="margin-left: 40%;">
+            <button mat-raised-button color="primary" type="button" (click)="addTable()" style="margin-right: 10px;">Add Table</button>
+          
+            <!-- Save Button -->
+            <button mat-raised-button color="primary" (click)="saveTables()"  [disabled]="!form.valid || isSaving">Save Tables</button>
+            <button mat-raised-button color="primary" (click)="GoToQR()" style="margin-left: 20px;">QR Generator</button>
+          </div>
+          </form>
+                </span>
+      </span>
+    </div>
+  </div>
+  

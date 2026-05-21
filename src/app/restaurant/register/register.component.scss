@@ -1,0 +1,60 @@
+// @font-face {
+//     font-family: FuturaHeavy;
+//     src: url("./fonts/futura/Futura Heavy font.ttf") 
+// }	
+body{
+    background-image: url("../../../assets/images/TS_Mobile_Register_BG.png") ;
+    max-width: 100%;
+    height: auto;
+    background-size: cover;
+    font-family: FuturaHeavy,Ariel;
+    background-position: center;
+}
+.boxDiv {
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 8px;
+    vertical-align: bottom;
+}
+.centerItem{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.pontsHead {
+    background-color: #fec200;
+    border: 2px solid #000;
+    font-family: FuturaHeavy, Ariel;
+    font-size: 28px;
+    text-align: center;
+    padding: 3px;
+    margin-top: 50px;
+    font-weight: 700;
+    color: #000;
+}
+.pointsImg{
+    max-height: 35px;
+}
+.pointsPara{
+    font-family: FuturaHeavy,Ariel;
+    display: inline-block;
+    margin-bottom: 27px;
+    font-size: 15px;
+}
+.RegisterHead {
+    background-color: #fec200;
+    font-family: FuturaHeavy, Ariel;
+    font-size: 28px;
+    text-align: center;
+    padding: 3px;
+    color: #000;
+    text-transform: uppercase;
+}
+.form-control {
+    border: 1px solid #000;
+}
+.btn-default {
+    background-image: none;
+    text-shadow: none;
+    background-color: #fec200;
+    color: #000;
+}

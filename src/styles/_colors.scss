@@ -1,0 +1,239 @@
+// ============================================
+// GLOBAL COLOR SYSTEM - GOLD/YELLOW THEME
+// ============================================
+// Primary accent: #fec200 (Gold/Yellow)
+// This is the single source of truth for all colors
+
+// ============================================
+// PRIMARY COLORS (Gold/Yellow Theme)
+// ============================================
+
+// Main primary color - Gold/Yellow
+$primary: #fec200;
+$primary-light: #ffd633;
+$primary-lighter: #ffeb99;
+$primary-dark: #e0a201;
+$primary-darker: #cc8f00;
+
+// Primary transparencies
+$primary-transparent-5: rgba(254, 194, 0, 0.05);
+$primary-transparent-8: rgba(254, 194, 0, 0.08);
+$primary-transparent-12: rgba(254, 194, 0, 0.12);
+$primary-transparent-20: rgba(254, 194, 0, 0.2);
+$primary-transparent-30: rgba(254, 194, 0, 0.3);
+
+// ============================================
+// SECONDARY COLORS
+// ============================================
+
+// Secondary - Blue (for complementary contrast)
+$secondary: #3a9dc4;
+$secondary-light: #5ab0d6;
+$secondary-lighter: #7bc3e8;
+$secondary-dark: #2a7a9b;
+
+// Secondary transparencies
+$secondary-transparent-8: rgba(58, 157, 196, 0.08);
+$secondary-transparent-12: rgba(58, 157, 196, 0.12);
+
+// ============================================
+// SEMANTIC COLORS
+// ============================================
+
+// Success - Green
+$success: #27ae60;
+$success-light: #45b879;
+$success-dark: #1e8449;
+$success-transparent-8: rgba(39, 174, 96, 0.08);
+
+// Danger - Red
+$danger: #e74c3c;
+$danger-light: #ec7063;
+$danger-dark: #c0392b;
+$danger-transparent-8: rgba(231, 76, 60, 0.08);
+
+// Warning - Orange
+$warning: #f39c12;
+$warning-light: #f5b041;
+$warning-dark: #d68910;
+$warning-transparent-8: rgba(243, 156, 18, 0.08);
+
+// Info - Cyan/Blue
+$info: #3498db;
+$info-light: #5dade2;
+$info-dark: #2874a6;
+$info-transparent-8: rgba(52, 152, 219, 0.08);
+
+// ============================================
+// NEUTRAL COLORS
+// ============================================
+
+// Text colors
+$text-dark: #2c3e50;           // Primary text
+$text-primary: #2c3e50;        // Same as text-dark
+$text-secondary: #7f8c8d;      // Secondary text
+$text-light: #bdc3c7;          // Light text
+$text-lighter: #ecf0f1;        // Very light text
+$text-inverse: #ffffff;        // White text on dark background
+
+// Basic colors
+$white: #ffffff;               // Pure white
+$black: #000000;               // Pure black
+
+// Background colors
+$bg-primary: #ffffff;          // Main white background
+$bg-secondary: #f8f9fa;        // Light gray background
+$bg-tertiary: #ecf0f1;         // Lighter gray background
+$bg-dark: #2c3e50;             // Dark background
+$bg-overlay: rgba(0, 0, 0, 0.5);  // Overlay for modals
+
+// Border colors
+$border-color: #d5dbdb;        // Default border
+$border-light: #ecf0f1;        // Light border
+$border-dark: #95a5a6;         // Dark border
+
+// ============================================
+// SEMANTIC USAGE GUIDE
+// ============================================
+
+// Primary usage (Gold - #fec200)
+// - Main CTA buttons
+// - Active states
+// - Header backgrounds
+// - Accent borders
+// - Tab selections
+// - Important highlights
+
+// Secondary usage (Blue - #3a9dc4)
+// - Secondary CTA buttons
+// - Secondary accents
+// - Links
+// - QR buttons
+// - Complementary elements
+
+// Semantic usage
+// - Success: Form success, confirmations, positive actions
+// - Danger: Delete buttons, errors, warnings
+// - Warning: Alerts, cautions, pending states
+// - Info: Information, tooltips, help text
+
+// ============================================
+// GRAYSCALE PALETTE
+// ============================================
+
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// ============================================
+// SHADOW COLORS (Color-specific shadows)
+// ============================================
+
+$shadow-primary: rgba(254, 194, 0, 0.2);      // Gold shadow
+$shadow-secondary: rgba(58, 157, 196, 0.2);   // Blue shadow
+$shadow-success: rgba(39, 174, 96, 0.2);      // Green shadow
+$shadow-danger: rgba(231, 76, 60, 0.2);       // Red shadow
+$shadow-warning: rgba(243, 156, 18, 0.2);     // Orange shadow
+$shadow-info: rgba(52, 152, 219, 0.2);        // Cyan shadow
+$shadow-dark: rgba(0, 0, 0, 0.15);            // Black shadow
+
+// ============================================
+// GRADIENTS
+// ============================================
+
+// Primary gradient (Gold)
+$gradient-primary: linear-gradient(135deg, #fec200 0%, #e0a201 100%);
+$gradient-primary-light: linear-gradient(135deg, #ffd633 0%, #fec200 100%);
+
+// Secondary gradient (Blue)
+$gradient-secondary: linear-gradient(135deg, #3a9dc4 0%, #2a7a9b 100%);
+
+// Success gradient
+$gradient-success: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+
+// Danger gradient
+$gradient-danger: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+
+// Neutral gradient
+$gradient-neutral: linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 100%);
+
+// ============================================
+// OPACITY LEVELS
+// ============================================
+
+$opacity-disabled: 0.5;
+$opacity-hover: 0.8;
+$opacity-active: 1;
+
+// ============================================
+// COLOR ALIASES (For convenience)
+// ============================================
+
+// Buttons
+$btn-primary-bg: $primary;
+$btn-primary-text: $text-dark;
+$btn-secondary-bg: $secondary;
+$btn-secondary-text: $text-inverse;
+$btn-danger-bg: $danger;
+$btn-danger-text: $text-inverse;
+$btn-success-bg: $success;
+$btn-success-text: $text-inverse;
+
+// Links
+$link-color: $secondary;
+$link-hover: $secondary-dark;
+$link-active: $primary;
+
+// Form elements
+$form-border: $border-color;
+$form-border-focus: $primary;
+$form-bg: $bg-primary;
+$form-text: $text-dark;
+$form-label: $text-dark;
+$form-error: $danger;
+$form-success: $success;
+
+// Status colors
+$status-active: $success;
+$status-inactive: $gray-400;
+$status-pending: $warning;
+$status-error: $danger;
+
+// ============================================
+// ============================================
+// SHADOW DEFINITIONS
+// ============================================
+
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);           // Small shadow
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);        // Medium shadow
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);        // Large shadow
+$shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.15);       // Extra large shadow
+$shadow-2xl: 0 20px 60px rgba(0, 0, 0, 0.2);       // 2X large shadow
+
+// DARK MODE SUPPORT (Future enhancement)
+// ============================================
+
+// Define dark mode colors here if needed in the future
+// Example:
+// $dark-mode-primary: #ffc107;  // Brighter gold for dark mode
+// $dark-mode-text: #f5f5f5;     // Light text for dark mode
+// etc.
+
+// ============================================
+// EXPORT SUMMARY
+// ============================================
+
+// Available variables for use in components:
+// Colors: $primary, $secondary, $success, $danger, $warning, $info
+// Variations: $primary-light, $primary-dark, etc.
+// Transparencies: $primary-transparent-8, etc.
+// Gradients: $gradient-primary, $gradient-secondary, etc.
+// Neutral: $text-dark, $bg-primary, $border-color, etc.
+// Semantic: $form-error, $link-color, $status-active, etc.

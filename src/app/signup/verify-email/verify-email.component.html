@@ -1,0 +1,30 @@
+<div class="clearfix"></div>
+    <div class="vspacer"></div>
+    <div class="vspacer"></div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; margin-top:15%">
+        <img src="../../../assets/images/Logo.png" height="80"  alt="logo">
+    </div>
+
+    <div style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; padding:15px;margin:25px;">
+
+    <div *ngIf="isAndroid">
+      Thank you for completing the verification. You may now log in and proceed.
+        <!-- Thank you for completing the verification,You may now proceed to log in using
+        Table Signals app today.        -->
+      <a [href]="androidAppLink" target="_blank" class="browser-button">Open the App</a>.
+    </div>
+    
+    <div *ngIf="isIOS">Thank you for completing the verification. You may now log in and proceed.
+      <a [href]="iosAppLink" target="_blank" class="browser-button">Open the App</a>.
+    </div>
+    <p *ngIf="!isAndroid && !isIOS">
+      Thank you for completing the verification. You may now log in and proceed.
+    </p>
+    
+    <!-- Button to Continue in Browser -->
+    <div style="text-align: center; margin-top:0px" *ngIf="!isAndroid && !isIOS"> 
+         <!-- <button (click)="continueInBrowser()" >Continue in Browser</button> -->
+         <a (click)="continueInBrowser()" class="browser-button">Continue in browser</a>
+        </div>
+  </div>
+`

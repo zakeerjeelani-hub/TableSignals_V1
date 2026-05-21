@@ -1,0 +1,39 @@
+.error-message {
+    
+    border: 1px solid #ebccd1;
+    color: #a94442;
+    padding: 8px 12px;
+    margin: 10px 0;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    min-height: 30px;
+    max-height: 30px;
+
+  }
+  
+  .error-message-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .error-icon {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  .error-text {
+    flex-grow: 1;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #a94442;
+    line-height: 1;
+  }

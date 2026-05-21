@@ -1,0 +1,170 @@
+<div class="phone-frame" [class.embedded]="embedded">
+
+  <!-- Header -->
+  <div class="header" *ngIf="!embedded">
+    <button class="back-btn" (click)="goBack()">&#8592;</button>
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="18" r="14" fill="#F5A800"/>
+        <circle cx="20" cy="18" r="10" fill="#1A1A1A"/>
+        <line x1="17" y1="13" x2="17" y2="23" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="23" y1="13" x2="23" y2="23" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="17" y1="18" x2="23" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 30 L20 38 L26 30" fill="#F5A800"/>
+        <path d="M14 30 Q20 32 26 30" fill="#F5A800"/>
+      </svg>
+      <div class="logo-text">Table<br>Signals</div>
+    </div>
+  </div>
+
+  <!-- Page title -->
+  <div class="page-title-wrap">
+    <div class="page-title">Send a Custom Message</div>
+    <div class="page-subtitle">Let your server know how we can help.</div>
+  </div>
+
+  <!-- Message card -->
+  <div class="message-card">
+    <div class="card-label">
+      <div class="card-label-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5A800" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="card-label-text">Your Message</div>
+    </div>
+
+    <textarea
+      [(ngModel)]="message"
+      placeholder="Type your message here..."
+      maxlength="50"
+      class="msg-textarea">
+    </textarea>
+    <div class="char-count">{{ charCount }}/50</div>
+
+    <div class="tip-box">
+      <div class="tip-icon">
+        <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2a7 7 0 0 1 4 12.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26A7 7 0 0 1 12 2zm-1 18h2v1a1 1 0 0 1-2 0v-1zm-1-2h4v1h-4v-1z"/>
+        </svg>
+      </div>
+      <div class="tip-text">
+        <strong>Tip:</strong> Be specific so we can help you faster.<br>
+        Examples: "Extra napkins", "Check on order", "Need more time"
+      </div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="action-row">
+    <button class="btn-primary" (click)="saveAndDisplay()" [disabled]="!message.trim()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v14a2 2 0 0 1-2 2z"/>
+        <polyline points="17 21 17 13 7 13 7 21"/>
+        <polyline points="7 3 7 8 15 8"/>
+      </svg>
+      Save &amp; Display
+    </button>
+    <button class="btn-secondary" (click)="sendMessage()" [disabled]="!message.trim() || isSending">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E7A3E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+      {{ isSending ? 'Sending...' : 'Send Message' }}
+    </button>
+  </div>
+  <div class="hints-row">
+    <div class="btn-hint">Save and show on this screen</div>
+    <div class="btn-hint">Send message to server</div>
+  </div>
+
+  <!-- Saved display message -->
+  <div class="display-message-box" *ngIf="displayMessage">
+    <div class="display-message-label">Displayed message</div>
+    <div class="display-message-text">{{ displayMessage }}</div>
+  </div>
+
+  <!-- Previously used messages -->
+  <ng-container *ngIf="previousMessages.length > 0">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5A800" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="section-label">
+        <div class="section-title">Previously used messages</div>
+        <div class="section-sub">Tap to send again</div>
+      </div>
+    </div>
+
+    <div class="prev-list">
+      <div class="prev-item" *ngFor="let msg of previousMessages" (click)="fillMessage(msg)">
+        <div class="prev-emoji">💬</div>
+        <div class="prev-text">{{ msg }}</div>
+        <div class="prev-arrow">›</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Default quick messages when no history -->
+  <ng-container *ngIf="previousMessages.length === 0">
+    <div class="section-header">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5A800" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div class="section-label">
+        <div class="section-title">Quick messages</div>
+        <div class="section-sub">Tap to use</div>
+      </div>
+    </div>
+
+    <div class="prev-list">
+      <div class="prev-item" (click)="fillMessage('Refill my drink, please')">
+        <div class="prev-emoji">🥤</div>
+        <div class="prev-text">Refill my drink, please</div>
+        <div class="prev-arrow">›</div>
+      </div>
+      <div class="prev-item" (click)="fillMessage('Extra napkins, please')">
+        <div class="prev-emoji">🗒️</div>
+        <div class="prev-text">Extra napkins, please</div>
+        <div class="prev-arrow">›</div>
+      </div>
+      <div class="prev-item" (click)="fillMessage('Check on my order, please')">
+        <div class="prev-emoji">🍽️</div>
+        <div class="prev-text">Check on my order, please</div>
+        <div class="prev-arrow">›</div>
+      </div>
+      <div class="prev-item" (click)="fillMessage('We need more time, please')">
+        <div class="prev-emoji">⏱</div>
+        <div class="prev-text">We need more time, please</div>
+        <div class="prev-arrow">›</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Bottom CTA — hidden when embedded inside a popup -->
+  <div class="bottom-cta" *ngIf="!embedded" (click)="goBack()">
+    <div class="cta-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </div>
+    <div class="cta-text">
+      <div class="cta-title">Need something else?</div>
+      <div class="cta-sub">Return to the main menu</div>
+    </div>
+    <div class="cta-arrow">›</div>
+  </div>
+
+</div>
+
+<app-popup-message
+  [message]="popupMessage"
+  [isVisible]="showPopup"
+  (closed)="closePopup()">
+</app-popup-message>

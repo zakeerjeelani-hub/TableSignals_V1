@@ -1,0 +1,510 @@
+// ============================================
+// GLOBAL FORM SYSTEM
+// ============================================
+// All form elements, inputs, and validation styles
+// Single source of truth for all form styling
+
+@import 'colors';
+@import 'typography';
+@import 'spacing';
+
+// ============================================
+// FORM CONTAINER
+// ============================================
+
+.form,
+form {
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $gap-sm;
+  margin-bottom: $gap-form-group;
+}
+
+.form-inline {
+  display: flex;
+  align-items: center;
+  gap: $gap-md;
+}
+
+// ============================================
+// FORM LABELS
+// ============================================
+
+label {
+  @include label-text;
+  color: $text-dark;
+  display: block;
+  margin-bottom: $space-sm;
+  font-weight: $font-weight-semibold;
+  
+  &.required {
+    &::after {
+      content: ' *';
+      color: $danger;
+    }
+  }
+  
+  &.disabled {
+    color: $text-light;
+    opacity: $opacity-disabled;
+  }
+}
+
+// ============================================
+// INPUT FIELDS
+// ============================================
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="phone"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="search"],
+input[type="url"],
+textarea,
+select {
+  width: 100%;
+  padding: $padding-input;
+  font-size: $font-size-base;
+  font-family: $font-family-primary;
+  border: 1px solid $border-color;
+  border-radius: $radius-input;
+  background-color: $bg-primary;
+  color: $text-dark;
+  transition: all 0.3s ease;
+  
+  // Placeholder styling
+  &::placeholder {
+    color: $text-light;
+    opacity: 1;
+  }
+  
+  // Focus state
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px $primary-transparent-12;
+    background-color: $bg-primary;
+  }
+  
+  // Hover state
+  &:hover:not(:disabled):not(:focus) {
+    border-color: $text-secondary;
+  }
+  
+  // Disabled state
+  &:disabled {
+    background-color: $bg-tertiary;
+    color: $text-light;
+    cursor: not-allowed;
+    opacity: $opacity-disabled;
+  }
+  
+  // Read-only state
+  &:read-only {
+    background-color: $bg-tertiary;
+    cursor: not-allowed;
+  }
+}
+
+// Small input
+input.input-sm,
+select.input-sm,
+textarea.input-sm {
+  padding: $padding-input-sm;
+  font-size: $font-size-sm;
+}
+
+// Large input
+input.input-lg,
+select.input-lg,
+textarea.input-lg {
+  padding: $padding-lg;
+  font-size: $font-size-lg;
+}
+
+// ============================================
+// TEXTAREA
+// ============================================
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  
+  &.textarea-sm {
+    min-height: 60px;
+  }
+  
+  &.textarea-lg {
+    min-height: 150px;
+  }
+}
+
+// ============================================
+// SELECT DROPDOWN
+// ============================================
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-md center;
+  padding-right: 36px;
+  cursor: pointer;
+  
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+// ============================================
+// CHECKBOXES & RADIO BUTTONS
+// ============================================
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: $gap-sm;
+  margin-bottom: $space-sm;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: $primary;
+  
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+  
+  &:disabled {
+    opacity: $opacity-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.form-check-label {
+  @include body-text;
+  cursor: pointer;
+  
+  input[type="checkbox"]:checked + &,
+  input[type="radio"]:checked + & {
+    font-weight: $font-weight-semibold;
+    color: $primary;
+  }
+}
+
+// ============================================
+// FORM VALIDATION STATES
+// ============================================
+
+// Valid state
+input.is-valid,
+select.is-valid,
+textarea.is-valid {
+  border-color: $success;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2327ae60'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-md center;
+  background-size: 20px;
+  padding-right: 40px;
+  
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.12);
+    border-color: $success;
+  }
+}
+
+// Invalid state
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+  border-color: $danger;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e74c3c'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-md center;
+  background-size: 20px;
+  padding-right: 40px;
+  
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.12);
+    border-color: $danger;
+  }
+}
+
+// ============================================
+// FORM MESSAGES
+// ============================================
+
+.form-text,
+.form-help-text {
+  @include body-sm;
+  color: $text-secondary;
+  margin-top: $space-xs;
+}
+
+.form-error {
+  @include body-sm;
+  color: $danger;
+  margin-top: $space-xs;
+  display: flex;
+  align-items: center;
+  gap: $gap-xs;
+  
+  &::before {
+    content: '⚠';
+    font-size: 1.1em;
+  }
+}
+
+.form-success {
+  @include body-sm;
+  color: $success;
+  margin-top: $space-xs;
+  display: flex;
+  align-items: center;
+  gap: $gap-xs;
+  
+  &::before {
+    content: '✓';
+    font-size: 1.1em;
+  }
+}
+
+.form-info {
+  @include body-sm;
+  color: $info;
+  margin-top: $space-xs;
+  display: flex;
+  align-items: center;
+  gap: $gap-xs;
+  
+  &::before {
+    content: 'ℹ';
+    font-size: 1.1em;
+  }
+}
+
+// ============================================
+// FORM LAYOUT
+// ============================================
+
+.form-row {
+  display: grid;
+  gap: $gap-md;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  
+  &.form-row-2 {
+    grid-template-columns: repeat(2, 1fr);
+    
+    @media (max-width: $tablet-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &.form-row-3 {
+    grid-template-columns: repeat(3, 1fr);
+    
+    @media (max-width: $tablet-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (max-width: $mobile-lg) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// ============================================
+// INPUT GROUPS
+// ============================================
+
+.input-group {
+  display: flex;
+  align-items: center;
+  
+  .input-group-prepend,
+  .input-group-append {
+    display: flex;
+    align-items: center;
+    padding: $padding-input;
+    background-color: $bg-secondary;
+    border: 1px solid $border-color;
+    font-size: $font-size-base;
+    color: $text-secondary;
+  }
+  
+  .input-group-prepend {
+    border-right: none;
+    border-radius: $radius-input 0 0 $radius-input;
+  }
+  
+  .input-group-append {
+    border-left: none;
+    border-radius: 0 $radius-input $radius-input 0;
+  }
+  
+  input {
+    border-radius: 0;
+  }
+  
+  .btn {
+    border-radius: 0;
+  }
+}
+
+// ============================================
+// FLOATING LABELS
+// ============================================
+
+.form-floating {
+  position: relative;
+  
+  label {
+    position: absolute;
+    top: $padding-input;
+    left: $padding-input;
+    margin-bottom: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background-color: $bg-primary;
+    padding: 0 $space-xs;
+  }
+  
+  input:focus ~ label,
+  input:not(:placeholder-shown) ~ label,
+  textarea:focus ~ label,
+  textarea:not(:placeholder-shown) ~ label {
+    top: -$space-lg;
+    left: $space-sm;
+    font-size: $font-size-sm;
+    color: $primary;
+  }
+}
+
+// ============================================
+// SWITCH / TOGGLE
+// ============================================
+
+.form-switch {
+  display: flex;
+  align-items: center;
+  gap: $gap-sm;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+  
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $border-color;
+    transition: 0.3s;
+    border-radius: 28px;
+    
+    &::before {
+      position: absolute;
+      content: '';
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+  }
+  
+  input:checked + .slider {
+    background-color: $primary;
+  }
+  
+  input:checked + .slider::before {
+    transform: translateX(20px);
+  }
+}
+
+// ============================================
+// RESPONSIVE FORM STYLES
+// ============================================
+
+@media (max-width: $tablet-md) {
+  input,
+  select,
+  textarea {
+    font-size: 16px; // Prevents zoom on iOS
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// MATERIAL FORM FIELD OVERRIDES
+// ============================================
+
+// For Angular Material mat-form-field
+::ng-deep {
+  .mat-mdc-form-field {
+    width: 100%;
+    
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: $border-color !important;
+    }
+    
+    &.mat-focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: $primary !important;
+        border-width: 2px !important;
+      }
+    }
+  }
+  
+  .mat-mdc-form-field-error {
+    font-size: 0.75rem !important;
+    color: $danger !important;
+  }
+}
+
+// ============================================
+// EXPORT SUMMARY
+// ============================================
+
+// Available form classes and selectors:
+// Containers: .form, .form-group, .form-row, .form-inline
+// Labels: label, .form-check-label
+// Inputs: input[type="text"], textarea, select
+// Validation: .is-valid, .is-invalid, .form-error, .form-success
+// Messages: .form-text, .form-help-text, .form-error, .form-success
+// Special: .input-group, .form-floating, .form-switch
+// Responsive: Automatically adjusts on mobile
+// States: :focus, :disabled, :read-only, :checked

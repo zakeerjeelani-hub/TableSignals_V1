@@ -1,0 +1,939 @@
+// ============================================
+// QR CODE GENERATOR - FULLY RESPONSIVE SCSS
+// ============================================
+
+// Design System Variables
+$primary: #fec200;
+$primary-dark: #e5b000;
+$primary-light: rgba(254, 194, 0, 0.1);
+
+$secondary: #007bff;
+$secondary-dark: #0056b3;
+$accent: #3a9dc4;
+
+$text-primary: #1a1a1a;
+$text-secondary: #666666;
+$text-muted: #999999;
+$text-inverse: #ffffff;
+
+$bg-white: #ffffff;
+$bg-light: #f8f9fb;
+$bg-lighter: #fafbfc;
+
+$border-light: #e0e0e0;
+$border-medium: #d0d0d0;
+
+$success: #4caf50;
+$danger: #f44336;
+$warning: #ff9800;
+
+// Spacing
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-xl: 24px;
+$space-2xl: 32px;
+$space-3xl: 48px;
+
+// Typography
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+$font-weight-heavy: 900;
+
+// Border Radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+// Breakpoints
+$breakpoint-mobile: 599px;
+$breakpoint-tablet: 768px;
+$breakpoint-small-mobile: 480px;
+$breakpoint-extra-small: 360px;
+
+// ============================================
+// MAIN CONTAINER
+// ============================================
+
+.qr-generator-container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $bg-light 0%, $bg-lighter 100%);
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $breakpoint-tablet) {
+    background: $bg-light;
+  }
+}
+
+// ============================================
+// HEADER
+// ============================================
+
+.qr-header {
+  background: linear-gradient(135deg, $primary-light 0%, $bg-lighter 100%);
+  border-bottom: 3px solid $primary;
+  padding: $space-lg;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: $space-md;
+    border-bottom: 2px solid $primary;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-md $space-sm;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    padding: $space-sm;
+  }
+}
+
+.qr-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-lg;
+  width: 100%;
+
+  @media (max-width: $breakpoint-tablet) {
+    gap: $space-md;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-sm;
+  }
+}
+
+.qr-title {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-heavy;
+  color: $primary;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-xl;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: $font-size-lg;
+    letter-spacing: 0.02em;
+  }
+}
+
+.qr-actions {
+  display: flex;
+  gap: $space-md;
+  align-items: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 100%;
+    justify-content: flex-end;
+    gap: $space-sm;
+  }
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-md;
+  background-color: $bg-white;
+  border: 2px solid $primary;
+  color: $primary;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $primary;
+    color: $text-primary;
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 40px;
+    height: 40px;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// ============================================
+// CONTENT
+// ============================================
+
+.qr-content {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: $space-2xl $space-lg;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: $space-xl $space-md;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-lg $space-sm;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    padding: $space-md $space-sm;
+  }
+}
+
+// ============================================
+// FORM
+// ============================================
+
+.qr-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+
+  @media (max-width: $breakpoint-mobile) {
+    gap: $space-lg;
+  }
+}
+
+// ============================================
+// FILTERS SECTION
+// ============================================
+
+.filters-section {
+  background: $bg-white;
+  border-radius: $radius-lg;
+  padding: $space-xl;
+  box-shadow: $shadow-md;
+  border: 1px solid $border-light;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-xl;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-lg;
+    padding: $space-lg;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: 1fr;
+    gap: $space-md;
+    padding: $space-lg;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    padding: $space-md;
+    gap: $space-sm;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+
+  @media (max-width: $breakpoint-mobile) {
+    gap: $space-xs;
+  }
+}
+
+.form-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: $font-size-xs;
+  }
+}
+
+.form-field {
+  width: 100%;
+
+  ::ng-deep {
+    .mat-mdc-form-field {
+      width: 100%;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      padding-bottom: 0.5em;
+    }
+
+    .mdc-text-field {
+      background-color: $bg-lighter;
+    }
+  }
+}
+
+// ============================================
+// TABLE SELECTION CONTROLS
+// ============================================
+
+.table-controls {
+  display: flex;
+  gap: $space-sm;
+  margin-bottom: $space-md;
+
+  .toggle-all-button {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-color: $primary;
+    color: $primary;
+    padding: $space-sm $space-md;
+
+    &:hover {
+      background-color: $primary-light;
+      color: $primary-dark;
+      border-color: $primary-dark;
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+      width: 100%;
+      justify-content: center;
+      padding: $space-md $space-lg;
+    }
+  }
+}
+
+.selection-info {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  margin-top: $space-sm;
+  font-weight: $font-weight-medium;
+
+  @media (max-width: $breakpoint-mobile) {
+    text-align: center;
+  }
+}
+
+// ============================================
+// ACTION BUTTONS
+// ============================================
+
+.action-buttons {
+  display: flex;
+  gap: $space-lg;
+  padding: $space-xl;
+  background: $bg-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  border: 1px solid $border-light;
+  justify-content: flex-end;
+
+  @media (max-width: $breakpoint-tablet) {
+    gap: $space-md;
+    padding: $space-lg;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    flex-direction: column;
+    gap: $space-sm;
+    padding: $space-lg;
+  }
+}
+
+.btn-download,
+.btn-print {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-md $space-xl;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: $radius-md;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 44px;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 100%;
+    justify-content: center;
+    padding: $space-md $space-lg;
+    font-size: $font-size-xs;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    min-height: 40px;
+    padding: 10px 12px;
+  }
+}
+
+.btn-download {
+  background-color: $secondary;
+  color: $text-inverse;
+
+  &:hover:not(:disabled) {
+    background-color: $secondary-dark;
+  }
+}
+
+.btn-print {
+  background-color: $primary;
+  color: $text-primary;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-dark;
+  }
+}
+
+// ============================================
+// QR GRID SECTION
+// ============================================
+
+.qr-grid-section {
+  background: $bg-white;
+  border-radius: $radius-lg;
+  padding: $space-xl;
+  box-shadow: $shadow-md;
+  border: 1px solid $border-light;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-lg;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    padding: $space-md;
+  }
+}
+
+.select-all-checkbox {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: $space-md;
+  margin-bottom: $space-xl;
+  background: $bg-lighter;
+  border-radius: $radius-md;
+  border: 2px solid $border-light;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-sm;
+    margin-bottom: $space-lg;
+  }
+}
+
+.checkbox-input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: $primary;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.checkbox-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-primary;
+  cursor: pointer;
+  user-select: none;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: $font-size-xs;
+  }
+}
+
+// ============================================
+// QR GRID
+// ============================================
+
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: $space-lg;
+  padding: $space-md 0;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: $space-md;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: $space-md;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-md;
+  }
+
+  @media (max-width: $breakpoint-extra-small) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================
+// QR CARD
+// ============================================
+
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: $space-md;
+  padding: $space-lg;
+  background: $bg-white;
+  border-radius: $radius-lg;
+  border: 1px solid $border-light;
+  transition: all 0.3s ease;
+  position: relative;
+  height: 100%;
+  box-shadow: $shadow-sm;
+
+  &:hover {
+    border-color: $primary;
+    box-shadow: $shadow-md;
+    transform: translateY(-4px);
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-md;
+    gap: $space-sm;
+    border-radius: $radius-md;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    padding: $space-sm;
+  }
+}
+
+.qr-checkbox {
+  position: absolute;
+  top: $space-md;
+  right: $space-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+
+  input[type="checkbox"] {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    accent-color: $primary;
+
+    @media (max-width: $breakpoint-mobile) {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    top: $space-sm;
+    right: $space-sm;
+  }
+}
+
+.qr-code-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-lg;
+  background: $bg-lighter;
+  border-radius: $radius-md;
+  border: 2px solid $border-light;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-md;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    padding: $space-sm;
+  }
+
+  qr-code {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  canvas {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+  }
+}
+
+.qr-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  text-align: center;
+  margin: 0;
+  padding: 0 $space-sm;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  line-height: 1.4;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: $font-size-xs;
+  }
+
+  @media (max-width: $breakpoint-small-mobile) {
+    font-size: 0.7rem;
+  }
+}
+
+// ============================================
+// EMPTY STATE
+// ============================================
+
+.empty-state {
+  background: $bg-white;
+  border-radius: $radius-lg;
+  padding: $space-3xl;
+  text-align: center;
+  border: 2px dashed $border-light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-lg;
+  min-height: 300px;
+  justify-content: center;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: $space-2xl;
+    min-height: 250px;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-xl;
+    min-height: 200px;
+  }
+}
+
+.empty-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: $primary;
+  opacity: 0.5;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.empty-text {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  margin: 0;
+
+  @media (max-width: $breakpoint-mobile) {
+    font-size: $font-size-sm;
+  }
+}
+
+// ============================================
+// LOADING OVERLAY
+// ============================================
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.spinner-container {
+  background-color: $bg-white;
+  border-radius: $radius-lg;
+  padding: $space-2xl;
+  text-align: center;
+  box-shadow: $shadow-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-lg;
+
+  p {
+    margin: 0;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+
+  ::ng-deep circle {
+    stroke: $primary !important;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-xl;
+
+    p {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// ============================================
+// MATERIAL OVERRIDES
+// ============================================
+
+::ng-deep {
+  // Prevent dropdown from going beyond screen
+  .mat-mdc-select-panel {
+    max-height: 400px !important;
+    max-width: 100% !important;
+  }
+
+  .table-select-panel {
+    max-height: 400px !important;
+    width: auto !important;
+    min-width: 250px !important;
+  }
+
+  // Select All Option styling
+  .select-all-option {
+    background-color: $bg-lighter !important;
+    border-bottom: 2px solid $border-light !important;
+    font-weight: $font-weight-bold !important;
+    min-height: 48px !important;
+    padding-left: $space-lg !important;
+
+    .mat-mdc-option-pseudo-checkbox {
+      display: none !important;
+    }
+
+    &:hover {
+      background-color: $primary-light !important;
+    }
+
+    .mat-mdc-checkbox {
+      width: 100%;
+      margin: 0;
+
+      .mdc-checkbox {
+        margin-right: $space-md;
+      }
+    }
+  }
+
+  // Divider
+  .mat-divider {
+    margin: 0 !important;
+  }
+
+  // OptGroup Labels
+  .mat-mdc-optgroup-label {
+    font-weight: $font-weight-bold;
+    padding: $space-md $space-lg;
+    background-color: $bg-lighter;
+    border-bottom: 1px solid $border-light;
+    color: $text-secondary;
+    text-transform: uppercase;
+    font-size: $font-size-xs;
+    letter-spacing: 0.05em;
+  }
+
+  // Options
+  .table-option,
+  .loading-option,
+  .mat-mdc-option {
+    padding-left: $space-xl !important;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+
+    &.mat-mdc-option-active {
+      background-color: $primary-light !important;
+    }
+
+    &:hover {
+      background-color: $bg-lighter;
+    }
+  }
+
+  // Loading Option
+  .loading-option {
+    padding-left: $space-lg !important;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+    cursor: default;
+
+    mat-spinner {
+      display: inline-flex;
+      margin: 0;
+    }
+
+    span {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+    }
+  }
+
+  // Checkbox styling
+  .mat-mdc-checkbox {
+    display: inline-flex;
+    margin-right: $space-sm;
+
+    .mdc-checkbox {
+      margin: 0;
+    }
+  }
+
+  // Form field
+  .mat-mdc-form-field {
+    width: 100%;
+
+    .mat-mdc-text-field-wrapper {
+      padding-bottom: 0.5em;
+    }
+
+    .mdc-text-field {
+      background-color: $bg-lighter;
+    }
+  }
+
+  // Select panel content
+  .mat-mdc-select-panel-wrap {
+    overflow-y: auto !important;
+    max-height: 400px !important;
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.qr-generator-container {
+  animation: slideDown 0.3s ease-out;
+}
+
+// ============================================
+// ACCESSIBILITY
+// ============================================
+
+.checkbox-input:focus-visible,
+.action-button:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+// ============================================
+// END QR GENERATOR
+// ============================================

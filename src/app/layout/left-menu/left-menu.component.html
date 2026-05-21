@@ -1,0 +1,85 @@
+<div class="sidenav-wrapper">
+  <!-- Mobile Menu Toggle Button (Hamburger) -->
+  <button 
+    class="mobile-menu-toggle"
+    (click)="toggleMobileMenu()"
+    aria-label="Toggle navigation menu"
+    [attr.aria-expanded]="isMobileMenuOpen">
+    <span class="hamburger">
+      <span class="line line1" [ngClass]="{ 'active': isMobileMenuOpen }"></span>
+      <span class="line line2" [ngClass]="{ 'active': isMobileMenuOpen }"></span>
+      <span class="line line3" [ngClass]="{ 'active': isMobileMenuOpen }"></span>
+    </span>
+  </button>
+
+  <!-- Sidebar Navigation -->
+  <nav 
+    class="sidenav"
+    [ngClass]="{ 'mobile-open': isMobileMenuOpen }"
+    role="navigation"
+    aria-label="Main navigation">
+    
+    <!-- Notification Toggle Section -->
+    <div class="notification-section">
+      <div class="toggle-container">
+        <label 
+          class="toggle-switch"
+          [attr.aria-label]="enableService ? 'Notifications are on' : 'Notifications are off'">
+          <input 
+            type="checkbox" 
+            [checked]="enableService" 
+            (change)="enableDisableService()"
+            aria-label="Toggle notifications">
+          <span class="toggle-slider" aria-hidden="true"></span>
+        </label>
+        <span class="toggle-label">
+          {{ enableService ? 'Notifications On' : 'Notifications Off' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Menu Items -->
+    <ng-container *ngIf="isUser">
+      <ng-container *ngFor="let menuItem of menuItems">
+        <!-- Main Menu Item -->
+        <button 
+          class="menu-item"
+          (click)="onMenuClick(menuItem)"
+          [attr.aria-expanded]="hasChildren(menuItem) ? menuItem.isSubmenuVisible : null"
+          [attr.aria-label]="menuItem.menuTitle">
+          <span class="menu-title">{{ menuItem.menuTitle }}</span>
+          <span 
+            class="arrow" 
+            *ngIf="hasChildren(menuItem)"
+            aria-hidden="true"
+            [ngClass]="{ 'expanded': menuItem.isSubmenuVisible }">
+            ▼
+          </span>
+        </button>
+
+        <!-- Submenu -->
+        <div 
+          class="submenu"
+          *ngIf="hasChildren(menuItem)"
+          [ngClass]="{ 'submenu-visible': menuItem.isSubmenuVisible }"
+          role="group"
+          [attr.aria-label]="menuItem.menuTitle + ' submenu'">
+          <button 
+            *ngFor="let child of menuItem.children"
+            class="submenu-item"
+            (click)="navigateToRoute(child)"
+            [attr.aria-label]="child.menuTitle">
+            {{ child.menuTitle }}
+          </button>
+        </div>
+      </ng-container>
+    </ng-container>
+  </nav>
+
+  <!-- Mobile Menu Backdrop (closes menu when clicked) -->
+  <div 
+    class="mobile-backdrop"
+    *ngIf="isMobileMenuOpen"
+    (click)="closeMobileMenu()"
+    aria-hidden="true"></div>
+</div>

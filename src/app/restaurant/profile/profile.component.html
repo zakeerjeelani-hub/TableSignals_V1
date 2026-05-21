@@ -1,0 +1,89 @@
+<div class="page-main">
+
+  <!-- Header Ribbon -->
+  <div class="page-header-ribbon">
+    <div class="ribbon-left"><h1 class="page-title">Profile</h1></div>
+    <div class="ribbon-right"><app-back-button></app-back-button></div>
+  </div>
+
+  <div class="page-content">
+    <app-success-message *ngIf="uploadSuccess"
+      [message]="'Restaurant info updated. Please Logout and Login to see the changes.'">
+    </app-success-message>
+
+    <form [formGroup]="form" class="profile-form">
+
+      <div class="field-row">
+        <mat-form-field appearance="outline" class="full-field">
+          <mat-label>Restaurant Name</mat-label>
+          <input matInput formControlName="restaurantName" required>
+          <mat-error *ngIf="form.get('restaurantName')?.hasError('required')">Restaurant Name is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="field-row">
+        <mat-form-field appearance="outline" class="full-field">
+          <mat-label>Email ID</mat-label>
+          <input matInput formControlName="emailID" readonly required>
+          <mat-error *ngIf="form.get('emailID')?.hasError('required')">Email is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="field-row">
+        <mat-form-field appearance="outline" class="full-field">
+          <mat-label>User Name</mat-label>
+          <input matInput formControlName="userName" required>
+          <mat-error *ngIf="form.get('userName')?.hasError('required')">User Name is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="field-row">
+        <mat-form-field appearance="outline" class="full-field">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="passwordVisible ? 'text' : 'password'" formControlName="password" required>
+          <mat-icon matSuffix style="cursor:pointer"
+            (mouseenter)="passwordVisible = true"
+            (mouseleave)="passwordVisible = false">
+            {{ passwordVisible ? 'visibility' : 'visibility_off' }}
+          </mat-icon>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="field-row">
+        <mat-form-field appearance="outline" class="full-field">
+          <mat-label>Phone No</mat-label>
+          <input matInput formControlName="phoneNo" required>
+        </mat-form-field>
+      </div>
+
+      <div class="field-row">
+        <mat-form-field appearance="outline" class="full-field">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address">
+        </mat-form-field>
+      </div>
+
+      <!-- Hidden fields kept for form integrity -->
+      <div style="display:none">
+        <input formControlName="webSite">
+        <div formArrayName="socialMediaArray">
+          <label *ngFor="let platform of socialMediaPlatforms; let i = index">
+            <input type="checkbox" [formControlName]="i">
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="accent" type="button" (click)="RestaurantSignup()" [disabled]="isLoading">
+          <mat-icon>save</mat-icon> Update
+        </button>
+      </div>
+
+    </form>
+
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div><p>Saving...</p>
+    </div>
+  </div>
+</div>

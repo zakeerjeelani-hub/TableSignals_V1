@@ -1,0 +1,493 @@
+// ============================================
+// MEMBERSHIP USERS — aligned with dashboard design
+// ============================================
+
+// Design tokens (identical to dashboard)
+$primary:        #fec200;
+$primary-dark:   #e5b000;
+$primary-light:  rgba(254, 194, 0, 0.1);
+
+$text-primary:   #1a1a1a;
+$text-secondary: #666666;
+$text-inverse:   #ffffff;
+
+$bg-white:       #ffffff;
+$bg-light:       #f8f9fb;
+$bg-lighter:     #fafbfc;
+$border-light:   #e0e0e0;
+
+$success: #4caf50;
+$warning: #ff9800;
+$danger:  #f44336;
+$info:    #2196f3;
+
+// Spacing (compact — same as dashboard)
+$space-xs: 4px;
+$space-sm: 6px;
+$space-md: 8px;
+$space-lg: 12px;
+$space-xl: 16px;
+$space-xxl: 32px;
+
+// Typography
+$font-size-xs:   0.7rem;
+$font-size-sm:   0.75rem;
+$font-size-base: 0.85rem;
+$font-size-lg:   1.125rem;
+$font-size-xl:   1.5rem;
+
+$font-weight-bold:   700;
+$font-weight-heavy:  900;
+
+// Border Radius
+$radius-sm:   4px;
+$radius-md:   8px;
+$radius-lg:   12px;
+$radius-full: 999px;
+
+// Shadows
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.10);
+
+// Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+
+// ============================================
+// ROOT
+// ============================================
+
+.membership-main {
+  width: 100%;
+  background-color: $bg-light;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+}
+
+// ============================================
+// HEADER RIBBON  (mirrors .dashboard-header-ribbon)
+// ============================================
+
+.membership-header-ribbon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $space-md $space-lg;
+  background: linear-gradient(135deg, $primary-light 0%, $bg-lighter 100%);
+  border-bottom: 2px solid $primary;
+  border-radius: $radius-md;
+  margin-bottom: $space-md;
+  gap: $space-lg;
+
+  @media (max-width: $breakpoint-mobile) {
+    flex-wrap: wrap;
+    gap: $space-sm;
+  }
+}
+
+.ribbon-left { flex: 0 0 auto; }
+
+.ribbon-right {
+  display: flex;
+  gap: $space-lg;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.page-title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-heavy;
+  color: $primary;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: $font-size-lg;
+  }
+}
+
+// ============================================
+// TAB GROUP
+// ============================================
+
+.membership-tabs {
+  flex: 1;
+  width: 100%;
+
+  ::ng-deep {
+    // MDC tab bar
+    .mat-mdc-tab-header {
+      background: $bg-lighter;
+      border-bottom: 2px solid $border-light;
+    }
+
+    .mat-mdc-tab {
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      min-width: 150px;
+    }
+
+    .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+      color: $primary;
+    }
+
+    .mdc-tab-indicator__content--underline {
+      border-color: $primary !important;
+      border-top-width: 3px;
+    }
+  }
+}
+
+.tab-icon {
+  margin-right: $space-sm;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+// ============================================
+// TAB CONTENT
+// ============================================
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+  padding: $space-xl $space-md;
+  background: $bg-white;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: $space-md $space-sm;
+    gap: $space-md;
+  }
+}
+
+// ============================================
+// FILTER BAR  (mirrors dashboard filters-section)
+// ============================================
+
+.filter-bar {
+  display: flex;
+  gap: $space-md;
+  align-items: flex-end;
+  flex-wrap: wrap;
+
+  @media (max-width: $breakpoint-mobile) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.filter-field-compact {
+  min-width: 240px;
+  flex: 1;
+
+  @media (max-width: $breakpoint-mobile) {
+    min-width: auto;
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .mat-mdc-form-field { width: 100%; }
+    .mdc-text-field--outlined { background: $bg-white; }
+  }
+}
+
+// ============================================
+// TABLE WRAPPER  (exact mirror of dashboard)
+// ============================================
+
+.table-wrapper {
+  background-color: $bg-white;
+  border-radius: $radius-md;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $shadow-md;
+}
+
+.table-container {
+  overflow-x: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  &::-webkit-scrollbar { width: 6px; height: 6px; }
+  &::-webkit-scrollbar-track { background: $bg-lighter; }
+  &::-webkit-scrollbar-thumb {
+    background: $border-light;
+    border-radius: 3px;
+    &:hover { background: $text-secondary; }
+  }
+}
+
+// ============================================
+// TABLE — shared column classes (mirrors dashboard)
+// ============================================
+
+.members-table,
+.history-parent-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+// Header row
+.table-header-row {
+  background-color: $bg-lighter;
+  border-bottom: 2px solid $primary;
+
+  &:hover { background-color: $bg-light; }
+}
+
+// Data rows
+.table-data-row {
+  border-bottom: 1px solid $border-light;
+  transition: background-color 0.15s ease;
+
+  &:hover { background-color: #fafafa; }
+  &:last-child { border-bottom: none; }
+
+  &.selected-row {
+    background-color: $primary-light;
+    border-left: 3px solid $primary;
+  }
+}
+
+// Column header cell (identical to dashboard .column-header)
+.column-header {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-heavy;
+  color: $text-primary;
+  padding: $space-md $space-sm !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: $bg-lighter;
+  border-bottom: 2px solid $primary;
+  white-space: nowrap;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-sm $space-xs !important;
+    font-size: $font-size-xs;
+  }
+
+  &[mat-sort-header]:hover {
+    color: $primary;
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  &.checkbox-cell { width: 50px; }
+}
+
+// Column data cell (identical to dashboard .column-cell)
+.column-cell {
+  padding: $space-md $space-sm !important;
+  font-size: $font-size-base;
+  color: $text-secondary;
+
+  @media (max-width: $breakpoint-mobile) {
+    padding: $space-sm $space-xs !important;
+    font-size: $font-size-xs;
+  }
+
+  &.checkbox-cell { width: 50px; }
+}
+
+.action-cell {
+  text-align: center;
+  white-space: nowrap;
+
+  button[mat-icon-button] {
+    width: 34px;
+    height: 34px;
+    padding: $space-xs;
+    border-radius: $radius-sm;
+    transition: background 0.2s;
+
+    &:hover:not(:disabled) { background: $primary-light; }
+    &:disabled { opacity: 0.5; }
+
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  }
+}
+
+// ============================================
+// SORT HEADER OVERRIDE
+// ============================================
+
+::ng-deep {
+  .mat-sort-header-button {
+    font-weight: $font-weight-heavy;
+    color: $text-primary;
+    &:hover { color: $primary; }
+  }
+  .mat-sort-header-sorted .mat-sort-header-button { color: $primary; }
+}
+
+// ============================================
+// HISTORY TABLE extras
+// ============================================
+
+.parent-row {
+  cursor: pointer;
+  &.expanded { background-color: $primary-light; }
+}
+
+.child-header-row {
+  background: #f5f5f5;
+  td { padding: $space-sm $space-md; font-size: $font-size-xs; font-weight: $font-weight-bold; color: $text-secondary; }
+}
+
+.child-row {
+  background: #fafafa;
+  border-bottom: 1px dashed $border-light;
+  td { padding: $space-sm $space-md; font-size: $font-size-xs; color: $text-secondary; }
+  &:hover { background: $primary-light; }
+}
+
+.child-id { padding-left: 48px !important; }
+
+.title-cell,
+.body-cell {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+.expand-btn { color: $text-secondary; }
+
+.badge-count {
+  display: inline-block;
+  min-width: 28px;
+  padding: $space-xs $space-md;
+  background: $primary;
+  color: $text-primary;
+  font-weight: $font-weight-heavy;
+  font-size: $font-size-xs;
+  border-radius: $radius-full;
+  text-align: center;
+}
+
+// ============================================
+// PAGINATOR  (mirrors dashboard)
+// ============================================
+
+::ng-deep {
+  .mat-mdc-paginator {
+    background-color: $bg-lighter;
+    border-top: 1px solid $border-light;
+    padding: $space-md;
+    font-size: 0.8rem;
+
+    .mat-mdc-paginator-container {
+      justify-content: space-between;
+      align-items: center;
+      gap: $space-lg;
+      min-height: auto;
+      padding: 0;
+
+      @media (max-width: $breakpoint-mobile) {
+        flex-direction: column;
+        gap: $space-sm;
+      }
+    }
+
+    .mat-mdc-paginator-page-size {
+      align-items: center;
+      gap: $space-sm;
+      .mat-mdc-form-field { margin: 0; }
+    }
+
+    .mat-mdc-paginator-range-label { margin: 0; }
+  }
+}
+
+// ============================================
+// LOADING / ERROR / EMPTY STATES
+// ============================================
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-lg;
+  padding: $space-xxl;
+  background: $bg-lighter;
+  border-radius: $radius-md;
+  border: 1px solid $border-light;
+
+  .spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid $border-light;
+    border-top-color: $primary;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  p { margin: 0; color: $text-secondary; font-size: $font-size-sm; font-weight: $font-weight-bold; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-state {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  padding: $space-lg;
+  background: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: $radius-md;
+  color: #c62828;
+  font-weight: $font-weight-bold;
+  mat-icon { color: #c62828; font-size: 22px; }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-lg;
+  padding: $space-xxl;
+  background: $bg-lighter;
+  border-radius: $radius-md;
+  border: 2px dashed $border-light;
+  text-align: center;
+
+  .empty-icon { font-size: 56px; width: 56px; height: 56px; color: $text-secondary; opacity: 0.45; }
+  .empty-message { margin: 0; color: $text-secondary; font-size: $font-size-base; font-weight: $font-weight-bold; }
+}
+
+// ============================================
+// MATERIAL BUTTON OVERRIDES
+// ============================================
+
+::ng-deep {
+  .membership-main {
+    .mat-mdc-raised-button[color="accent"] {
+      background-color: $primary !important;
+      color: $text-primary !important;
+      font-weight: $font-weight-heavy;
+      letter-spacing: 0.03em;
+      &:hover:not(:disabled) { background-color: $primary-dark !important; }
+    }
+
+    .mat-mdc-raised-button[color="primary"] {
+      font-weight: $font-weight-heavy;
+      letter-spacing: 0.03em;
+    }
+  }
+}
+
+// ============================================
+// END
+// ============================================
