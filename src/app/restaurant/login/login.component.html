@@ -1,99 +1,83 @@
-<div class="container-fluid justify-content-center align-items-center">
-    <div class="clearfix"></div>
-    <div class="vspacer"></div>
-    <div class="vspacer"></div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; padding-bottom: 50px;">
-      <img src="../../../assets/images/Logo.png" alt="logo" height="80" width="320">
+<div class="login-page">
+  <div class="login-shell">
+    <div class="brand-block">
+      <img src="../../../assets/images/Logo.png" alt="Table Signals logo" class="brand-logo">
     </div>
-    <div class="clearfix"></div>
-    <div class="vspacer"></div>
-    <section>
-      <div class="row" id="topDiv">
-        <div class="book">
-          <div class="book__form">
-            <form [formGroup]="form" (keydown.enter)="onLogin()"> <!-- Add (keydown.enter)="onLogin()" here -->
-              <div class="u-margin-bottom-medium" style="margin-bottom: 5px!important; padding-bottom: 0px;">
-                <h3 class="heading-secondary">Login</h3>
-              </div>
-  
-              <div class="form__group" style="padding-bottom: 10px;">
-                <input type="text" class="formusername__input form__input" placeholder="User Name" id="username"
-                       
-                       required formControlName="username">
-                <div class="clearfix"></div>
-                <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="error-message" style="float: left; display: flex;">
-                  <font style="color: red;">
-                    <small *ngIf="form.get('username')?.errors?.['required']">User Name is required.</small>
-                  </font>
-                </div>
-                <div class="vspacer"></div>
-                <div class="vspacer"></div>
-              </div>
-  
-              <div class="form__group">
-                <!-- <input type="password" class="form__input" placeholder="Password" id="password"
-                       style="height: 8px!important; width: 55%; padding-left: 10px; border-left: 3px solid red;"
-                       required formControlName="password"> -->
 
+    <section class="login-card">
+      <aside class="login-card__info">
+        <h2>Welcome Back</h2>
+        <p>Sign in to manage tables, QR setup, and guest alerts from your dashboard.</p>
+        <ul>
+          <li>Fast restaurant setup</li>
+          <li>Real-time request visibility</li>
+          <li>Simple QR management</li>
+        </ul>
+      </aside>
 
-                       <div class="form__group password-group">
-                        <input 
-                            [type]="passwordVisible ? 'text' : 'password'"
-                          class="form__input formpassword__input"
-                          placeholder="Password"
-                          id="password"
-                          name="password"
-                          
-                       required formControlName="password"
-                          
-                        />
-                        
-                          <mat-icon 
-                          class="eye-icon" 
-                          (mouseenter)="passwordVisible = true" 
-                          (mouseleave)="passwordVisible = false"
-                        >
-                          {{ passwordVisible ? 'visibility' : 'visibility_off' }}
-                        </mat-icon>
-                        
-                      </div>
+      <div class="login-card__form">
+        <form [formGroup]="form" (keydown.enter)="onLogin()">
+          <h3 class="heading-secondary">Login</h3>
+          <p class="form-subtitle">Use your account credentials to continue.</p>
 
-                <div class="clearfix"></div>
+          <div class="form__group">
+            <input
+              type="text"
+              class="form__input"
+              placeholder="User Name"
+              id="username"
+              required
+              formControlName="username">
 
-
-                
-                <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="error-message" style="float: left; display: flex;">
-                  <font style="color: red;">
-                    <small *ngIf="form.get('password')?.errors?.['required']">Password is required.</small>
-                  </font>
-                </div>
-                <span class="spanforgotpassword"  >
-                  <button class="hyperlink-button" type="button" (click)="forgotpassword()">Forgot Password?</button>
-                </span>
-                <div *ngIf="isinvalid" class="error-message">
-                  <font style="color: red;"><small> Invalid credentials.</small></font>
-                </div>
-                <div class="vspacer"></div>
-                <div class="clearfix"></div>
-              </div>
-  
-              <div class="form__group" style="padding-top: 20px;">
-                <button class="btn btn1"  
-                        (click)="onLogin()" [disabled]="isLoading">Login</button>
-                <button class="btn" style="padding: 15px; border-radius: 20px;" (click)="Register()">Register</button>
-              </div>
-  
-              <div *ngIf="isLoading" class="loading-overlay">
-                <div *ngIf="isLoading" class="spinner-border" role="status">
-                  <span class="sr-only" *ngIf="isLoading">
-                    <img *ngIf="isLoading" src="../../../assets/images/loader.gif">
-                  </span>
-                </div>
-              </div>
-            </form>
+            <div *ngIf="form.get('username')?.invalid && form.get('username')?.touched" class="error-message">
+              <small *ngIf="form.get('username')?.errors?.['required']">User Name is required.</small>
+            </div>
           </div>
-        </div>
+
+          <div class="form__group password-group">
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              class="form__input"
+              placeholder="Password"
+              id="password"
+              name="password"
+              required
+              formControlName="password" />
+
+            <mat-icon
+              class="eye-icon"
+              (mouseenter)="passwordVisible = true"
+              (mouseleave)="passwordVisible = false">
+              {{ passwordVisible ? 'visibility' : 'visibility_off' }}
+            </mat-icon>
+
+            <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="error-message">
+              <small *ngIf="form.get('password')?.errors?.['required']">Password is required.</small>
+            </div>
+          </div>
+
+          <div class="form-meta">
+            <button class="hyperlink-button" type="button" (click)="forgotpassword()">Forgot Password?</button>
+          </div>
+
+          <div *ngIf="isinvalid" class="error-message invalid-credentials">
+            <small>Invalid credentials.</small>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="button" (click)="onLogin()" [disabled]="isLoading">Login</button>
+            <button class="btn btn-secondary" type="button" (click)="Register()">Register</button>
+          </div>
+        </form>
       </div>
     </section>
   </div>
-  
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">
+        <img src="../../../assets/images/loader.gif" alt="Loading">
+      </span>
+    </div>
+  </div>
+</div>
